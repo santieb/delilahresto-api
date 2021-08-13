@@ -1,5 +1,4 @@
 const users = require('../models/users')
-
 const confirmRegistration = (req, res, next) => {
     check = users.filter(users => users.username === req.body.username || users.mail === req.body.mail)
     if(check.length != 0) res.json({msj: "The username or email is in use"})
