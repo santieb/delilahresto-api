@@ -8,9 +8,6 @@ router.get('/', function (req, res) {
 })
 
 router.post('/', middlewares.confirmRegistration, (req, res) => {
-    if(req.body.username === ""){
-        res.json({msj: "Fill in all fields"})
-    }
     users.push(req.body)
     res.send({msj:'User created'})
 })
