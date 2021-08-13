@@ -1,16 +1,15 @@
 const users = require('../models/users')
 
 const confirmRegistration = (req, res, next) => {
-    check = users.filter(user => user.username === req.body.username && user.mail === req.body.mail)
+    check = users.filter(users => users.username === req.body.username || users.mail === req.body.mail)
     if(check.length != 0) {res.json({msj: "The username or email is in use"})}
 
-    if(req.body.username === ""){ //no funciona esto
+    else if(req.body.username === "" || req.body.mail === ""){
         res.json({msj: "Fill in all fields"})
     }
-    next()
+    else next()
 }
 module.exports = {
     confirmRegistration                                                                                                       
 };
-
 
