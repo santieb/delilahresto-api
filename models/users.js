@@ -6,7 +6,7 @@ const users = [
         "mail": "juan.morales@gmail.com",
         "phone": 454545,
         "shippingAddress": "av.peron",
-        "password": "123456"
+        "password": 123456
     }
 ];
 

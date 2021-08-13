@@ -6,7 +6,7 @@ app.use(express.json());
 const port = 3000;
 
 const users = require('./routes/users');
-app.use('/users', users);
+app.use('/', users);
 
 
 app.listen(port, function () {

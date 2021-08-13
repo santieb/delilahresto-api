@@ -9,6 +9,10 @@ const confirmRegistration = (req, res, next) => {
     }
     else next()
 }
+const confirmLogin = (req, res, next) => {
+}
+
+
 module.exports = {
     confirmRegistration                                                                                                       
 };
