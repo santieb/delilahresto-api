@@ -13,7 +13,7 @@ router.post('/register', middlewares.confirmRegistration, (req, res) => {
     req.body.id = id
     req.body.isAdmin = false
     users.push(req.body)
-    res.send({msj:'User created'})
+    res.json({msj:'User created'})
 })
 
 router.post('/login', middlewares.confirmLogin, (req, res) => {
