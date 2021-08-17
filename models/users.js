@@ -7,7 +7,8 @@ const users = [
         "shippingAddress": "av.peron",
         "password": "juan123",
         "id": 0,
-        "isAdmin": true
+        "isAdmin": true,
+        "loggedIn": false
     }
 ];
 

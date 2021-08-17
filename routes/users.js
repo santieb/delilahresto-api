@@ -12,13 +12,16 @@ router.post('/register', middlewares.confirmRegistration, (req, res) => {
     id++
     req.body.id = id
     req.body.isAdmin = false
+    req.body.loggedIn = false
     users.push(req.body)
     res.json({msj:'User created'})
 })
 
 router.post('/login', middlewares.confirmLogin, (req, res) => {
     const index = users.findIndex(users => req.body.userOrEmail === users.username || req.body.userOrEmail === users.mail);
-
+    console.log(users[index].loggedIn)
+    users[index].loggedIn = true
+    console.log(users[index].loggedIn)
     res.json({msj:`Hello again, ${users[index].name}`})
 })
 
