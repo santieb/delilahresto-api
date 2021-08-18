@@ -1,6 +1,6 @@
 const ordersList = [];
 
-const methodOfPayments = ["cash", "credit card" ];
+const methodOfPayments = ["cash", "credit card"];
 
 const states = ["cancelled", "new", "confirmed", "preparing", "sending", "delivered"]
 

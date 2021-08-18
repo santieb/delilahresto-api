@@ -1,7 +1,7 @@
 const products = [
     {
         "id": "1",       
-        "name": "classic burger",
+        "name": "classicBurger",
         "precio": "350"
     },
     {

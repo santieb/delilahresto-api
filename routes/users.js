@@ -24,5 +24,4 @@ router.post('/login', middlewares.confirmLogin, (req, res) => {
 })
 
 
-
 module.exports = router;

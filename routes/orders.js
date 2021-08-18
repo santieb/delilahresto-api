@@ -11,20 +11,22 @@ const products = require('../models/products')
 router.get('/orders/history/:id',middlewares.confirmId, (req, res) => {
     const user = (users.find(users => users.id == req.params.id))
     const order = (orders.ordersList.filter(orders => user.username == orders.username))
-    res.json(order)
-    
+
+    if (order.length == 0) res.json({msj:`you have no history`})
+    else res.json(order)  //hacer para que no aparezcan algunos datos
 })
 
-let id = 0;
-router.post('/orders/:id', middlewares.confirmId, (req, res) => {
-    id++
+let count = 0;
+router.post('/orders/:id', middlewares.confirmId, middlewares.confirmOrder, (req, res) => {
+    count++
+    number =`#${count}`
     date = new Date()
-    time = `${date.getHours()}:${date.getMinutes()}` //arreglar pm y am
+    time = `${date.getHours()}:${date.getMinutes()}`
     const user = (users.find(users => users.id == req.params.id))
 
     req.body.state = orders.states[1]
     req.body.time = time
-    req.body.id = id
+    req.body.number = number
     req.body.username = user.username
     orders.ordersList.push(req.body)
     res.json({msj:`order created`})
