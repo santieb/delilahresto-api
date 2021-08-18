@@ -9,8 +9,10 @@ const products = require('../models/products')
 
 
 router.get('/orders/history/:id',middlewares.confirmId, (req, res) => {
+    const user = (users.find(users => users.id == req.params.id))
+    const order = (orders.ordersList.filter(orders => user.username == orders.username))
+    res.json(order)
     
-    res.json(products)
 })
 
 let id = 0;
@@ -23,8 +25,8 @@ router.post('/orders/:id', middlewares.confirmId, (req, res) => {
     req.body.state = orders.states[1]
     req.body.time = time
     req.body.id = id
-    req.body.user = user.username
-    orders.push(req.body)
+    req.body.username = user.username
+    orders.ordersList.push(req.body)
     res.json({msj:`order created`})
 })
 
