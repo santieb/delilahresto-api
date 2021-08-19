@@ -5,13 +5,6 @@ const users = require('../models/users')
 const orders = require('../models/orders')
 const products = require('../models/products')
 
-router.get('/orders/history/:id', middlewares.confirmId, (req, res) => {
-    const user = (users.find(users => users.id == req.params.id))
-    const order = (orders.ordersList.filter(orders => user.username == orders.username))
-
-    if (order.length == 0) res.json({msj:`you have no history`})
-    else res.json(order)  //hacer para que no aparezcan algunos datos
-})
 
 let count = 0;
 router.post('/orders/:id', middlewares.confirmId, middlewares.confirmOrder, (req, res) => { //filter para ver si tiene un pedido pendiente anteriormente o no
@@ -21,7 +14,6 @@ router.post('/orders/:id', middlewares.confirmId, middlewares.confirmOrder, (req
 
     const {order, methodOfPayment, shippingAddress} = req.body;
     const newOrder = {
-        username: user.username,
         idUser: user.id,
         state: orders.states[1],
         number: `#${count}`,
@@ -33,6 +25,13 @@ router.post('/orders/:id', middlewares.confirmId, middlewares.confirmOrder, (req
 
     orders.ordersList.push(newOrder)
     res.json({msj:`order created`})
+})
+
+router.get('/orders/history/:id', middlewares.confirmId, (req, res) => {    //hacer para que no aparezcan algunos datos
+    const orderUser = (orders.ordersList.filter(orders => orders.idUser == req.params.id))
+
+    if (orderUser.length == 0) res.json({msj:`you have no history`})
+    else res.json(orderUser)  
 })
 
 router.post('/orders/confirmation/:id ',middlewares.confirmId, (req, res) => {

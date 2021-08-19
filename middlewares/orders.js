@@ -10,13 +10,15 @@ const confirmId = (req, res, next) => {
     }else res.send("ID does not exist");
 }
 
-const confirmOrder = (req, res, next) => {  //hacer validacion del nombre del producto
+const confirmOrder = (req, res, next) => {  //hacer validacion del nombre del producto y lo del precio
 
     if(req.body.order === "" || req.body.methodOfPayment === "" || req.body.shippingAddress === "") res.json({msj: "Fill in all fields"})
+    
+    const orderUser = (orders.ordersList.filter(orders => orders.idUser == req.params.id))
+    const validateOrder = (orderUser.find(orderUser => orderUser.state == "new"))
 
-    const sas = (products.filter(products => products.id == req.body.order.product))
-    console.log(sas)
-    next()
+    if (validateOrder) res.send ("You already have a pending order, confirm it or modify it to continue")
+    else next()
 }
 
 module.exports = {
