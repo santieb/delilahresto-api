@@ -19,7 +19,6 @@ const confirmLogin = (req, res, next) => {
     else res.json({msj: "Username or email address not found. Please try again"})
 }
 
-
 module.exports = {
     confirmRegistration,     
     confirmLogin                                                                                                  
