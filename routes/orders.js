@@ -19,13 +19,19 @@ router.post('/orders/:id', middlewares.confirmId, middlewares.confirmOrder, (req
     count++
     date = new Date()
 
-    req.body.state = orders.states[1]
-    req.body.time = `${date.getHours()}:${date.getMinutes()}`
-    req.body.number = `#${count}`
-    req.body.username = user.username
-    req.body.idUser = user.id
+    const {order, methodOfPayment, shippingAddress} = req.body;
+    const newOrder = {
+        username: user.username,
+        idUser: user.id,
+        state: orders.states[1],
+        number: `#${count}`,
+        time: `${date.getHours()}:${date.getMinutes()}`,
+        order: order,
+        methodOfPayment: methodOfPayment,
+        shippingAddress: shippingAddress,
+    };
 
-    orders.ordersList.push(req.body)
+    orders.ordersList.push(newOrder)
     res.json({msj:`order created`})
 })
 

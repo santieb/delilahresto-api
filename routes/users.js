@@ -29,7 +29,9 @@ router.post('/register', middlewares.confirmRegistration, (req, res) => {
 })
 
 router.post('/login', middlewares.confirmLogin, (req, res) => {
+
     const index = users.findIndex(users => req.body.userOrEmail === users.username || req.body.userOrEmail === users.mail);
+
     users[index].loggedIn = true
     res.json({msj:`Hello again, ${users[index].name}`})
 })
