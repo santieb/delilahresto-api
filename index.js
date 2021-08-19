@@ -4,7 +4,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express')
-const port = 3000;
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -29,6 +28,10 @@ app.use('/', users);
 const orders = require('./routes/orders');
 app.use('/', orders);
 
+const products = require('./routes/products')
+app.use('/', products);
+
+const port = 3000;
 app.listen(port, function () {
     console.log(`Server listening on port http://localhost:${port}`);
   });

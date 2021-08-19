@@ -9,11 +9,22 @@ router.get('/', function (req, res) {
 
 let id = 0;
 router.post('/register', middlewares.confirmRegistration, (req, res) => {
+
     id++
-    req.body.id = id
-    req.body.isAdmin = false
-    req.body.loggedIn = false
-    users.push(req.body)
+    const {username, name, email, phone, shippingAddress, password} = req.body;
+    const newUser = {
+        id: id,
+        username: username,
+        password: password,
+        email: email,
+        name: name,
+        phone: phone,
+        shippingAddress: shippingAddress,
+        isAdmin: false,
+        loggedIn: false,
+    };
+
+    users.push(newUser)
     res.json({msj:'User created'})
 })
 

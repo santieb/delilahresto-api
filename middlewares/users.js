@@ -1,17 +1,17 @@
 const users = require('../models/users')
 
 const confirmRegistration = (req, res, next) => {
-    const check = users.find(users => users.username === req.body.username || users.mail === req.body.mail)
+    const check = users.find(users => users.username === req.body.username || users.email === req.body.email)
     if(check) res.json({msj: "The username or email is in use."})
 
-    else if(req.body.username === "" || req.body.mail === "" || req.body.mail === "" || req.body.name === "" || req.body.phone === "" || req.body.shippingAddress === "" || req.body.password === ""){
+    else if(req.body.username === "" || req.body.email === "" || req.body.name === "" || req.body.phone === "" || req.body.shippingAddress === "" || req.body.password === ""){
         res.json({msj: "Fill in all fields"})
     }
     else next()
 }
 
 const confirmLogin = (req, res, next) => {
-    const check = users.find(users => users.username === req.body.userOrEmail && users.password === req.body.password || users.mail === req.body.userOrEmail && users.password === req.body.password)
+    const check = users.find(users => users.username === req.body.userOrEmail && users.password === req.body.password || users.email === req.body.userOrEmail && users.password === req.body.password)
     if(check) next()
 
     else if(req.body.userOrEmail === "" || req.body.password === "") res.json({msj: "Fill in all fields"})

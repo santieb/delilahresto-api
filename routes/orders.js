@@ -18,11 +18,13 @@ router.post('/orders/:id', middlewares.confirmId, middlewares.confirmOrder, (req
     const user = (users.find(users => users.id == req.params.id))
     count++
     date = new Date()
-    
+
     req.body.state = orders.states[1]
     req.body.time = `${date.getHours()}:${date.getMinutes()}`
     req.body.number = `#${count}`
     req.body.username = user.username
+    req.body.idUser = user.id
+
     orders.ordersList.push(req.body)
     res.json({msj:`order created`})
 })

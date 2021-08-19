@@ -1,15 +1,16 @@
 const users = [
     {
+        "id": 0,
         "username": "juan",
-        "name": "juan morales", 
-        "mail": "juan.morales@gmail.com",
+        "password": "juan123",
+        "email": "juanmorales@gmail.com",
+        "name": "Juan Morales",
         "phone": 454545,
         "shippingAddress": "av.peron",
-        "password": "juan123",
-        "id": 0,
         "isAdmin": true,
-        "loggedIn": false
+        "loggedIn": false,
     }
 ];
+
 
 module.exports = users;

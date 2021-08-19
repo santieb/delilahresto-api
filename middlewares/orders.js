@@ -10,11 +10,9 @@ const confirmId = (req, res, next) => {
     }else res.send("ID does not exist");
 }
 
-const confirmOrder = (req, res, next) => {
+const confirmOrder = (req, res, next) => {  //hacer validacion del nombre del producto
 
     if(req.body.order === "" || req.body.methodOfPayment === "" || req.body.shippingAddress === "") res.json({msj: "Fill in all fields"})
-    
-    //hacer validacion del nombre del producto
 
     const sas = (products.filter(products => products.id == req.body.order.product))
     console.log(sas)
