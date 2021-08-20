@@ -8,9 +8,10 @@ const products = require('../models/products')
 
 let count = 0;
 router.post('/orders/:id', middlewares.confirmId, middlewares.confirmOrder, (req, res) => { //filter para ver si tiene un pedido pendiente anteriormente o no
-    const user = (users.find(users => users.id == req.params.id))
+
     count++
     date = new Date()
+    const user = (users.find(users => users.id == req.params.id))
 
     const {order, methodOfPayment, shippingAddress} = req.body;
     const newOrder = {
@@ -27,6 +28,17 @@ router.post('/orders/:id', middlewares.confirmId, middlewares.confirmOrder, (req
     res.json({msj:`order created`})
 })
 
+
+router.get('/orders/confirmation/:id', middlewares.confirmId, (req, res) => {
+
+    const orderUser = (orders.ordersList.filter(orders => orders.idUser == req.params.id))
+    const indexOrder = (orderUser.findIndex(orderUser => orderUser.state == "new"))
+
+    orderUser[indexOrder].state = orders.states[2]  //confirma el pedido que esta en estado new
+    res.json({msj:`order confirmada`})
+})
+
+
 router.get('/orders/history/:id', middlewares.confirmId, (req, res) => {    //hacer para que no aparezcan algunos datos
     const orderUser = (orders.ordersList.filter(orders => orders.idUser == req.params.id))
 
@@ -34,10 +46,5 @@ router.get('/orders/history/:id', middlewares.confirmId, (req, res) => {    //ha
     else res.json(orderUser)  
 })
 
-router.post('/orders/confirmation/:id ',middlewares.confirmId, (req, res) => {
-        
-    if (req.body.confirm) 
-    res.json({msj:`order created`})
-})
 
 module.exports = router;

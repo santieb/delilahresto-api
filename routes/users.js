@@ -3,9 +3,11 @@ const router = express.Router();
 const users = require('../models/users')
 const middlewares = require('../middlewares/users')
 
+
 router.get('/', function (req, res) {
     res.json(users)
 })
+
 
 let id = 0;
 router.post('/register', middlewares.confirmRegistration, (req, res) => {
@@ -27,6 +29,7 @@ router.post('/register', middlewares.confirmRegistration, (req, res) => {
     users.push(newUser)
     res.json({msj:'User created'})
 })
+
 
 router.post('/login', middlewares.confirmLogin, (req, res) => {
 

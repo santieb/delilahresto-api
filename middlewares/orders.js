@@ -17,7 +17,7 @@ const confirmOrder = (req, res, next) => {  //hacer validacion del nombre del pr
     const orderUser = (orders.ordersList.filter(orders => orders.idUser == req.params.id))
     const validateOrder = (orderUser.find(orderUser => orderUser.state == "new"))
 
-    if (validateOrder) res.send ("You already have a pending order, confirm it or modify it to continue")
+    if (validateOrder) res.send ("You already have a pending order, confirm it or modify it to create another")
     else next()
 }
 
