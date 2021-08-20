@@ -1,5 +1,6 @@
 const users = require('../models/users')
 
+
 const confirmRegistration = (req, res, next) => {
     const check = users.find(users => users.username === req.body.username || users.email === req.body.email)
     if(check) res.json({msj: "The username or email is in use."})
@@ -10,6 +11,7 @@ const confirmRegistration = (req, res, next) => {
     else next()
 }
 
+
 const confirmLogin = (req, res, next) => {
     const check = users.find(users => users.username === req.body.userOrEmail && users.password === req.body.password || users.email === req.body.userOrEmail && users.password === req.body.password)
     if(check) next()
@@ -18,6 +20,7 @@ const confirmLogin = (req, res, next) => {
 
     else res.json({msj: "Username or email address not found. Please try again"})
 }
+
 
 module.exports = {
     confirmRegistration,     
