@@ -1,8 +1,4 @@
-const ordersList = [];
+const orders = [];
 
-const states = ["cancelled", "new", "confirmed", "preparing", "sending", "delivered"]
-
-module.exports = {
-    ordersList,     
-    states                                                                                              
-};
+module.exports = orders;    
+                                                                                           

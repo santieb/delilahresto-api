@@ -4,27 +4,27 @@ const middlewares = require('../middlewares/orders')
 const users = require('../models/users')
 const orders = require('../models/orders')
 const isAdmin = require('../middlewares/products')
-
+const states = require('../models/states')
 
 let id = -1;
-router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, (req, res) => { 
-//falta validar todo casi
+router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, middlewares.validateMethod, (req, res) => { 
+
     id++
     date = new Date()
     const user = (users.find(users => users.id == req.params.id))
-
+                                                                        //validar pedido
     const {order, methodOfPayment, shippingAddress} = req.body;
     const newOrder = {
         idUser: user.id,
         idOrder: id,
-        state: orders.states[1],
+        state: states[1],
         time: `${date.getHours()}:${date.getMinutes()}`,
         order: order,
         methodOfPayment: methodOfPayment,
         shippingAddress: shippingAddress,
     };
 
-    orders.ordersList.push(newOrder)
+    orders.push(newOrder)
     res.json({msj:`order created`})
 })
 
@@ -37,8 +37,8 @@ router.put('/orders/edit/:id', middlewares.confirmId, (req, res) => {
 
 router.get('/orders/confirmation/:id', middlewares.confirmId, middlewares.confirmOrder, (req, res) => {
 
-    const indexOrder = (orders.ordersList.findIndex(orders => orders.state == "new" && orders.idUser == req.params.id))
-    orders.ordersList[indexOrder].state = orders.states[2] 
+    const indexOrder = (orders.findIndex(orders => orders.state == "new" && orders.idUser == req.params.id))
+    orders[indexOrder].state = states[2] 
 
     res.json({msj:`order confirmed`})
 })
@@ -46,22 +46,22 @@ router.get('/orders/confirmation/:id', middlewares.confirmId, middlewares.confir
 
 router.get('/orders/history/:id', middlewares.confirmId, (req, res) => {    //hacer para que no aparezcan algunos datos
 
-    const orderUser = (orders.ordersList.filter(orders => orders.idUser == req.params.id))
+    const orderUser = (orders.filter(orders => orders.idUser == req.params.id))
     res.json({msj: orderUser})  
 })
 
 
 router.get('/allOrders/:id', isAdmin.confirmId, (req, res) => { 
 
-    res.json(orders.ordersList)  
+    res.json(orders)  
 })
 
 
 router.put('/allOrders/:id/:idOrder', isAdmin.confirmId, middlewares.confirmIdOrder, middlewares.validateState, (req, res) => { 
 
-    const indexOrder = (orders.ordersList.findIndex(orders => orders.idOrder == req.params.idOrder))
+    const indexOrder = (orders.findIndex(orders => orders.idOrder == req.params.idOrder))
 
-    orders.ordersList[indexOrder].state = req.body.newState
+    orders[indexOrder].state = req.body.newState
     res.json({msj: "order edited"})  
 })
 

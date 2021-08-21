@@ -1,7 +1,8 @@
 const users = require('../models/users')
 const orders = require('../models/orders')
 const products = require('../models/products')
-
+const states = require('../models/states')
+const payments = require('../models/payments')
 
 const confirmId = (req, res, next) => {
 
@@ -17,7 +18,7 @@ const validateOrder = (req, res, next) => {  //hacer validacion del nombre del p
     
     if(req.body.order === "" || req.body.methodOfPayment === "" || req.body.shippingAddress === "") res.json({msj: "Fill in all fields"})
     
-    const findOrder = (orders.ordersList.find(orders => orders.state == "new" && orders.idUser == req.params.id))
+    const findOrder = (orders.find(orders => orders.state == "new" && orders.idUser == req.params.id))
     if (findOrder) res.json ({msj: "You already have a pending order, confirm it or modify it to create another"})
     else next()
 }
@@ -25,7 +26,7 @@ const validateOrder = (req, res, next) => {  //hacer validacion del nombre del p
 
 const confirmOrder = (req, res, next) => { 
 
-    const findOrder = (orders.ordersList.find(orders => orders.state == "new" && orders.idUser == req.params.id))
+    const findOrder = (orders.find(orders => orders.state == "new" && orders.idUser == req.params.id))
     
     if (findOrder)  next()
     else res.json ({msj: "you do not have any new order to be confirmed"})
@@ -34,7 +35,7 @@ const confirmOrder = (req, res, next) => {
 
 const confirmHistory = (req, res, next) => { 
 
-    const orderUser = (orders.ordersList.filter(orders => orders.idUser == req.params.id))
+    const orderUser = (orders.filter(orders => orders.idUser == req.params.id))
 
     if (orderUser.length == 0) res.json({msj:`you have no history`})
     else next()
@@ -43,7 +44,7 @@ const confirmHistory = (req, res, next) => {
 
 const confirmIdOrder = (req, res, next) => { 
 
-    const orderID = (orders.ordersList.find(orders => orders.idOrder == req.params.idOrder))
+    const orderID = (orders.find(orders => orders.idOrder == req.params.idOrder))
 
     if(orderID) next()
     else res.json({msj: "the product ID does not exist"})
@@ -53,12 +54,23 @@ const confirmIdOrder = (req, res, next) => {
 
 const validateState = (req, res, next) => { 
 
-    const state = (orders.states.find(orders => orders.states == req.body.newState))
+    const state = (states.find(states => states == req.body.newState))
 
     if(state) next()
     else res.json({msj: "the state does not exist"})
 
 }
+
+
+const validateMethod = (req, res, next) => { 
+     
+    const method = (payments.find(payments => payments.method == req.body.methodOfPayment))
+
+    if(method) next()
+    else res.json({msj: "the payment method is not available"})
+
+}
+
 
 module.exports = {
     confirmId,    
@@ -66,5 +78,6 @@ module.exports = {
     confirmOrder,
     confirmHistory,
     confirmIdOrder,
-    validateState                                                                                   
+    validateState,
+    validateMethod                                                                                  
 };
