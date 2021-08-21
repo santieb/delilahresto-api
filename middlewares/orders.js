@@ -14,13 +14,22 @@ const confirmId = (req, res, next) => {
 }
 
 
-const validateOrder = (req, res, next) => {  //hacer validacion del nombre del producto y lo del precio
+const validateOrder = (req, res, next) => {  //hacer validacion del nombre del producto y lo del precio //modificar
     
     if(req.body.order === "" || req.body.methodOfPayment === "" || req.body.shippingAddress === "") res.json({msj: "Fill in all fields"})
     
     const findOrder = (orders.find(orders => orders.state == "new" && orders.idUser == req.params.id))
     if (findOrder) res.json ({msj: "You already have a pending order, confirm it or modify it to create another"})
     else next()
+}
+
+
+const validateEdit = (req, res, next) => {  
+    
+    const user = (orders.find(orders => orders.state == states[1]))
+
+    if(user) next()
+    else res.json({msj: "you cannot modify any order"})
 }
 
 
@@ -79,5 +88,6 @@ module.exports = {
     confirmHistory,
     confirmIdOrder,
     validateState,
-    validateMethod                                                                                  
+    validateMethod,
+    validateEdit                                                                                
 };

@@ -30,7 +30,7 @@ router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, mid
 })
 
 
-router.put('/orders/edit/:id', middlewares.confirmId, middlewares.validateMethod, (req, res) => {       //falta validar
+router.put('/orders/edit/:id', middlewares.confirmId, middlewares.validateEdit, middlewares.validateMethod,  (req, res) => {       //falta validar
 
     const user = (orders.find(orders => orders.idUser == req.params.id && orders.state == states[1]))
     const indexOrder = orders.findIndex(orders => orders.state == states[1])
