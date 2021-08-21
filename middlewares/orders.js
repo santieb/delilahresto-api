@@ -41,9 +41,30 @@ const confirmHistory = (req, res, next) => {
 }
 
 
+const confirmIdOrder = (req, res, next) => { 
+
+    const orderID = (orders.ordersList.find(orders => orders.idOrder == req.params.idOrder))
+
+    if(orderID) next()
+    else res.json({msj: "the product ID does not exist"})
+
+}
+
+
+const validateState = (req, res, next) => { 
+
+    const state = (orders.states.find(orders => orders.states == req.body.newState))
+
+    if(state) next()
+    else res.json({msj: "the state does not exist"})
+
+}
+
 module.exports = {
     confirmId,    
     validateOrder,
     confirmOrder,
-    confirmHistory                                                                                     
+    confirmHistory,
+    confirmIdOrder,
+    validateState                                                                                   
 };

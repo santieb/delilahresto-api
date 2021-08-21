@@ -3,21 +3,21 @@ const router = express.Router();
 const middlewares = require('../middlewares/orders')
 const users = require('../models/users')
 const orders = require('../models/orders')
-const products = require('../models/products')
+const isAdmin = require('../middlewares/products')
 
 
-let count = 0;
+let id = -1;
 router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, (req, res) => { 
 //falta validar todo casi
-    count++
+    id++
     date = new Date()
     const user = (users.find(users => users.id == req.params.id))
 
     const {order, methodOfPayment, shippingAddress} = req.body;
     const newOrder = {
         idUser: user.id,
+        idOrder: id,
         state: orders.states[1],
-        number: `#${count}`,
         time: `${date.getHours()}:${date.getMinutes()}`,
         order: order,
         methodOfPayment: methodOfPayment,
@@ -50,5 +50,19 @@ router.get('/orders/history/:id', middlewares.confirmId, (req, res) => {    //ha
     res.json({msj: orderUser})  
 })
 
+
+router.get('/allOrders/:id', isAdmin.confirmId, (req, res) => { 
+
+    res.json(orders.ordersList)  
+})
+
+
+router.put('/allOrders/:id/:idOrder', isAdmin.confirmId, middlewares.confirmIdOrder, middlewares.validateState, (req, res) => { 
+
+    const indexOrder = (orders.ordersList.findIndex(orders => orders.idOrder == req.params.idOrder))
+
+    orders.ordersList[indexOrder].state = req.body.newState
+    res.json({msj: "order edited"})  
+})
 
 module.exports = router;
