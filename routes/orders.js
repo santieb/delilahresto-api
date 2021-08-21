@@ -7,7 +7,7 @@ const products = require('../models/products')
 
 
 let count = 0;
-router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, (req, res) => { //filter para ver si tiene un pedido pendiente anteriormente o no
+router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, (req, res) => { 
 //falta validar todo casi
     count++
     date = new Date()

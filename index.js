@@ -5,6 +5,7 @@ app.use(express.json());
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express')
 
+
 const swaggerOptions = {
   swaggerDefinition: {
     info: {
@@ -14,6 +15,7 @@ const swaggerOptions = {
   },
   apis: ['./swagger.json']
 };
+
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
@@ -25,11 +27,17 @@ app.use('/api-docs',
 const users = require('./routes/users');
 app.use('/', users);
 
+
 const orders = require('./routes/orders');
 app.use('/', orders);
 
+
 const products = require('./routes/products')
 app.use('/', products);
+
+const payments = require('./routes/payments')
+app.use('/', payments);
+
 
 const port = 3000;
 app.listen(port, function () {
