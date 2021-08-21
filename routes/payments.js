@@ -1,36 +1,46 @@
 const express = require('express');
 const router = express.Router();
-const users = require('../models/users')
-let methodsOfPayments = require('../models/payments')
-const middlewares = require('../middlewares/products')
+let methodOfPayments = require('../models/payments')
+const isAdmin = require('../middlewares/products')
+const middlewares = require('../middlewares/payments')
 
 
-router.get('/payment/:id', (req, res) => {
-    
-    res.json(products)
+router.get('/payments/:id', isAdmin.confirmId, (req, res) => {
+
+    res.json(methodOfPayments)
 })
 
 
+id = methodOfPayments[methodOfPayments.length-1].id
+router.post('/payments/:id', isAdmin.confirmId, middlewares.validateMethod, (req, res) => { 
 
-router.post('/payment/:id', middlewares.confirmId, middlewares.validateProduct, (req, res) => { 
+    id++
+    const {method} = req.body
+    const newMethod = {
+        id: id,
+        method: method
+    };
 
-
-    res.json({msj:`product created`})
+    methodOfPayments.push(newMethod)
+    res.json({msj:`payment method created`})
 })
 
 
-router.put('/payment', middlewares.confirmId, middlewares.validateProduct, (req, res) => {
+router.put('/payments/:id/:idMethod',  isAdmin.confirmId, middlewares.validateMethodID, middlewares.validateMethod,  (req, res) => {
         
+    const indexMethod = methodOfPayments.findIndex(methodOfPayments => req.params.idMethod == methodOfPayments.id)
 
-    res.json({msj:`product edited`})
+    methodOfPayments[indexMethod].method = req.body.method
+    res.json({msj:`payment method edited`})
 })
 
 
-router.delete('/payment', middlewares.confirmId, (req, res) => {
+router.delete('/payments/:id/:idMethod', middlewares.validateMethodID, isAdmin.confirmId, (req, res) => {
 
+    let removeMethod = methodOfPayments.filter(methodOfPayments => req.params.idMethod != methodOfPayments.id)
 
-    
-    res.json({msj:`removed product`})
+    methodOfPayments = removeMethod
+    res.json({msj:`payment method removed`})
 })
 
 

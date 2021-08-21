@@ -4,15 +4,14 @@ const users = require('../models/users')
 let products = require('../models/products')
 const middlewares = require('../middlewares/products')
 
-
-router.get('/products/:id', (req, res) => {
+router.get('/products/', (req, res) => {
     
     res.json(products)
 })
 
-
 id = products[products.length-1].id
 router.post('/products/:id', middlewares.confirmId, middlewares.validateProduct, (req, res) => { 
+    
     id++
     const {name, price} = req.body
     const newProduct = {
@@ -26,7 +25,7 @@ router.post('/products/:id', middlewares.confirmId, middlewares.validateProduct,
 })
 
 
-router.put('/products/:id/:idProduct', middlewares.confirmId, middlewares.validateProduct, (req, res) => {
+router.put('/products/:id/:idProduct', middlewares.confirmId, middlewares.validateProductID, middlewares.validateProduct, (req, res) => {
         
     const indexProduct = products.findIndex(products => req.params.idProduct == products.id)
     const {name, price} = req.body
@@ -41,12 +40,12 @@ router.put('/products/:id/:idProduct', middlewares.confirmId, middlewares.valida
 })
 
 
-router.delete('/products/:id/:idProduct', middlewares.confirmId, (req, res) => {
+router.delete('/products/:id/:idProduct', middlewares.confirmId, middlewares.validateProductID, (req, res) => {
         
     let removeProduct = products.filter(products => req.params.idProduct != products.id)
 
     products = removeProduct
-    res.json({msj:`removed product`})
+    res.json({msj:`product removed `})
 })
 
 

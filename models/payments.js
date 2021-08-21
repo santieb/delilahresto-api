@@ -1,5 +1,13 @@
-const methodsOfPayments = ["cash", "credit card"];
+const methodOfPayments = [
+    {
+        "id": 0,       
+        "method": "cash",
+    },
+    {
+        "id": 1,       
+        "method": "creditCard",
+    }
+];
 
-module.exports = {
-    methodsOfPayments
-}
+
+module.exports = methodOfPayments
