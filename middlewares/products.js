@@ -19,7 +19,6 @@ const validateProduct = (req, res, next) => {
     const checkProduct = (products.find(products => products.name == req.body.name))
 
     if(checkProduct) res.json({msj: "The name already exists"})
-
     else if(req.body.name === "" || req.body.price === ""){
         res.json({msj: "Fill in all fields"})
     }
@@ -31,7 +30,6 @@ const validateProductID = (req, res, next) => {
     const checkID = (products.find(products => products.id == req.params.idProduct))
     if (checkID) next()
     else res.send("the product ID does not exist");
-
 }
 
 module.exports = {

@@ -43,9 +43,9 @@ router.put('/products/:id/:idProduct', middlewares.confirmId, middlewares.valida
 router.delete('/products/:id/:idProduct', middlewares.confirmId, middlewares.validateProductID, (req, res) => {
         
     let removeProduct = products.filter(products => req.params.idProduct != products.id)
-
+    
     products = removeProduct
-    res.json({msj:`product removed `})
+    res.json({msj:`product removed`})
 })
 
 
