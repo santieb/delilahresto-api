@@ -1,11 +1,11 @@
 const products = [
     {
-        "id": "0",       
+        "id": 0,       
         "name": "classicBurger",
         "price": 350
     },
     {
-        "id": "1",       
+        "id": 1,       
         "name": "classic sandwich",
         "price": 300
     }

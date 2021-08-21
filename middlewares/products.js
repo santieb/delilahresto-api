@@ -14,6 +14,19 @@ const confirmId = (req, res, next) => {
     }else res.send("ID does not exist");
 }
 
+const validateProduct = (req, res, next) => {
+
+    const checkProduct = (products.find(products => products.name == req.body.name))
+
+    if(checkProduct) res.json({msj: "The name is in use."})
+
+    else if(req.body.name === "" || req.body.price === ""){
+        res.json({msj: "Fill in all fields"})
+    }
+    else next()
+}
+
 module.exports = {
-    confirmId
+    confirmId,
+    validateProduct
 } 
