@@ -4,15 +4,16 @@ const middlewares = require('../middlewares/orders')
 const users = require('../models/users')
 const orders = require('../models/orders')
 const isAdmin = require('../middlewares/products')
-const states = require('../models/states')
+const states = require('../models/states');
+
 
 let id = -1;
 router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, middlewares.validateMethod, (req, res) => { 
 
     id++
     date = new Date()
-    const user = (users.find(users => users.id == req.params.id))
-                                                                        //validar pedido
+    const user = (users.find(users => users.id == req.params.id))                        //terminar de Validar order
+
     const {order, methodOfPayment, shippingAddress} = req.body;
     const newOrder = {
         idUser: user.id,
@@ -29,7 +30,23 @@ router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, mid
 })
 
 
-router.put('/orders/edit/:id', middlewares.confirmId, (req, res) => {   
+router.put('/orders/edit/:id', middlewares.confirmId, middlewares.validateMethod, (req, res) => {       //falta validar
+
+    const user = (orders.find(orders => orders.idUser == req.params.id && orders.state == states[1]))
+    const indexOrder = orders.findIndex(orders => orders.state == states[1])
+
+    const {order, methodOfPayment, shippingAddress} = req.body;
+    const changeOrder = {
+        idUser: req.params.id,
+        idOrder: user.idOrder,
+        state: states[1],
+        time: `${date.getHours()}:${date.getMinutes()}`,
+        order: order,
+        methodOfPayment: methodOfPayment,
+        shippingAddress: shippingAddress,
+    };
+
+    orders[indexOrder] = changeOrder
 
     res.json({msj:`edited order`})
 })
