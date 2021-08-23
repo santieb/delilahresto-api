@@ -41,7 +41,9 @@ const validateEdit = (req, res, next) => {
     if(req.body.name === "" || req.body.price === ""){
         res.json({msj: "Fill in all fields"})
     }
-    else if(products[indexProduct].name == req.body.name) next()
+    else if(products[indexProduct].name == req.body.name && products[indexProduct].price != req.body.price) next()
+
+    else if(products[indexProduct].name == req.body.name && products[indexProduct].price == req.body.price) res.json({msj: "you have not put any new data"})
 
     else {const checkProduct = (products.find(products => products.name == req.body.name))
         if(checkProduct) res.json({msj: "The name already exists"})
