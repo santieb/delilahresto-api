@@ -24,7 +24,7 @@ router.post('/products/:id', middlewares.confirmId, middlewares.validateProduct,
 })
 
 
-router.put('/products/:id/:idProduct', middlewares.confirmId, middlewares.validateProductID, middlewares.validateProduct, (req, res) => {
+router.put('/products/:id/:idProduct', middlewares.confirmId, middlewares.validateProductID, middlewares.validateEdit, (req, res) => {
         
     const indexProduct = products.findIndex(products => req.params.idProduct == products.id)
     const {name, price} = req.body
