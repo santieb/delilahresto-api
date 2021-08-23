@@ -41,7 +41,23 @@ const validateOrder = (req, res, next) => {  //hacer validacion del nombre del p
 
 const validateEdit = (req, res, next) => {  
     
-    const user = (orders.find(orders => orders.state == states[1]))
+    if(req.body.order === "" || req.body.methodOfPayment === "" || req.body.shippingAddress === "") res.json({msj: "Fill in all fields"}) 
+
+    for(i=0;i<req.body.order.length;i++){   
+
+        if(req.body.order[i].product === "" || req.body.order[i].amount === "") {
+        res.status(404).json ({msj: "Fill in all fields"})
+        return;
+        }
+
+        const findProduct = (products.find(products => products.name == req.body.order[i].product))
+        if(findProduct == null){
+        res.status(404).json ({msj: "one of the products does not exist"}) 
+        return;
+        }
+    }
+    
+    const user = (orders.find(orders => orders.state == states[1] && orders.idUser == req.params.id))
 
     if(user) next()
     else res.json({msj: "you don't have any new order to modify"})
