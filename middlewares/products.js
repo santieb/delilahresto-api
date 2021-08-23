@@ -38,16 +38,14 @@ const validateProductID = (req, res, next) => {
 const validateEdit = (req, res, next) => {
 
     const indexProduct = (products.findIndex(products => products.id == req.params.idProduct))
-
-    if(products[indexProduct].name == req.body.name) next()
-
-    else {const checkProduct = (products.find(products => products.name == req.body.name))
-
-    if(checkProduct) res.json({msj: "The name already exists"})
-    else if(req.body.name === "" || req.body.price === ""){
+    if(req.body.name === "" || req.body.price === ""){
         res.json({msj: "Fill in all fields"})
     }
-    else next()
+    else if(products[indexProduct].name == req.body.name) next()
+
+    else {const checkProduct = (products.find(products => products.name == req.body.name))
+        if(checkProduct) res.json({msj: "The name already exists"})
+        else next()
     }
 }
 
