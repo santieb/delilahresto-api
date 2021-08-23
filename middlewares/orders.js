@@ -16,16 +16,20 @@ const confirmId = (req, res, next) => {
 
 const validateOrder = (req, res, next) => {  //hacer validacion del nombre del producto y lo del precio //modificar
     
-    if(req.body.order === "" || req.body.methodOfPayment === "" || req.body.shippingAddress === "") res.json({msj: "Fill in all fields"})
+    if(req.body.order === "" || req.body.methodOfPayment === "" || req.body.shippingAddress === "") res.json({msj: "Fill in all fields"}) 
 
-    for(i=0;i<req.body.order.length;i++){
+    for(i=0;i<req.body.order.length;i++){   
+
+        if(req.body.order[i].product === "" || req.body.order[i].amount === "") {
+        res.status(404).json ({msj: "Fill in all fields"})
+        return;
+        }
 
         const findProduct = (products.find(products => products.name == req.body.order[i].product))
         if(findProduct == null){
         res.status(404).json ({msj: "one of the products does not exist"}) 
         return;
         }
-
     }
 
     const findOrder = (orders.find(orders => orders.state == "new" && orders.idUser == req.params.id))
