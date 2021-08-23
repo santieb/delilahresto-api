@@ -36,7 +36,6 @@ const validateOrder = (req, res, next) => {  //hacer validacion del nombre del p
     if (findOrder) res.json ({msj: "You already have a pending order, confirm it or modify it to create another"})
 
     else next()
-
 }
 
 
@@ -97,6 +96,19 @@ const validateMethod = (req, res, next) => {
 }
 
 
+const calculatingPrice = (req) => { 
+
+    let price = 0
+    for(i=0;i<req.body.order.length;i++){ 
+        const findProduct = (products.find(products => products.name == req.body.order[i].product))
+
+        let productPrice = findProduct.price
+        let amount = req.body.order[i].amount
+        price = price + amount * productPrice
+    }
+    return(price)
+}
+
 module.exports = {
     confirmId,    
     validateOrder,
@@ -105,5 +117,6 @@ module.exports = {
     confirmIdOrder,
     validateState,
     validateMethod,
-    validateEdit                                                                                
+    validateEdit,
+    calculatingPrice                                                                       
 };

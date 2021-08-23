@@ -3,6 +3,7 @@ const router = express.Router();
 const middlewares = require('../middlewares/orders')
 const users = require('../models/users')
 const orders = require('../models/orders')
+const products = require('../models/products')
 const isAdmin = require('../middlewares/products')
 const states = require('../models/states');
 
@@ -12,13 +13,16 @@ router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, mid
 
     id++
     date = new Date()
-    const user = (users.find(users => users.id == req.params.id))                        //terminar de Validar order
+    const user = (users.find(users => users.id == req.params.id)) 
+
+    price = middlewares.calculatingPrice(req)
 
     const {order, methodOfPayment, shippingAddress} = req.body;
     const newOrder = {
         idUser: user.id,
         idOrder: id,
         state: states[1],
+        price: price,
         time: `${date.getHours()}:${date.getMinutes()}`,
         order: order,
         methodOfPayment: methodOfPayment,
@@ -30,7 +34,7 @@ router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, mid
 })
 
 
-router.put('/orders/edit/:id', middlewares.confirmId, middlewares.validateEdit, middlewares.validateMethod,  (req, res) => {       //falta validar
+router.put('/orders/edit/:id', middlewares.confirmId, middlewares.validateOrder, middlewares.validateEdit, middlewares.validateMethod,  (req, res) => {       //falta validar
 
     const user = (orders.find(orders => orders.idUser == req.params.id && orders.state == states[1]))
     const indexOrder = orders.findIndex(orders => orders.state == states[1])
