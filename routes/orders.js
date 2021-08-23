@@ -61,7 +61,7 @@ router.get('/orders/confirmation/:id', middlewares.confirmId, middlewares.confir
 })
 
 
-router.get('/orders/history/:id', middlewares.confirmId, (req, res) => {    //hacer para que no aparezcan algunos datos
+router.get('/orders/history/:id', middlewares.confirmId, (req, res) => {
 
     const orderUser = (orders.filter(orders => orders.idUser == req.params.id))
     res.json({msj: orderUser})  

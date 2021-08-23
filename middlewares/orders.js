@@ -18,9 +18,17 @@ const validateOrder = (req, res, next) => {  //hacer validacion del nombre del p
     
     if(req.body.order === "" || req.body.methodOfPayment === "" || req.body.shippingAddress === "") res.json({msj: "Fill in all fields"})
     
+    const findProduct = (products.find(products => products.name == req.body.order[0].product))
+    if(findProduct == null){
+    res.status(404).json ({msj: "the product does not exist"}) 
+    return;
+    }
+
     const findOrder = (orders.find(orders => orders.state == "new" && orders.idUser == req.params.id))
     if (findOrder) res.json ({msj: "You already have a pending order, confirm it or modify it to create another"})
+
     else next()
+
 }
 
 
