@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const users = require('../models/users')
 let products = require('../models/products')
 const middlewares = require('../middlewares/products')
 
@@ -9,13 +8,13 @@ router.get('/products/', (req, res) => {
     res.json(products)
 })
 
-id = products[products.length-1].id
+idProduct = products[products.length-1].id
 router.post('/products/:id', middlewares.confirmId, middlewares.validateProduct, (req, res) => { 
     
-    id++
+    idProduct++
     const {name, price} = req.body
     const newProduct = {
-        id: id,
+        id: idProduct,
         name: name,
         price: price,
     };
@@ -42,9 +41,9 @@ router.put('/products/:id/:idProduct', middlewares.confirmId, middlewares.valida
 
 router.delete('/products/:id/:idProduct', middlewares.confirmId, middlewares.validateProductID, (req, res) => {
         
-    let removeProduct = products.filter(products => req.params.idProduct != products.id)
-    
-    products = removeProduct
+    let indexProduct = products.findIndex(products => req.params.idProduct == products.id)
+
+    products.splice(indexProduct, 1)
     res.json({msj:`product removed`})
 })
 

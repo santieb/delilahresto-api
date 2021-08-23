@@ -29,7 +29,7 @@ const validateEdit = (req, res, next) => {
     const user = (orders.find(orders => orders.state == states[1]))
 
     if(user) next()
-    else res.json({msj: "you cannot modify any order"})
+    else res.json({msj: "you don't have any new order to modify"})
 }
 
 

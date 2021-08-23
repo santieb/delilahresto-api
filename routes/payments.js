@@ -11,13 +11,13 @@ router.get('/payments/:id', isAdmin.confirmId, (req, res) => {
 })
 
 
-id = methodOfPayments[methodOfPayments.length-1].id
+idMethod = methodOfPayments[methodOfPayments.length-1].id
 router.post('/payments/:id', isAdmin.confirmId, middlewares.validateMethod, (req, res) => { 
 
-    id++
+    idMethod++
     const {method} = req.body
     const newMethod = {
-        id: id,
+        id: idMethod,
         method: method
     };
 
@@ -37,9 +37,9 @@ router.put('/payments/:id/:idMethod',  isAdmin.confirmId, middlewares.validateMe
 
 router.delete('/payments/:id/:idMethod', middlewares.validateMethodID, isAdmin.confirmId, (req, res) => {
 
-    let removeMethod = methodOfPayments.filter(methodOfPayments => req.params.idMethod != methodOfPayments.id)
+    let indexMethod = methodOfPayments.findIndex(methodOfPayments => req.params.idMethod == methodOfPayments.id)
 
-    methodOfPayments = removeMethod
+    methodOfPayments.splice(indexMethod, 1)
     res.json({msj:`payment method removed`})
 })
 
