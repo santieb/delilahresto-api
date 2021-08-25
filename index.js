@@ -13,7 +13,7 @@ const swaggerOptions = {
       version: '1.0.0'
     }
   },
-  apis: ['./swagger.json']
+  apis: ['swagger.js']
 };
 
 
@@ -34,6 +34,7 @@ app.use('/', orders);
 
 const products = require('./routes/products')
 app.use('/', products);
+
 
 const payments = require('./routes/payments')
 app.use('/', payments);
