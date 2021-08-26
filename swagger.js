@@ -83,14 +83,7 @@
  *    tags: [Orders]
  *    parameters:
  *      - name: order
- *        type: array
- *        in: formData
- *        items:
- *          properties:
- *            product: 
- *              type: string
- *            amount:   
- *              type: integer
+ *        in: body 
  *    responses:
  *      200:
  *        Sucess

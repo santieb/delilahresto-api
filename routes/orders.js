@@ -10,8 +10,12 @@ const states = require('../models/states');
 
 let id = -1;
 router.post('/orders/:id',  (req, res) => { 
-    console.log(req.body.order[0].product)
+
+    let ordenn = req.body.order
+    console.log(req.body)
     console.log(req.body.order)
+    console.log(ordenn[0].product)
+
     id++
     date = new Date()
     const user = (users.find(users => users.id == req.params.id)) 
