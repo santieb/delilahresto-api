@@ -9,8 +9,9 @@ const states = require('../models/states');
 
 
 let id = -1;
-router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, middlewares.validateMethod, (req, res) => { 
-
+router.post('/orders/:id',  (req, res) => { 
+    console.log(req.body.order[0].product)
+    console.log(req.body.order)
     id++
     date = new Date()
     const user = (users.find(users => users.id == req.params.id)) 
