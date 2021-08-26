@@ -8,7 +8,7 @@ const users = [
         "phone": 454545,
         "shippingAddress": "av.peron",
         "isAdmin": true,
-        "loggedIn": false,
+        "loggedIn": true,
     }
 ];
 

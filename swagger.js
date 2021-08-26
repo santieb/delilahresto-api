@@ -72,22 +72,21 @@
  * 
  * /orders/{id}:
  *  post:
- *    summary: Update the book by the id
  *    tags: [Orders]
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: string
- *        required: true
- *        description: id user
- *      - name: userOrEmail
- *        type: string
+ *      - name: order
+ *        type: array
  *        in: formData
- *        required: false
- *        description : Nombre o email
- *    requestBody:
- *      required: true
+ *        items:
+ *          properties:
+ *            product: 
+ *              type: string
+ *            amount:
+ *              type: integer
  *    responses:
  *      200:
  *        Sucess

@@ -17,7 +17,7 @@ const confirmId = (req, res, next) => {
 const validateOrder = (req, res, next) => {  //hacer validacion del nombre del producto y lo del precio //modificar
     
     if(req.body.order === "" || req.body.methodOfPayment === "" || req.body.shippingAddress === "") res.json({msj: "Fill in all fields"}) 
-
+    console.log(req.body.order[0].product)
     for(i=0;i<req.body.order.length;i++){   
 
         if(req.body.order[i].product === "" || req.body.order[i].amount === "") {
