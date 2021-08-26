@@ -124,6 +124,48 @@
  *    responses:
  *      200:
  *        Sucess
+ *
+ * /allOrders/{id}:
+ *  get:
+ *    description: Ver todas las ordenes
+ *    tags: [Orders] 
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: id del usuario
+ *    responses:
+ *      200:
+ *        Sucess
+ * 
+ * /allorders/{id}/{idOrder}:
+ *  put:
+ *    description: Modificar estados
+ *    tags: [Orders]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: id del usuario
+ *      - in: path
+ *        name: idOrder
+ *        required: true
+ *        description: id de la orden
+ *        schema:
+ *          type: integer
+ *      - name: newState
+ *        type: string
+ *        in: formData
+ *        required: true
+ *        description: Nuevo estado
+ *    responses:
+ *      200:
+ *        Sucess
+ * 
  */
 
 
@@ -194,25 +236,6 @@
  *    responses:
  *      200:
  *        Sucess
- */
-/**
- * @swagger
- * /payments/{id}/{idMethod}:
- *  delete:
- *    description: Eliminar metodo de pago
- *    tags: [Payments]
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: integer
- *        required: true
- *        description: id del usuario
- *      - in: path
- *        name: idMethod
- *        schema:
- *          type: integer
- *        description: id del metodo
  */
 /**
  * @swagger
