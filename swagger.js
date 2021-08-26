@@ -142,7 +142,7 @@
  *        schema:
  *          type: integer
  *        required: true
- *        description: id user
+ *        description: id del usuario
  *    responses:
  *      200:
  *        Sucess
@@ -164,7 +164,7 @@
  *        type: string
  *        in: formData
  *        required: true
- *        description: Nuevo metodo
+ *        description: Metodo
  *    responses:
  *      200:
  *        Sucess
@@ -190,7 +190,7 @@
  *        type: string
  *        in: formData
  *        required: true
- *        description: Nuevo metodo
+ *        description: Metodo
  *    responses:
  *      200:
  *        Sucess
@@ -242,8 +242,87 @@
  * @swagger
  * /products:
  *  get:
- *    description: Ver metodos de pago
+ *    description: Ver productos
  *    tags: [Products]
+ *    responses:
+ *      200:
+ *        Sucess
+ * 
+ * /products/{id}:
+ *  post:
+ *    description: Crear producto
+ *    tags: [Products]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: id del usuario
+ *      - name: name
+ *        type: string
+ *        in: formData
+ *        required: true
+ *        description: Nombre del producto
+ *      - name: price
+ *        type: integer
+ *        in: formData
+ *        required: true
+ *        description: precio del producto
+ *    responses:
+ *      200:
+ *        Sucess
+ *
+ * /products/{id}/{idProduct}:
+ *  put:
+ *    description: Editar producto
+ *    tags: [Products]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: id del usuario
+ *      - in: path
+ *        name: idProduct
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: id del producto
+ *      - name: name
+ *        type: string
+ *        in: formData
+ *        required: true
+ *        description: Nombre del producto
+ *      - name: price
+ *        type: integer
+ *        in: formData
+ *        required: true
+ *        description: precio del producto
+ *    responses:
+ *      200:
+ *        Sucess
+ */
+/**
+ * @swagger
+ * /products/{id}/{idProduct}:
+ *  delete:
+ *    description: Eliminar producto
+ *    tags: [Products]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: id del usuario
+ *      - in: path
+ *        name: idProduct
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: id del producto
  *    responses:
  *      200:
  *        Sucess
