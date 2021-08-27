@@ -1,7 +1,7 @@
 const methodOfPayments = [
     {
         "id": 0,       
-        "method": "cash",
+        "method": "bitcoin",
     },
     {
         "id": 1,       
