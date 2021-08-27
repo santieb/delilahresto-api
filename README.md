@@ -6,8 +6,6 @@ Primer proyecto con Acamica - Mi primera API
 
 _Clonar el repositorio_
 
-```
-
 _Instalar nodejs y las dependencias de express y swagger_
 
 ## Construido con 🛠️
