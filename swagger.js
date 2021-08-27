@@ -79,17 +79,83 @@
  * @swagger
  *
  * /orders/{id}:
- *  post:
+ *   post:
+ *    description: Hacer un pedido
  *    tags: [Orders]
+ *    consumes:
+ *    - application/json
+ *    produces:
+ *    - application/json
  *    parameters:
- *      - name: order
- *        in: body 
+ *    - in: path
+ *      name: id
+ *      schema:
+ *        type: string
+ *      required: true
+ *      description: id user
+ *    - in: body
+ *      name: orders
+ *      required: false
+ *      description : Crear una orden. Es posible añadir otro producto diferente añadiendo un objeto al array "order" con sus correspondientes elementos (product y amount)
+ *      schema:
+ *                  type: object
+ *                  properties:
+ *                    order:
+ *                      type: array
+ *                      items:
+ *                            type: object
+ *                            properties:
+ *                                  product:
+ *                                    type: string
+ *                                  amount: 
+ *                                    type: number
+ *                    methodOfPayment: 
+ *                        type: string
+ *                    shippingAddress: 
+ *                        type: string
  *    responses:
  *      200:
  *        Sucess
  *
+ * /orders/edit/{id}:
+ *   put:
+ *    description: Editar un pedido, el cambio se efectuará en el pedido sin confirmar
+ *    tags: [Orders]
+ *    consumes:
+ *    - application/json
+ *    produces:
+ *    - application/json
+ *    parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *        type: number
+ *      required: true
+ *      description: id user
+ *    - in: body
+ *      name: orders
+ *      description : Editar una pedido. Es posible añadir otro producto diferente añadiendo un objeto al array "order" con sus correspondientes elementos (product y amount)
+ *      schema:
+ *                  type: object
+ *                  properties:
+ *                    order:
+ *                      type: array
+ *                      items:
+ *                            type: object
+ *                            properties:
+ *                                  product:
+ *                                    type: string
+ *                                  amount: 
+ *                                    type: number
+ *                    methodOfPayment: 
+ *                        type: string
+ *                    shippingAddress: 
+ *                        type: string
+ *    responses:
+ *      200:
+ *        Sucess
  * /orders/confirmation/{id}:
- *  get:
+ *  put:
  *    description: confirmar pedido del usuario en estado "new"
  *    tags: [Orders] 
  *    parameters:

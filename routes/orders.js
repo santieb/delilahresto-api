@@ -3,18 +3,12 @@ const router = express.Router();
 const middlewares = require('../middlewares/orders')
 const users = require('../models/users')
 const orders = require('../models/orders')
-const products = require('../models/products')
 const isAdmin = require('../middlewares/products')
 const states = require('../models/states');
 
 
 let id = -1;
-router.post('/orders/:id',  (req, res) => { 
-
-    let ordenn = req.body.order
-    console.log(req.body)
-    console.log(req.body.order)
-    console.log(ordenn[0].product)
+router.post('/orders/:id', middlewares.confirmId, middlewares.validateOrder, middlewares.validateMethod,  (req, res) => { 
 
     id++
     date = new Date()
@@ -39,16 +33,19 @@ router.post('/orders/:id',  (req, res) => {
 })
 
 
-router.put('/orders/edit/:id', middlewares.confirmId, middlewares.validateEdit, middlewares.validateMethod,  (req, res) => {       //falta validar
+router.put('/orders/edit/:id', middlewares.confirmId, middlewares.validateEdit, middlewares.validateMethod,  (req, res) => {
 
     const user = (orders.find(orders => orders.idUser == req.params.id && orders.state == states[1]))
     const indexOrder = orders.findIndex(orders => orders.state == states[1])
+
+    price = middlewares.calculatingPrice(req)
 
     const {order, methodOfPayment, shippingAddress} = req.body;
     const changeOrder = {
         idUser: req.params.id,
         idOrder: user.idOrder,
         state: states[1],
+        price: price,
         time: `${date.getHours()}:${date.getMinutes()}`,
         order: order,
         methodOfPayment: methodOfPayment,
@@ -61,7 +58,7 @@ router.put('/orders/edit/:id', middlewares.confirmId, middlewares.validateEdit, 
 })
 
 
-router.get('/orders/confirmation/:id', middlewares.confirmId, middlewares.confirmOrder, (req, res) => {
+router.put('/orders/confirmation/:id', middlewares.confirmId, middlewares.confirmOrder, (req, res) => {
 
     const indexOrder = (orders.findIndex(orders => orders.state == "new" && orders.idUser == req.params.id))
     orders[indexOrder].state = states[2] 
