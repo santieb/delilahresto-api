@@ -38,7 +38,7 @@ router.put('/orders/edit/:id', middlewares.confirmId, middlewares.validateEdit, 
     const user = (orders.find(orders => orders.idUser == req.params.id && orders.state == states[1]))
     const indexOrder = orders.findIndex(orders => orders.state == states[1])
 
-    price = middlewares.calculatingPrice(req)
+    const price = middlewares.calculatingPrice(req)
 
     const {order, methodOfPayment, shippingAddress} = req.body;
     const changeOrder = {
