@@ -1,50 +1,58 @@
 const express = require('express');
 const router = express.Router();
-let products = require('../models/products')
 const middlewares = require('../middlewares/products')
+const products = require('../models/products.model')
 
-router.get('/products/', (req, res) => {
+router.get('/products', (req, res) => {
     
-    res.json(products)
+    const list = async () => await products.find(); //mover
+    list()
+    .then(products => res.json(products))
+    .catch(err => res.json(err));
+
 })
 
-idProduct = products[products.length-1].id
-router.post('/products/:id', middlewares.confirmId, middlewares.validateProduct, (req, res) => { 
-    
-    idProduct++
-    const {name, price} = req.body
+
+router.post('/products/:id', middlewares.confirmId, middlewares.validateProductName, (req, res) => { 
+        
     const newProduct = {
-        id: idProduct,
-        name: name,
-        price: price,
+        name: req.body.name,
+        price: req.body.price
     };
+    
+    const createProduct = async (newProduct) => {   //mover
+        const product = new products(newProduct);
+        const response = await product.save();
+        return response;
+};
+    createProduct(newProduct)
+        .then((response) => res.json(response))
+        .catch((err) => res.json(err))
+})
+    
 
-    products.push(newProduct)
-    res.json({msj:`product created`})
+
+router.put('/products/:id/:idProduct', middlewares.confirmId,  middlewares.validateProductID, middlewares.validateProductName, (req, res) => { //validar y modularizar
+        
+    const filter = { _id: req.params.idProduct };
+    const update = { name: req.body.name };
+
+    const modifyProduct = async () => await products.findOneAndUpdate(filter,update); //mover
+
+    modifyProduct().then(() => res.json("editado"))
+    .catch((err) => res.json(err))
+
 })
 
 
-router.put('/products/:id/:idProduct', middlewares.confirmId, middlewares.validateProductID, middlewares.validateEdit, (req, res) => {
+router.delete('/products/:id/:idProduct', middlewares.confirmId, middlewares.validateProductID,  (req, res) => { //validar y modularizar
         
-    const indexProduct = products.findIndex(products => req.params.idProduct == products.id)
-    const {name, price} = req.body
-    const changeProduct = {
-        id: req.params.idProduct,
-        name: name,
-        price: price,
-    };
+    const deleteProduct = async (idProduct) => await products.findByIdAndDelete(idProduct); //mover
 
-    products[indexProduct] = changeProduct
-    res.json({msj:`product edited`})
-})
+    deleteProduct(req.params.idProduct)
+        .then(() => res.json(`product removed`))
+        .catch(() => res.json("error"));
 
-
-router.delete('/products/:id/:idProduct', middlewares.confirmId, middlewares.validateProductID, (req, res) => {
-        
-    let indexProduct = products.findIndex(products => req.params.idProduct == products.id)
-
-    products.splice(indexProduct, 1)
-    res.json({msj:`product removed`})
 })
 
 

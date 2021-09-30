@@ -1,5 +1,5 @@
 const users = require('../models/users')
-const products = require('../models/products')
+const products = require('../models/products.model')
 
 
 const confirmId = (req, res, next) => {
@@ -15,46 +15,33 @@ const confirmId = (req, res, next) => {
 }
 
 
-const validateProduct = (req, res, next) => {
+const nameExist = async (nameProduct) => await products.exists({ name: nameProduct });
 
-    const checkProduct = (products.find(products => products.name == req.body.name))
+const validateProductName = (req, res, next) => { //validar tambien que no se ingresen datos vacios
+    nameExist(req.body.name)
+    .then((result) =>
+    result ? res.status(404).send("The name already exists") : next())
+    .catch(() => res.status(404).json("The name already exists"));
 
-    if(checkProduct) res.json({msj: "The name already exists"})
-    else if(req.body.name === "" || req.body.price === ""){
-        res.json({msj: "Fill in all fields"})
-    }
-    else next()
+};
+
+
+const productExist = async (idProduct) => await products.exists({ _id: idProduct });
+
+const validateProductID = (req, res, next) => { 
+
+    productExist(req.params.idProduct)
+    .then((result) =>
+    result ? next() : res.status(404).send("the product ID does not exist"))
+    .catch(() => res.status(404).json("the product ID does not exist"));
+
 }
 
-
-const validateProductID = (req, res, next) => {
-
-    const checkID = (products.find(products => products.id == req.params.idProduct))
-    if (checkID) next()
-    else res.send("the product ID does not exist");
-}
-
-
-const validateEdit = (req, res, next) => {
-
-    const indexProduct = (products.findIndex(products => products.id == req.params.idProduct))
-    if(req.body.name === "" || req.body.price === ""){
-        res.json({msj: "Fill in all fields"})
-    }
-    else if(products[indexProduct].name == req.body.name && products[indexProduct].price != req.body.price) next()
-
-    else if(products[indexProduct].name == req.body.name && products[indexProduct].price == req.body.price) res.json({msj: "you have not put any new data"})
-
-    else {const checkProduct = (products.find(products => products.name == req.body.name))
-        if(checkProduct) res.json({msj: "The name already exists"})
-        else next()
-    }
-}
+//validar que no puedan ingresar datos vacios
 
 
 module.exports = {
     confirmId,
-    validateProduct,
+    validateProductName,
     validateProductID,
-    validateEdit
 } 
