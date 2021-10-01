@@ -1,46 +1,55 @@
 const express = require('express');
 const router = express.Router();
-let methodOfPayments = require('../models/payments')
+const payments = require('../models/payments.model')
 const isAdmin = require('../middlewares/products')
 const middlewares = require('../middlewares/payments')
 
 
 router.get('/payments/:id', isAdmin.confirmId, (req, res) => {
 
-    res.json(methodOfPayments)
+    const list = async () => await payments.find(); //mover
+    list()
+    .then(payments => res.json(payments))
+    .catch(err => res.json(err));
 })
 
 
-idMethod = methodOfPayments[methodOfPayments.length-1].id
 router.post('/payments/:id', isAdmin.confirmId, middlewares.validateMethod, (req, res) => { 
 
-    idMethod++
-    const {method} = req.body
-    const newMethod = {
-        id: idMethod,
-        method: method
+    const newPayment = {
+        method: req.body.method,
     };
-
-    methodOfPayments.push(newMethod)
-    res.json({msj:`payment method created`})
+    
+    const createPayment = async (newPayment) => {   //mover
+        const payment = new payments(newPayment);
+        const response = await payment.save();
+        return response;
+};
+    createPayment(newPayment)
+        .then((response) => res.json(response))
+        .catch((err) => res.json(err))      
 })
 
 
-router.put('/payments/:id/:idMethod',  isAdmin.confirmId, middlewares.validateMethodID, middlewares.validateMethod,  (req, res) => {
+router.put('/payments/:id/:idPayment',  isAdmin.confirmId, middlewares.validatePayment, middlewares.validateMethod,  (req, res) => {
         
-    const indexMethod = methodOfPayments.findIndex(methodOfPayments => req.params.idMethod == methodOfPayments.id)
+    const filter = { _id: req.params.idPayment };
+    const update = { method: req.body.method };
 
-    methodOfPayments[indexMethod].method = req.body.method
-    res.json({msj:`payment method edited`})
+    const modifyPayment= async () => await payments.findOneAndUpdate(filter,update); //mover
+
+    modifyPayment().then(() => res.json("editado"))
+    .catch((err) => res.json(err))
 })
 
 
-router.delete('/payments/:id/:idMethod', middlewares.validateMethodID, isAdmin.confirmId, (req, res) => {
+router.delete('/payments/:id/:idPayment', isAdmin.confirmId, middlewares.validatePayment, (req, res) => {
 
-    let indexMethod = methodOfPayments.findIndex(methodOfPayments => req.params.idMethod == methodOfPayments.id)
+    const deletePayment = async (idPayment) => await payments.findByIdAndDelete(idPayment); //mover
 
-    methodOfPayments.splice(indexMethod, 1)
-    res.json({msj:`payment method removed`})
+    deletePayment(req.params.idPayment)
+        .then(() => res.json(` payments removed`))
+        .catch(() => res.json("error"));
 })
 
 

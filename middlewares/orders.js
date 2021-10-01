@@ -1,6 +1,5 @@
 const users = require('../models/users')
 const orders = require('../models/orders')
-const products = require('../models/products')
 const states = require('../models/states')
 const payments = require('../models/payments')
 
