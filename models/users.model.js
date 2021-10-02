@@ -13,6 +13,6 @@ const schemaProduct = new Schema({
 });
 
 
-const products = mongoose.model('products', schemaProduct);
+const users = mongoose.model('users', users);
 
-module.exports = products;
+module.exports = users;
