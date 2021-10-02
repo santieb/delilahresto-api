@@ -1,40 +1,54 @@
 const express = require('express');
 const router = express.Router();
-const users = require('../models/users')
+const users = require('../models/users.model')
 const middlewares = require('../middlewares/users')
 
 
 router.get('/', function (req, res) {
-    res.json(users)
+
+    const list = async () => await users.find(); //mover
+    list()
+    .then(payments => res.json(payments))
+    .catch(err => res.json(err));
 })
 
 
 router.post('/register', middlewares.confirmRegistration, (req, res) => {
 
-    const {username, name, email, phone, shippingAddress, password} = req.body;
     const newUser = {
-        id: users.length,
-        username: username,
-        password: password,
-        email: email,
-        name: name,
-        phone: phone,
-        shippingAddress: shippingAddress,
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+        name: req.body.name,
+        phone: req.body.phone,
+        shippingAddress: req.body.shippingAddress,
         isAdmin: false,
         loggedIn: false,
     };
+    
+    const createUser = async (newUser) => {   //mover
+        const user = new users(newUser);
+        const response = await user.save();
+        return response;
+};
+    createUser(newUser)
+        .then((response) => res.json(response))
+        .catch((err) => res.json(err))
 
-    users.push(newUser)
-    res.json({msj:'User created'})
 })
 
 
-router.post('/login', middlewares.confirmLogin, (req, res) => {
+router.post('/login', (req, res) => {
 
-    const index = users.findIndex(users => req.body.userOrEmail === users.username || req.body.userOrEmail === users.email);
+    const filter = { username: req.body.username, password: req.body.password };
+    const update = { loggedIn: true };
 
-    users[index].loggedIn = true
-    res.json({msj:`Hello again, ${users[index].name}`})
+    const login = async () => await users.findOneAndUpdate(filter,update); //mover
+
+    login()
+    .then((response) => res.json("session started"))
+    .catch((err) => res.json(err))
+
 })
 
 
