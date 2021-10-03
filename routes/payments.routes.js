@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isAdmin = require('../controllers/products')
-const controllers = require('../controllers/payments.controller')
+const controllers = require('../controllers/payments.controllers')
 
 router.get('/payments/:id', (req, res) => {
 
@@ -19,7 +18,7 @@ router.post('/payments/:id', controllers.validateMethod, (req, res) => {
 })
 
 
-router.put('/payments/:id/:idPayment', controllers.validatePayment, controllers.validateMethod,  (req, res) => {
+router.put('/payments/:id/:idPayment', controllers.validatePaymentID, controllers.validateMethod,  (req, res) => {
         
     controllers.modifyPayment(req)
     .then(() => res.json("editado"))
@@ -27,7 +26,7 @@ router.put('/payments/:id/:idPayment', controllers.validatePayment, controllers.
 })
 
 
-router.delete('/payments/:id/:idPayment', controllers.validatePayment, (req, res) => {
+router.delete('/payments/:id/:idPayment', controllers.validatePaymentID, (req, res) => {
 
     controllers.deletePayment(req)
         .then(() => res.json(`payments removed`))

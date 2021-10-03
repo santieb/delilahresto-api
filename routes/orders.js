@@ -3,7 +3,7 @@ const router = express.Router();
 const middlewares = require('../controllers/orders')
 const users = require('../models/users')
 const orders = require('../models/orders')
-const isAdmin = require('../controllers/products')
+const isAdmin = require('../controllers/products.controllers')
 const states = require('../models/states');
 
 

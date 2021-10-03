@@ -28,7 +28,7 @@ const validateMethod = async (req, res, next) => { //validar tambien que no se i
     }
 };
 
-const validatePayment = async (req, res, next) => { 
+const validatePaymentID = async (req, res, next) => { 
     try {
         validateId = await payments.exists({ _id: req.params.idPayment });
         validateId ? next() : res.status(404).send("thes id payment does not exist")
@@ -38,10 +38,10 @@ const validatePayment = async (req, res, next) => {
 };
 
 module.exports = {
-    validateMethod,
-    validatePayment,
     listPayments,
     createPayment,
     modifyPayment,
-    deletePayment
+    deletePayment,
+    validateMethod,
+    validatePaymentID
 };

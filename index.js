@@ -32,7 +32,7 @@ const orders = require('./routes/orders');
 app.use('/', orders);
 
 
-const products = require('./routes/products')
+const products = require('./routes/products.routes')
 app.use('/', products);
 
 
