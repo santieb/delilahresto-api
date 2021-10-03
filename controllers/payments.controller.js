@@ -1,4 +1,4 @@
-const payments = require('../models/payments.model')
+const payments = require('../models/payments.models')
 
 const listPayments = async () => await payments.find();
 

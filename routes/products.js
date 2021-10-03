@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const middlewares = require('../controllers/products')
-const products = require('../models/products.model')
+const products = require('../models/products.models')
 
 router.get('/products', (req, res) => {
     

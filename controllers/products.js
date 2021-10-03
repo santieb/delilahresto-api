@@ -1,5 +1,5 @@
 const users = require('../models/users')
-const products = require('../models/products.model')
+const products = require('../models/products.models')
 
 
 const confirmId = (req, res, next) => {
