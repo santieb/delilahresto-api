@@ -36,7 +36,7 @@ const products = require('./routes/products')
 app.use('/', products);
 
 
-const payments = require('./routes/payments')
+const payments = require('./routes/payments.routes')
 app.use('/', payments);
 
 

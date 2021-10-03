@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const users = require('../models/users.model')
-const middlewares = require('../middlewares/users')
+const middlewares = require('../controllers/users')
 
 
 router.get('/', function (req, res) {

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const middlewares = require('../middlewares/orders')
+const middlewares = require('../controllers/orders')
 const users = require('../models/users')
 const orders = require('../models/orders')
-const isAdmin = require('../middlewares/products')
+const isAdmin = require('../controllers/products')
 const states = require('../models/states');
 
 
