@@ -24,12 +24,12 @@ app.use('/api-docs',
    swaggerUI.setup(swaggerDocs));
 
 
-const users = require('./routes/users');
+const users = require('./routes/users.routes');
 app.use('/', users);
 
 
-const orders = require('./routes/orders');
-app.use('/', orders);
+//const orders = require('./routes/orders');
+//app.use('/', orders);
 
 
 const products = require('./routes/products.routes')

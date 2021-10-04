@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers/products.controllers')
+const controllersUser = require('../controllers/users.controllers')
 
 router.get('/products', (req, res) => {
     
@@ -10,7 +11,7 @@ router.get('/products', (req, res) => {
 })
 
 
-router.post('/products/:id', controllers.validateProductName, (req, res) => { 
+router.post('/products/:idUser', controllersUser.confirmUser, controllersUser.confirmIsAdmin, controllers.validateProductName, (req, res) => { 
         
     controllers.createProduct(req)
     .then((response) => res.json(response))
@@ -18,7 +19,7 @@ router.post('/products/:id', controllers.validateProductName, (req, res) => {
 })
     
 
-router.put('/products/:id/:idProduct', controllers.validateProductID, controllers.validateProductName, (req, res) => { 
+router.put('/products/:idUser/:idProduct', controllersUser.confirmUser, controllersUser.confirmIsAdmin, controllers.validateProductID, controllers.validateProductName, (req, res) => { 
            
     controllers.modifyProduct(req)
     .then(() => res.json("editado"))
@@ -26,7 +27,7 @@ router.put('/products/:id/:idProduct', controllers.validateProductID, controller
 })
 
 
-router.delete('/products/:id/:idProduct', controllers.validateProductID,  (req, res) => { 
+router.delete('/products/:idUser/:idProduct', controllersUser.confirmUser, controllersUser.confirmIsAdmin, controllers.validateProductID,  (req, res) => { 
         
     controllers.deleteProduct(req)
         .then(() => res.json(`product removed`))

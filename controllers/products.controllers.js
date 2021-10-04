@@ -1,18 +1,6 @@
 const users = require('../models/users')
 const products = require('../models/products.models')
 
-const confirmId = (req, res, next) => {
-
-    const user = (users.find(users => users.id == req.params.id))
-    if (user){
-      	if (user.loggedIn == false) res.send("you can't access, log in before");
-
-        else if (user.isAdmin == false) res.send("you can't access")
-
-        else next()
-    }else res.send("ID does not exist");
-}
-
 const listProducts = async () => await products.find();
 
 const createProduct = async (req) => {  
@@ -57,7 +45,6 @@ const validateProductID = async (req, res, next) => {
 };
 
 module.exports = {
-    confirmId,
     listProducts,
     createProduct,
     modifyProduct,
