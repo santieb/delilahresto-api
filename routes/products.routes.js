@@ -3,7 +3,7 @@ const router = express.Router();
 const controllers = require('../controllers/products.controllers')
 const controllersUser = require('../controllers/users.controllers')
 
-router.get('/products', (req, res) => {
+router.get('/products', controllersUser.confirmUser, (req, res) => {
     
     controllers.listProducts()
     .then(payments => res.json(payments))
@@ -11,7 +11,7 @@ router.get('/products', (req, res) => {
 })
 
 
-router.post('/products/:idUser', controllersUser.confirmUser, controllersUser.confirmIsAdmin, controllers.validateProductName, (req, res) => { 
+router.post('/products', controllersUser.isAdmin, controllers.validateProductName, (req, res) => { 
         
     controllers.createProduct(req)
     .then((response) => res.json(response))
@@ -19,7 +19,7 @@ router.post('/products/:idUser', controllersUser.confirmUser, controllersUser.co
 })
     
 
-router.put('/products/:idUser/:idProduct', controllersUser.confirmUser, controllersUser.confirmIsAdmin, controllers.validateProductID, controllers.validateProductName, (req, res) => { 
+router.put('/products/:idProduct', controllersUser.isAdmin, controllers.validateProductID, controllers.validateProductName, (req, res) => { 
            
     controllers.modifyProduct(req)
     .then(() => res.json("editado"))
@@ -27,7 +27,7 @@ router.put('/products/:idUser/:idProduct', controllersUser.confirmUser, controll
 })
 
 
-router.delete('/products/:idUser/:idProduct', controllersUser.confirmUser, controllersUser.confirmIsAdmin, controllers.validateProductID,  (req, res) => { 
+router.delete('/products/:idProduct', controllersUser.isAdmin, controllers.validateProductID,  (req, res) => { 
         
     controllers.deleteProduct(req)
         .then(() => res.json(`product removed`))

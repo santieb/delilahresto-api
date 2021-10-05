@@ -9,7 +9,6 @@ const schemaUser = new Schema({
     phone: Number,
     shippingAddress: String,
     isAdmin: Boolean,
-    loggedIn: Boolean,
 });
 
 

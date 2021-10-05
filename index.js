@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
+const helmet = require('helmet')
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express')
 
+const port = process.env.PORT || 3000;
+app.use(helmet())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -40,7 +43,6 @@ const payments = require('./routes/payments.routes')
 app.use('/', payments);
 
 
-const port = 3000;
 app.listen(port, function () {
     console.log(`Server listening on port http://localhost:${port}`);
   });

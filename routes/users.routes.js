@@ -3,7 +3,7 @@ const router = express.Router();
 const controllers = require('../controllers/users.controllers')
 
 
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
 
     controllers.listUsers()
     .then(payments => res.json(payments))
@@ -22,7 +22,7 @@ router.post('/register', controllers.validateEmail, (req, res) => {
 router.post('/login', controllers.confirmLogin, (req, res) => {
 
     controllers.loginUser(req)
-    .then(() => res.json("session started"))
+    .then((response) => res.json({msj: "session started", token: response}))
     .catch((err) => res.json(err))
 })
 

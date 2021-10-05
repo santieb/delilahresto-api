@@ -1,4 +1,3 @@
-const users = require('../models/users')
 const products = require('../models/products.models')
 
 const listProducts = async () => await products.find();

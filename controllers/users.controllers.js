@@ -1,11 +1,14 @@
+require('dotenv').config();
 const users = require('../models/users.models')
+const jwt = require('jsonwebtoken');
+const { findOne } = require('../models/users.models');
 
 const listUsers = async () => await users.find();
 
 const createUser = async (req) => {
     const newUser = {
         username: req.body.username,
-        password: req.body.password,
+        password: req.body.password, //encriptar
         email: req.body.email,
         name: req.body.name,
         phone: req.body.phone,
@@ -18,29 +21,32 @@ const createUser = async (req) => {
     return response;
 };
 
-const loginUser = async (req) => {
-    const filter = { email: req.body.email, password: req.body.password };
-    const update = { loggedIn: true };
-    await users.findOneAndUpdate(filter,update); 
+const loginUser = async (req, res) => {
+    const { email } = req.body;
+    const user = await users.findOne({ email: email })
+    const token = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: 120 });
+    return token
 }
 
 
 //middlewares
 const confirmUser = async (req, res, next) => {
     try{
-        const userValidate = await users.exists ( {_id: req.params.idUser} )
-        if(userValidate) {
-            const loggedIn = await users.exists ( {_id: req.params.idUser, loggedIn: true } )
-            loggedIn ? next() : res.status(404).json("you can't access, log in before");
-        }else res.status(404).json("ID does not exist"); 
-    }catch{
+        const token = req.headers.authorization.replace('Bearer ','');
+        const decoded = jwt.verify(token, process.env.SECRET)
+        const user = await users.exists ({ id: decoded._id })
+        if(!user) res.status(404).send('No user found')
+        else next()
+    }
+    catch{
         res.status(404).json("not found"); 
     }
 }
-
-const confirmIsAdmin = async (req, res, next) => {
+const isAdmin = async (req, res, next) => {
     try{
-        const userValidate = await users.exists ( {_id: req.params.idUser, isAdmin: true} )
+        const token = req.headers.authorization.replace('Bearer ','');
+        const decoded = jwt.verify(token, process.env.SECRET)
+        const userValidate = await users.exists ({ id: decoded._id , isAdmin: true })
         userValidate ? next() : res.status(404).json("you can't access")
     }catch{
         res.status(404).json("not found"); 
@@ -54,7 +60,6 @@ const validateEmail = async (req, res, next) => {
     }catch{
         res.status(404).json("not found");
     }
-
 }
 
 const confirmLogin = async (req, res, next) => {
@@ -64,16 +69,16 @@ const confirmLogin = async (req, res, next) => {
     }catch{
         res.status(404).json("not found");
     }
-
 }
+
 
 module.exports = {                                                             
     listUsers,
     createUser,
     loginUser,
-    confirmUser,
-    confirmIsAdmin,   
+    confirmUser,  
     validateEmail,     
-    confirmLogin,                                                                           
+    isAdmin,
+    confirmLogin                                                                           
 };
 
