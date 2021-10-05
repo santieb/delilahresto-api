@@ -46,7 +46,7 @@ const isAdmin = async (req, res, next) => {
     try{
         const token = req.headers.authorization.replace('Bearer ','');
         const decoded = jwt.verify(token, process.env.SECRET)
-        const userValidate = await users.exists ({ id: decoded._id , isAdmin: true })
+        const userValidate = await users.exists ({ id: decoded._id , isAdmin: decoded.isAdmin })
         userValidate ? next() : res.status(404).json("you can't access")
     }catch{
         res.status(404).json("not found"); 
