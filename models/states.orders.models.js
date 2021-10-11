@@ -8,4 +8,4 @@ const schemaPayment = new Schema({
 
 const orderStatuses = mongoose.model('order Statuses', schemaPayment);
 
-module.exports = payments;
+module.exports = orderStatuses;
