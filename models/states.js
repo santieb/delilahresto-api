@@ -1,3 +1,11 @@
-const states = ["cancelled", "new", "confirmed", "preparing", "sending", "delivered"]
+const mongoose = require('../config/db.config');
+const { Schema } = mongoose;
 
-module.exports = states;
+const schemaPayment = new Schema({
+    status: String
+});
+
+
+const orderStatuses = mongoose.model('order Statuses', schemaPayment);
+
+module.exports = payments;

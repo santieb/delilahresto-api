@@ -1,7 +1,6 @@
 require('dotenv').config();
 const users = require('../models/users.models')
 const jwt = require('jsonwebtoken');
-const { findOne } = require('../models/users.models');
 
 const listUsers = async () => await users.find();
 
