@@ -11,7 +11,7 @@ router.get('/payments', controllersUser.confirmUser, (req, res) => {
 })
 
 
-router.post('/payments/:idUser', controllersUser.isAdmin, controllers.validateMethod, (req, res) => { 
+router.post('/payments', controllersUser.isAdmin, controllers.validateMethod, (req, res) => { 
 
     controllers.createPayment(req)
     .then((response) => res.json(response))
@@ -19,7 +19,7 @@ router.post('/payments/:idUser', controllersUser.isAdmin, controllers.validateMe
 })
 
 
-router.put('/payments/:idUser/:idPayment', controllersUser.isAdmin, controllers.validatePaymentID, controllers.validateMethod, (req, res) => {
+router.put('/payments/:idPayment', controllersUser.isAdmin, controllers.validatePaymentID, controllers.validateMethod, (req, res) => {
         
     controllers.modifyPayment(req)
     .then(() => res.json("editado"))
@@ -27,7 +27,7 @@ router.put('/payments/:idUser/:idPayment', controllersUser.isAdmin, controllers.
 })
 
 
-router.delete('/payments/:idUser/:idPayment', controllersUser.isAdmin, controllers.validatePaymentID, (req, res) => {
+router.delete('/payments/:idPayment', controllersUser.isAdmin, controllers.validatePaymentID, (req, res) => {
 
     controllers.deletePayment(req)
         .then(() => res.json(`payments removed`))

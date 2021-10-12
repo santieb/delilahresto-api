@@ -8,7 +8,7 @@ const schemaUser = new Schema({
     name: String,
     phone: Number,
     shippingAddress: String,
-    isAdmin: Boolean,
+    isAdmin: Boolean, // cambiar por roles
 });
 
 
