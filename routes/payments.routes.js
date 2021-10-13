@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers/payments.controllers')
-const controllersUser = require('../controllers/users.controllers')
+const middlewares = require('../middlewares/payments.middlewares')
+const middlewaresUser = require('../middlewares/users.middlewares')
 
-router.get('/payments', controllersUser.confirmUser, (req, res) => {
+router.get('/payments', middlewaresUser.confirmUser, (req, res) => {
 
     controllers.listPayments()
     .then(payments => res.json(payments))
@@ -11,7 +12,7 @@ router.get('/payments', controllersUser.confirmUser, (req, res) => {
 })
 
 
-router.post('/payments', controllersUser.isAdmin, controllers.validateMethod, (req, res) => { 
+router.post('/payments', middlewaresUser.isAdmin, middlewares.validateMethod, (req, res) => { 
 
     controllers.createPayment(req)
     .then((response) => res.json(response))
@@ -19,7 +20,7 @@ router.post('/payments', controllersUser.isAdmin, controllers.validateMethod, (r
 })
 
 
-router.put('/payments/:idPayment', controllersUser.isAdmin, controllers.validatePaymentID, controllers.validateMethod, (req, res) => {
+router.put('/payments/:idPayment', middlewaresUser.isAdmin, middlewares.validatePaymentID, middlewares.validateMethod, (req, res) => {
         
     controllers.modifyPayment(req)
     .then(() => res.json("editado"))
@@ -27,7 +28,7 @@ router.put('/payments/:idPayment', controllersUser.isAdmin, controllers.validate
 })
 
 
-router.delete('/payments/:idPayment', controllersUser.isAdmin, controllers.validatePaymentID, (req, res) => {
+router.delete('/payments/:idPayment', middlewaresUser.isAdmin, middlewares.validatePaymentID, (req, res) => {
 
     controllers.deletePayment(req)
         .then(() => res.json(`payments removed`))

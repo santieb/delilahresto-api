@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers/products.controllers')
-const controllersUser = require('../controllers/users.controllers')
+const middlewares = require('../middlewares/products.middlewares')
+const middlewaresUser = require('../middlewares/users.middlewares')
 
-router.get('/products', controllersUser.confirmUser, (req, res) => {
+router.get('/products', middlewaresUser.confirmUser, (req, res) => {
     
     controllers.listProducts()
     .then(payments => res.json(payments))
@@ -11,7 +12,7 @@ router.get('/products', controllersUser.confirmUser, (req, res) => {
 })
 
 
-router.post('/products', controllersUser.isAdmin, controllers.validateProductName, (req, res) => { 
+router.post('/products', middlewaresUser.isAdmin, middlewares.validateProductName, (req, res) => { 
         
     controllers.createProduct(req)
     .then((response) => res.json(response))
@@ -19,7 +20,7 @@ router.post('/products', controllersUser.isAdmin, controllers.validateProductNam
 })
     
 
-router.put('/products/:idProduct', controllersUser.isAdmin, controllers.validateProductID, controllers.validateProductName, (req, res) => { 
+router.put('/products/:idProduct', middlewaresUser.isAdmin, middlewares.validateProductID, middlewares.validateProductName, (req, res) => { 
            
     controllers.modifyProduct(req)
     .then(() => res.json("editado"))
@@ -27,7 +28,7 @@ router.put('/products/:idProduct', controllersUser.isAdmin, controllers.validate
 })
 
 
-router.delete('/products/:idProduct', controllersUser.isAdmin, controllers.validateProductID,  (req, res) => { 
+router.delete('/products/:idProduct', middlewaresUser.isAdmin, middlewares.validateProductID,  (req, res) => { 
         
     controllers.deleteProduct(req)
         .then(() => res.json(`product removed`))

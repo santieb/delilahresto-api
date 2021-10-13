@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers/users.controllers')
-
+const middlewares = require('../middlewares/users.middlewares')
 
 router.get('/', (req, res) => {
 
@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 })
 
 
-router.post('/register', controllers.validateEmail, (req, res) => {
+router.post('/register', middlewares.validateEmail, (req, res) => {
 
     controllers.createUser(req)
         .then((response) => res.json(response))
@@ -19,7 +19,7 @@ router.post('/register', controllers.validateEmail, (req, res) => {
 })
 
 
-router.post('/login', controllers.confirmLogin, (req, res) => {
+router.post('/login', middlewares.confirmLogin, (req, res) => {
 
     controllers.loginUser(req)
     .then((response) => res.json({msj: "session started", token: response}))
