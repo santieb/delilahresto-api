@@ -1,4 +1,4 @@
-const mongoose = require('../config/db.config');
+const mongoose = require('../src/config/db.config');
 const { Schema } = mongoose;
 
 const schemaUser = new Schema({

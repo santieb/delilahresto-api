@@ -1,5 +1,5 @@
 require('dotenv').config();
-const users = require('../models/users.models')
+const users = require('../../models/users.models')
 const jwt = require('jsonwebtoken');
 
 const validateEmail = async (req, res, next) => {
