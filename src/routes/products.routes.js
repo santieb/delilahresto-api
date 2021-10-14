@@ -4,7 +4,7 @@ const controllers = require('../controllers/products.controllers')
 const middlewares = require('../middlewares/products.middlewares')
 const middlewaresUser = require('../middlewares/users.middlewares')
 
-router.get('/products', middlewaresUser.confirmUser, (req, res) => {
+router.get('/products', middlewaresUser.isAuthenticated, (req, res) => {
     
     controllers.listProducts()
     .then(payments => res.json(payments))

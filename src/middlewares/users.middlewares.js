@@ -20,15 +20,15 @@ const confirmLogin = async (req, res, next) => {
     }
 }
 
-const confirmUser = async (req, res, next) => {
+const isAuthenticated = async (req, res, next) => {
     try {
         const token = req.headers.authorization.replace('Bearer ','');
         const decoded = jwt.verify(token, process.env.SECRET)
         const user = await users.exists ({ _id: decoded.id })
-        user ? next() : res.status(404).json({msj: 'No user found'})
+        user ? next() : res.status(404).json({msj: 'Not authorized'})
     }
     catch {
-        res.status(404).json("not found"); 
+        res.status(404).json("Not authorized"); 
     }
 }
 
@@ -45,7 +45,7 @@ const isAdmin = async (req, res, next) => {
 
 
 module.exports = {                                                             
-    confirmUser,     
+    isAuthenticated,     
     isAdmin,                                                                 
     validateEmail,     
     confirmLogin                                                                                                                                            

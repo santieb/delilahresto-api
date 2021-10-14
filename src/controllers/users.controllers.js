@@ -7,7 +7,7 @@ const listUsers = async () => await users.find();
 const createUser = async (req) => {
     const newUser = {
         username: req.body.username,
-        password: req.body.password, //encriptar
+        password: req.body.password, //encriptar y que sea de al menos 4 caracteres
         email: req.body.email,
         name: req.body.name,
         phone: req.body.phone,

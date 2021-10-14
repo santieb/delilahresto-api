@@ -1,27 +1,24 @@
 const mongoose = require('../config/db.config');
 const { Schema } = mongoose;
-const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const schemaProduct = new Schema({
-  name: String,
-  price: Number,
-});
 
-const schemaOrders = new Schema({
-  //idUser: ObjectId,
+const schemaOrders = new Schema({ 
+  idUser: { type: mongoose.Types.ObjectId, require: true }, // ver si hacer una trasaccion
   order: [
     {
-      product: schemaProduct,
-      amount : Number
+      product: {
+              nameProduct: { type: String, require: true },
+              price: { type: Number, require: true }
+      },    
+      amount : { type: Number, require: true }
     }
   ],
-  //state: ObjectId, //
-  //methodOfPayment: ObjectId, //
-  //price: Number,
-  //time: String, 
+  //state: ObjectId, //enbeber
+  methodOfPayment: { type: String, require: true },
+  price: { type: Number, require: true },
+  date: { type: Date, default: Date.now }, 
   //shippingAddress: String, //tiene que ser enbebido
 });
-
 
 const orders = mongoose.model('orders', schemaOrders);
 

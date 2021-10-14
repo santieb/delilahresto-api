@@ -1,11 +1,12 @@
 const mongoose = require('../config/db.config');
 const { Schema } = mongoose;
 
-const schemaPayment = new Schema({
-    state: String
+const orderStatusScheme = new Schema({
+    state: { type: String, required: true }
 });
 
 
-const orderStatuses = mongoose.model('order Statuses', schemaPayment);
+const orderStatus = mongoose.model('orderStatus', orderStatusScheme);
 
-module.exports = orderStatuses;
+
+module.exports = orderStatus;
