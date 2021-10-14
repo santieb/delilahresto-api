@@ -8,6 +8,8 @@ const middlewaresUser = require('../middlewares/users.middlewares')
 router.post('/orders', middlewaresUser.isAuthenticated, (req, res) => { 
 
     controllers.createOrder(req, res)
+    .then(res => res.json("Order created"))
+    .catch(err => res.json(err));
 })
 
 

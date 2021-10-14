@@ -22,7 +22,7 @@ const createUser = async (req) => {
 const loginUser = async (req, res) => {
     const { email } = req.body;
     const user = await users.findOne({ email: email })
-    const token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: 300 });
+    const token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 60 });
     return token
 }
 
