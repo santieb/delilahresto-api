@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers/orders.controllers')
-const middlewares = require('../middlewares/payments.middlewares')
+const middlewares = require('../middlewares/orders.middlewares')
 const middlewaresUser = require('../middlewares/users.middlewares')
 
 
-router.post('/orders', middlewaresUser.isAuthenticated, (req, res) => { 
+router.post('/orders', middlewaresUser.isAuthenticated, middlewares.validateRequest, (req, res) => { 
 
     controllers.createOrder(req, res)
-    .then(res => res.json("Order created"))
+    .then(() => res.json({msj: "Order created"}))
     .catch(err => res.json(err));
 })
 
@@ -27,16 +27,19 @@ router.put('/orders/confirmation', middlewaresUser.isAuthenticated, (req, res) =
 
 router.get('/orders/history', middlewaresUser.isAuthenticated, (req, res) => { 
 
-    res.json({msj: orderUser})  
+    controllers.getHistory(req)
+    .then((response) => res.json(response))
+    .catch(err => res.json(err));
 })
 
 
 router.get('/allOrders', middlewaresUser.isAdmin, (req, res) => { 
 
-    res.json(orders)  
+    controllers.getAllOrders()
+    .then((response) => res.json(response))
+    .catch(err => res.json(err));
 })
 
-//hacer un endpoint de todas las ordenes de un usuario
 
 router.put('/allOrders/:idOrder', middlewaresUser.isAdmin, (req, res) => { 
 

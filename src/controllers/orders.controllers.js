@@ -4,24 +4,35 @@ const products = require('../models/products.models')
 
 const createOrder = async (req, res) => {   
 
-
     const token = req.headers.authorization.replace('Bearer ','');
     const decoded = jwt.verify(token, process.env.SECRET)
 
-    const { order } = req.body
+    const { order, methodOfPayment } = req.body
 
     const price = await calculatePrice(req, res, order)
 
     const newOrder = {
         idUser: decoded.id,
         order: order,
-        price: price
-     };
+        price: price,
+        methodOfPayment: methodOfPayment,
+    };
 
     const ordera = new orders(newOrder);
     const response = await ordera.save();
     return response;
 };
+
+const getHistory = (req) =>{ //quitar ids y datos que no le sirven al usuario
+
+    const token = req.headers.authorization.replace('Bearer ','');
+    const decoded = jwt.verify(token, process.env.SECRET)
+
+    response = orders.find( {idUser: decoded.id} )
+    return response
+}
+
+const getAllOrders = (req) => orders.find()
 
 
 const calculatePrice = async (req,res, order) => { 
@@ -34,7 +45,7 @@ const calculatePrice = async (req,res, order) => {
         let amount = order[i].amount
         price += amount * productPrice
 
-        order[i].productPrice = productPrice; //agrego el atributo productPrice al objeto order
+        order[i].productPrice = productPrice;
     }
     return price
     }catch{
@@ -45,6 +56,8 @@ const calculatePrice = async (req,res, order) => {
 
 module.exports = {
     createOrder,
+    getHistory,
+    getAllOrders,
 }
 
 

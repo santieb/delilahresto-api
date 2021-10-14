@@ -6,7 +6,7 @@ const middlewares = require('../middlewares/users.middlewares')
 router.get('/', (req, res) => {
 
     controllers.listUsers()
-    .then(payments => res.json(payments))
+    .then(response => res.json(response))
     .catch(err => res.json(err));
 })
 

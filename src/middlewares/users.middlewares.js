@@ -25,10 +25,10 @@ const isAuthenticated = async (req, res, next) => {
         const token = req.headers.authorization.replace('Bearer ','');
         const decoded = jwt.verify(token, process.env.SECRET)
         const user = await users.exists ({ _id: decoded.id })
-        user ? next() : res.status(404).json({msj: 'Not authorized'})
+        user ? next() : res.status(404).json({msj: 'Not authenticated'})
     }
     catch {
-        res.status(404).json("Not authorized"); 
+        res.status(404).json({msj: 'Not authenticated' }); 
     }
 }
 
@@ -37,7 +37,7 @@ const isAdmin = async (req, res, next) => {
         const token = req.headers.authorization.replace('Bearer ','');
         const decoded = jwt.verify(token, process.env.SECRET)               
         const user = await users.findOne({ _id: decoded.id })
-        user.isAdmin ? next() : res.status(404).json("you can't access")
+        user.isAdmin ? next() : res.status(404).json({msj: 'Not authorized' })
     } catch{
         res.status(404).json("not found"); 
     }
