@@ -18,8 +18,22 @@ const validatePaymentID = async (req, res, next) => {
     }
 };
 
+const validateChanges = async (req, res, next) => {
+    try {
+        const { method } = req.body
+        const product = await payments.findOne({ _id: req.params.idPayment });
+
+        if(product.method == method ) return res.status(404).json('you have not made any changes')
+        
+        methodExist = await payments.exists({ method: req.body.method });
+        methodExist ? res.status(404).json("The payment method already exists") : next()
+    } catch {
+        res.status(404).json("not found");
+    }
+};
 
 module.exports = {
     validateMethod,
-    validatePaymentID
+    validatePaymentID,
+    validateChanges
 }
