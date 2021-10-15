@@ -12,7 +12,7 @@ router.get('/products', middlewaresUser.isAuthenticated, (req, res) => {
 })
 
 
-router.post('/products', middlewaresUser.isAdmin, middlewares.validateProductName, (req, res) => {
+router.post('/products', middlewaresUser.isAdmin, middlewares.validateProduct, (req, res) => {
 
     controllers.createProduct(req)
     .then((response) => res.json(response))
@@ -20,7 +20,7 @@ router.post('/products', middlewaresUser.isAdmin, middlewares.validateProductNam
 })
 
 
-router.put('/products/:idProduct', middlewaresUser.isAdmin, middlewares.validateProductID, middlewares.validateProductName, (req, res) => {
+router.put('/products/:idProduct', middlewaresUser.isAdmin, middlewares.validateProductID, middlewares.validateChanges, (req, res) => {
 
     controllers.modifyProduct(req)
     .then(() => res.json("editado"))

@@ -16,6 +16,8 @@ const orderScheme = new Schema({
 	price: { type: Number, require: true },
 	date: { type: Date, default: Date.now },
 	//shippingAddress: String, //tiene que ser enbebido
+	//agregar un valor numero incremental
+	//agregar descripcion del pedido
 });
 
 const orders = mongoose.model("orders", orderScheme);

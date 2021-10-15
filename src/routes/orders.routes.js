@@ -19,8 +19,8 @@ router.put('/orders/edit', middlewaresUser.isAuthenticated, (req, res) => {
 })
 
 
-router.put('/orders/confirmation', middlewaresUser.isAuthenticated, (req, res) => {
-
+router.put('/orders/confirmation', middlewaresUser.isAuthenticated, (req, res) => { 
+//hacer un mensaje
     res.json({ msj: `order confirmed` })
 })
 

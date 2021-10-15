@@ -23,7 +23,7 @@ router.post('/payments', middlewaresUser.isAdmin, middlewares.validateMethod, (r
 router.put('/payments/:idPayment', middlewaresUser.isAdmin, middlewares.validatePaymentID, middlewares.validateMethod, (req, res) => {
 
     controllers.modifyPayment(req)
-    .then(() => res.json("editado"))
+    .then(() => res.json("edited"))
     .catch((err) => res.json(err))
 })
 
