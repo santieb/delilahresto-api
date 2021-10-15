@@ -1,12 +1,12 @@
 const mongoose = require('../config/db.config');
 const { Schema } = mongoose;
 
-const schemaProduct = new Schema({
-    name: String,
-    price: Number,
+const productScheme = new Schema({
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
 });
 
 
-const products = mongoose.model('products', schemaProduct);
+const products = mongoose.model('products', productScheme);
 
-module.exports = products 
+module.exports = products

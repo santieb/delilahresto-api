@@ -12,16 +12,16 @@ router.get('/payments', middlewaresUser.isAuthenticated, (req, res) => {
 })
 
 
-router.post('/payments', middlewaresUser.isAdmin, middlewares.validateMethod, (req, res) => { 
+router.post('/payments', middlewaresUser.isAdmin, middlewares.validateMethod, (req, res) => {
 
     controllers.createPayment(req)
     .then((response) => res.json(response))
-    .catch((err) => res.json(err))   
+    .catch((err) => res.json(err))
 })
 
 
 router.put('/payments/:idPayment', middlewaresUser.isAdmin, middlewares.validatePaymentID, middlewares.validateMethod, (req, res) => {
-        
+
     controllers.modifyPayment(req)
     .then(() => res.json("editado"))
     .catch((err) => res.json(err))
@@ -31,8 +31,8 @@ router.put('/payments/:idPayment', middlewaresUser.isAdmin, middlewares.validate
 router.delete('/payments/:idPayment', middlewaresUser.isAdmin, middlewares.validatePaymentID, (req, res) => {
 
     controllers.deletePayment(req)
-        .then(() => res.json(`payments removed`))
-        .catch((err) => res.json(err));
+    .then(() => res.json(`payments removed`))
+    .catch((err) => res.json(err));
 })
 
 module.exports = router;

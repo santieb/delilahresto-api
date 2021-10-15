@@ -10,21 +10,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      title: 'Acamica API',
-      version: '1.0.0'
-    }
-  },
-  apis: ['swagger.js']
+	swaggerDefinition: {
+		info: {
+			title: 'Acamica API',
+			version: '1.0.0'
+		}
+	},
+	apis: ['swagger.js']
 };
 
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 app.use('/api-docs',
-   swaggerUI.serve,
-   swaggerUI.setup(swaggerDocs));
+	swaggerUI.serve,
+	swaggerUI.setup(swaggerDocs));
 
 
 const users = require('./routes/users.routes');
@@ -44,5 +44,5 @@ app.use('/', payments);
 
 
 app.listen(port, function () {
-    console.log(`Server listening on port http://localhost:${port}`);
-  });
+	console.log(`Server listening on port http://localhost:${port}`);
+});

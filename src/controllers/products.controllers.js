@@ -2,7 +2,7 @@ const products = require('../models/products.models')
 
 const listProducts = async () => await products.find();
 
-const createProduct = async (req) => {  
+const createProduct = async (req) => {
     const newProduct = {
         name: req.body.name,
         price: req.body.price
@@ -18,7 +18,7 @@ const modifyProduct = async (req) => {
         name: req.body.name,
         price: req.body.price
     };
-    await products.findOneAndUpdate(filter, update); 
+    await products.findOneAndUpdate(filter, update);
 }
 
 const deleteProduct = async (req) => await products.findByIdAndDelete(req.params.idProduct);
@@ -29,4 +29,4 @@ module.exports = {
     createProduct,
     modifyProduct,
     deleteProduct,
-} 
+}
