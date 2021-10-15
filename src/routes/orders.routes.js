@@ -21,9 +21,11 @@ router.put('/orders', middlewaresUser.isAuthenticated, middlewares.validateChang
 })
 
 
-router.put('/orders/confirmation', middlewaresUser.isAuthenticated, (req, res) => { 
-//hacer un mensaje
-    res.json({ msj: `order confirmed` })
+router.put('/orders/confirmation', middlewaresUser.isAuthenticated, middlewares.validateConfirmation, (req, res) => { 
+
+    controllers.confirmOrder(req)
+        .then(() => res.json({ msj: "We receive your order. You can track your order to know where it is" }))
+        .catch(err => res.json(err));
 })
 
 
@@ -43,9 +45,10 @@ router.get('/allOrders', middlewaresUser.isAdmin, (req, res) => {
 })
 
 
-router.put('/allOrders/:idOrder', middlewaresUser.isAdmin, (req, res) => {
+router.put('/allOrders/:idOrder', middlewaresUser.isAdmin, middlewares.validateState, (req, res) => {
 
-    res.json({ msj: "order edited" })
+    controllers.changeOrderStatus(req)
+        .then(() => res.json({ msj: " Order status changed" }))
+        .catch(err => res.json(err));
 })
-
 module.exports = router;

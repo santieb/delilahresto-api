@@ -10,7 +10,7 @@ const orderScheme = new Schema({
 			amount: { type: Number, require: true },
 		},
 	],
-	//state: ObjectId, //enbeber
+	state: { type: String, default: "new" },
 	price: { type: Number, require: true },
 	methodOfPayment: { type: String, require: true },
 	description: { type: String, require: true },

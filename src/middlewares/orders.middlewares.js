@@ -2,10 +2,17 @@ const jwt = require('jsonwebtoken');
 const orders = require('../models/orders.models')
 const products = require('../models/products.models')
 const payments = require('../models/payments.models')
+const orderStates = require('../models/orderStates.models')
 
 const validateRequest = async (req, res, next) => {
     try {
         const { order, methodOfPayment } = req.body;
+
+        const idUser = getIdUser(req)
+        const orderUser = await orders.findOne({ idUser: idUser, state: "new" });
+
+        if (orderUser) return res.status(404).send("You already have a pending order, confirm the order to create another")
+
         for (let i = 0; i < order.length; i++) {
             productExist = await products.exists({ name: order[i].product })
             if (!productExist) return res.status(404).send("a product entered does not exist. Check the product list")
@@ -15,39 +22,77 @@ const validateRequest = async (req, res, next) => {
         if (!paymentExist) return res.status(404).send("the payment method does not exist")
 
         next()
-    } catch (err) {
+    } catch {
         res.status(404).send("an unexpected error has occurred")
     }
 }
 
 const validateChanges = async (req, res, next) => {
-    const token = req.headers.authorization.replace('Bearer ', '');
-    const decoded = jwt.verify(token, process.env.SECRET)
-    const idUser = decoded.id
-
     try {
         const { order, methodOfPayment } = req.body
+        
+        const idUser = getIdUser(req)
+        const orderUser = await orders.findOne({ idUser: idUser, state: "new" });
 
-        const orderUser = await orders.findOne({ idUser: idUser });  //({ idUser: idUser, state: "new" })
+        if (!orderUser) return res.status(404).json('you do not have any new orders that you can edit')
 
         for (let i = 0; i < order.length; i++) {
-            productExist = await products.exists({ name: order[i].product })
-            if (!productExist) return res.status(404).send("a product entered does not exist. Check the product list")
+            const productExist = await products.exists({ name: order[i].product })
+            if (!productExist) return res.status(404).json("a product entered does not exist. Check the product list")
         }
 
-        paymentExist = await payments.exists({ method: methodOfPayment })
-        if (!paymentExist) return res.status(404).send("the payment method does not exist")
+        const paymentExist = await payments.exists({ method: methodOfPayment })
+        if (!paymentExist) return res.status(404).json("the payment method does not exist")
 
         if (order.methodOfPayment == orderUser.methodOfPayment && order == orderUser.order) return res.status(404).json('you have not made any changes') //esto se deberia arreglar cuando saques el _id
-        
+
         next()
-    } catch (err) {
+    } catch {
+        res.status(404).json("an unexpected error has occurred")
+    }
+}
+
+const validateConfirmation = async (req, res, next) => {
+    try {
+        const idUser = getIdUser(req)
+        const orderUser = await orders.findOne({ idUser: idUser, state: "new" });
+        if (!orderUser) return res.status(404).json('you do not have any new order to be confirmed')
+        next()
+    } catch {
+        res.status(404).json("an unexpected error has occurred")
+    }
+}
+
+const validateState = async (req, res, next) => {
+    try {
+        const { state } = req.body
+
+        const idOrder = req.params.idOrder;
+        const order = await orders.findOne({_id: idOrder });
+        if(order.state === state) res.status(404).json('you have not made any changes') 
+
+        if(order.state === "new")  res.status(404).json('You cannot change an order in new condition. has to be confirmed')
+
+        if(state === "new") res.status(404).json('you cannot change the status to new') 
+
+        const stateExist = await orderStates.exists({ state: state })
+        stateExist ? next() : res.status(404).json('the entered state does not exist') 
+    } catch {
         res.status(404).json("an unexpected error has occurred")
     }
 }
 
 
+const getIdUser = (req) => {
+    const token = req.headers.authorization.replace('Bearer ', '');
+    const decoded = jwt.verify(token, process.env.SECRET)
+    const idUser = decoded.id
+    return idUser
+}
+
 module.exports = {
     validateRequest,
-    validateChanges
+    validateChanges,
+    validateConfirmation,
+    validateState
 }

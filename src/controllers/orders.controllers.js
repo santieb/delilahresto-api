@@ -35,7 +35,7 @@ const modifyOrder = async (req, res) => {
     const { order, methodOfPayment } = req.body
 
     const idUser = getIdUser(req)
-    const filter = { idUser: idUser };
+    const filter = { idUser: idUser, state: "new" };
 
     const price = await getPrice(order, res)
     const description = await getDescription(req, res)
@@ -49,16 +49,36 @@ const modifyOrder = async (req, res) => {
     await orders.findOneAndUpdate(filter, update);
 }
 
-const getHistory = (req) => { //quitar ids y datos que no le sirven al usuario
+const confirmOrder = async (req) => {
+
+    const idUser = getIdUser(req)
+    const filter = { idUser: idUser, state: "new" };
+    const update = { state: "confirmed" }
+
+    await orders.findOneAndUpdate(filter, update); //plantear si agregar aca la hora y el "number" o no
+}
+
+
+const getHistory = async (req) => { //quitar ids y datos que no le sirven al usuario
 
     const token = req.headers.authorization.replace('Bearer ', '');
     const decoded = jwt.verify(token, process.env.SECRET)
 
-    response = orders.find({ idUser: decoded.id })
+    response = await orders.find({ idUser: decoded.id })
     return response
 }
 
 const getAllOrders = () => orders.find()
+
+const changeOrderStatus = async (req) => { //quitar ids y datos que no le sirven al usuario
+    const { state } = req.body;
+    const idOrder = req.params.idOrder;
+    
+    const filter = { _id: idOrder };
+    const update = { state: state }
+
+    await orders.findOneAndUpdate(filter, update);
+}
 
 
 const getIdUser = (req) => {
@@ -117,7 +137,8 @@ module.exports = {
     modifyOrder,
     getHistory,
     getAllOrders,
-
+    confirmOrder,
+    changeOrderStatus
 }
 
 
