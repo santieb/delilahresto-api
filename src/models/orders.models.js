@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 const orderScheme = new Schema({
 	idUser: { type: mongoose.Types.ObjectId, require: true },
 	order: [
-		//sacar el id
 		{
 			product: { type: String, require: true },
 			productPrice: { type: Number, require: true },
@@ -12,12 +11,15 @@ const orderScheme = new Schema({
 		},
 	],
 	//state: ObjectId, //enbeber
-	methodOfPayment: { type: String, require: true },
 	price: { type: Number, require: true },
-	date: { type: Date, default: Date.now },
+	methodOfPayment: { type: String, require: true },
+	description: { type: String, require: true },
+	number: { type: String, require: true },
+	hour: { type: String, require: true},
 	//shippingAddress: String, //tiene que ser enbebido
-	//agregar un valor numero incremental
-	//agregar descripcion del pedido
+},
+{
+	timestamps:true
 });
 
 const orders = mongoose.model("orders", orderScheme);
