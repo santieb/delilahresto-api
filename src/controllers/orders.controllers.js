@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const { restart } = require('nodemon');
 const orders = require('../models/orders.models');
 const products = require('../models/products.models')
 
@@ -7,35 +6,48 @@ let count = 1;
 
 const createOrder = async (req, res) => {
 
-    const token = req.headers.authorization.replace('Bearer ', '');
-    const decoded = jwt.verify(token, process.env.SECRET)
-    const idUser = decoded.id
-
     const { order, methodOfPayment } = req.body
 
     const price = await getPrice(order, res)
     const description = await getDescription(req, res)
-
+    const idUser = getIdUser(req)
+    const hour = getHour(req)
     count++
     const number = `#${count}`
-
-    date = new Date()
-    const hour =`${date.getHours()}:${date.getMinutes()}`
 
     const newOrder = {
         idUser: idUser,
         order: order,
         price: price,
         methodOfPayment: methodOfPayment,
-        number: number,
         description: description,
+        number: number,
         hour: hour
     };
 
-    const ordera = new orders(newOrder);
-    const response = await ordera.save();
+    const charge = new orders(newOrder);
+    const response = await charge.save();
     return response;
 };
+
+const modifyOrder = async (req, res) => {
+
+    const { order, methodOfPayment } = req.body
+
+    const idUser = getIdUser(req)
+    const filter = { idUser: idUser };
+
+    const price = await getPrice(order, res)
+    const description = await getDescription(req, res)
+
+    const update = {
+        order: order,
+        price: price,
+        methodOfPayment: methodOfPayment,
+        description: description,
+    };
+    await orders.findOneAndUpdate(filter, update);
+}
 
 const getHistory = (req) => { //quitar ids y datos que no le sirven al usuario
 
@@ -47,6 +59,20 @@ const getHistory = (req) => { //quitar ids y datos que no le sirven al usuario
 }
 
 const getAllOrders = () => orders.find()
+
+
+const getIdUser = (req) => {
+    const token = req.headers.authorization.replace('Bearer ', '');
+    const decoded = jwt.verify(token, process.env.SECRET)
+    const idUser = decoded.id
+
+    return idUser
+}
+
+const getHour = () => {
+    const date = new Date()
+    return hour =`${date.getHours()}:${date.getMinutes()}`
+}
 
 
 const getDescription = async (req, res) => {
@@ -88,8 +114,10 @@ const getPrice = async (order, res) => {
 
 module.exports = {
     createOrder,
+    modifyOrder,
     getHistory,
     getAllOrders,
+
 }
 
 

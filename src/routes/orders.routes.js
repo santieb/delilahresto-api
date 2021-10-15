@@ -13,9 +13,11 @@ router.post('/orders', middlewaresUser.isAuthenticated, middlewares.validateRequ
 })
 
 
-router.put('/orders/edit', middlewaresUser.isAuthenticated, (req, res) => {
+router.put('/orders', middlewaresUser.isAuthenticated, middlewares.validateChanges, (req, res) => {
 
-    res.json({ msj: `edited order` })
+    controllers.modifyOrder(req, res)
+        .then(() => res.json({ msj: "Order edited" }))
+        .catch(err => res.json(err));
 })
 
 
