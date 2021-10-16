@@ -1,6 +1,14 @@
 const products = require('../models/products.models')
 
-const listProducts = async () => await products.find();
+const redis = require('redis');
+const client = redis.createClient();
+
+
+const listProducts = async () => {
+    const response = await products.find();
+    client.set('products', JSON.stringify(response), 'EX', 60 * 60 * 24 * 30 );
+    return response
+}
 
 const createProduct = async (req) => {
     const newProduct = {
@@ -20,6 +28,8 @@ const modifyProduct = async (req) => {
         price: req.body.price,
         abbreviation: req.body.abbreviation
     };
+    client.del('products');
+
     await products.findOneAndUpdate(filter, update);
 }
 

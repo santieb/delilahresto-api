@@ -24,7 +24,7 @@ router.put('/orders', middlewaresUser.isAuthenticated, middlewares.validateChang
 router.put('/orders/confirmation', middlewaresUser.isAuthenticated, middlewares.validateConfirmation, (req, res) => { 
 
     controllers.confirmOrder(req)
-        .then(() => res.json({ msj: "We receive your order. You can track your order to know where it is" }))
+        .then(() => res.json({ msj: "We receive your order." }))
         .catch(err => res.json(err));
 })
 

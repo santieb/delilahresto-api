@@ -1,5 +1,16 @@
 const products = require('../models/products.models')
 
+const redis = require('redis');
+const bluebird = require('bluebird');
+bluebird.promisifyAll(redis);
+const client = redis.createClient();
+
+
+const productsCache = async (req, res, next) => {
+    const productsOnRedis = await client.getAsync('products');
+    productsOnRedis !== null ? res.json(JSON.parse(productsOnRedis)) : next();
+};
+
 const validateProduct = async (req, res, next) => { //validar tambien que no se ingresen datos vacios
     try {
         const nameExist = await products.exists({ name: req.body.name });
@@ -54,6 +65,7 @@ const validateChanges = async (req, res, next) => {
 };
 
 module.exports = {
+    productsCache,
     validateProduct,
     validateProductID,
     validateChanges
