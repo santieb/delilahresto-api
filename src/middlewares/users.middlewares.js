@@ -24,8 +24,8 @@ const isAuthenticated = async (req, res, next) => {
     try {
         const token = req.headers.authorization.replace('Bearer ', '');
         const decoded = jwt.verify(token, process.env.SECRET)
-        const user = await users.exists({ _id: decoded.id })
-        user ? next() : res.status(404).json({ msj: 'Not authenticated' })
+        const userExist = await users.exists({ _id: decoded.id })
+        if(userExist) next()
     }
     catch {
         res.status(404).json({ msj: 'Not authenticated' });
@@ -36,10 +36,20 @@ const isAdmin = async (req, res, next) => {
     try {
         const token = req.headers.authorization.replace('Bearer ', '');
         const decoded = jwt.verify(token, process.env.SECRET)
-        const user = await users.findOne({ _id: decoded.id })
-        user.isAdmin ? next() : res.status(404).json({ msj: 'Not authorized' })
+        const adminExist = await users.exists({ _id: decoded.id, isAdmin: true })
+        if (adminExist) next()
     } catch {
-        res.status(404).json("not found");
+        res.status(404).json({ msj: 'Not authorized' })
+    }
+}
+
+const validateUserID = async (req, res, next) => {
+    try {
+        const { idUser } = req.params;
+        const user = await users.findOne({ _id: idUser})
+        user.isAdmin ? res.status(404).json({ msj: 'you cannot suspend an administrator' }) : next();
+    } catch {
+        res.status(404).json({ msj: 'user id does not exist' });
     }
 }
 
@@ -48,5 +58,6 @@ module.exports = {
     isAuthenticated,
     isAdmin,
     validateEmail,
-    confirmLogin
+    confirmLogin,
+    validateUserID
 };

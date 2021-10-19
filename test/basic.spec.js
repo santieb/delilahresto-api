@@ -4,8 +4,6 @@ const assert = require('assert');
 const fetch = require('node-fetch');
 const users = require('../models/users.models');
 
-
-
 describe('#find()', function() {
   it('responds with matching records', async function() {
     const url = `http://localhost:3000/login`;

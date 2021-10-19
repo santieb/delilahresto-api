@@ -8,7 +8,8 @@ const userScheme = new Schema({
     name: { type: String, required: true },
     phone: { type: Number, required: true },
     shippingAddress: { type: String, required: true },
-    isAdmin: { type: Boolean, required: true }, // cambiar por roles
+    isAdmin: { type: Boolean, default: false },
+    isSuspended: { type: Boolean, default: false }
 });
 
 const users = mongoose.model("users", userScheme);

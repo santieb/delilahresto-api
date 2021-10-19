@@ -12,18 +12,25 @@ const createUser = async (req) => {
         name: req.body.name,
         phone: req.body.phone,
         shippingAddress: req.body.shippingAddress,
-        isAdmin: false,
     };
     const user = new users(newUser);
     const response = await user.save();
     return response;
 };
 
-const loginUser = async (req, res) => {
+const loginUser = async (req, res) => { //hacer login 2 veces
     const { email } = req.body;
     const user = await users.findOne({ email: email })
     const token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 60 });
     return token
+}
+
+const suspendUser = async (req) => {
+    const { idUser } = req.params;
+    const filter = { _id: idUser };
+    const update = { isSuspended: true };
+    
+    await users.findOneAndUpdate(filter, update);
 }
 
 
@@ -31,5 +38,6 @@ module.exports = {
     listUsers,
     createUser,
     loginUser,
+    suspendUser
 };
 

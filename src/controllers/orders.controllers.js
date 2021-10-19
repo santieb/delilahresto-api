@@ -60,7 +60,6 @@ const confirmOrder = async (req) => {
 
 
 const getHistory = async (req) => { //quitar ids y datos que no le sirven al usuario
-
     const token = req.headers.authorization.replace('Bearer ', '');
     const decoded = jwt.verify(token, process.env.SECRET)
 
@@ -70,7 +69,7 @@ const getHistory = async (req) => { //quitar ids y datos que no le sirven al usu
 
 const getAllOrders = () => orders.find()
 
-const changeOrderStatus = async (req) => { //quitar ids y datos que no le sirven al usuario
+const changeOrderStatus = async (req) => { 
     const { state } = req.body;
     const idOrder = req.params.idOrder;
     
@@ -100,7 +99,7 @@ const getDescription = async (req, res) => {
         const { order } = req.body;
         let description = "";
 
-        for (i = 0; i < req.body.order.length; i++) {
+        for (i = 0; i < order.length; i++) {
             const product = await products.findOne({ name: order[i].product })
             const info = `${order[i].amount}x${product.abbreviation} `
 

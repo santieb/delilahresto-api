@@ -5,7 +5,6 @@ const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
 const client = redis.createClient();
 
-
 const productsCache = async (req, res, next) => {
     const productsOnRedis = await client.getAsync('products');
     productsOnRedis !== null ? res.json(JSON.parse(productsOnRedis)) : next();
@@ -33,7 +32,7 @@ const validateProductID = async (req, res, next) => {
     }
 };
 
-const validateChanges = async (req, res, next) => {
+const validateChanges = async (req, res, next) => { //agregar para ver si esta disponible el producto o no
     try {
         const { name, price, abbreviation } = req.body
 
