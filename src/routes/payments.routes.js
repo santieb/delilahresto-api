@@ -12,27 +12,4 @@ router.get('/payments', middlewaresUser.isAuthenticated, (req, res) => {
 })
 
 
-router.post('/payments', middlewaresUser.isAdmin, middlewares.validateMethod, (req, res) => {
-
-    controllers.createPayment(req)
-    .then((response) => res.json(response))
-    .catch((err) => res.json(err))
-})
-
-
-router.put('/payments/:idPayment', middlewaresUser.isAdmin, middlewares.validatePaymentID, middlewares.validateChanges, (req, res) => {
-
-    controllers.modifyPayment(req)
-    .then(() => res.json("edited"))
-    .catch((err) => res.json(err))
-})
-
-
-router.delete('/payments/:idPayment', middlewaresUser.isAdmin, middlewares.validatePaymentID, (req, res) => {
-
-    controllers.deletePayment(req)
-    .then(() => res.json(`payments removed`))
-    .catch((err) => res.json(err));
-})
-
 module.exports = router;
