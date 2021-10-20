@@ -70,10 +70,10 @@ const getHistory = async (req) => { //quitar ids y datos que no le sirven al usu
 
 const getAllOrders = () => orders.find()
 
-const changeOrderStatus = async (req) => { 
+const changeOrderStatus = async (req) => {
     const { state } = req.body;
     const idOrder = req.params.idOrder;
-    
+
     const filter = { _id: idOrder };
     const update = { state: state }
 
@@ -91,7 +91,7 @@ const getIdUser = (req) => {
 
 const getHour = () => {
     const date = new Date()
-    return hour =`${date.getHours()}:${date.getMinutes()}`
+    return hour = `${date.getHours()}:${date.getMinutes()}`
 }
 
 

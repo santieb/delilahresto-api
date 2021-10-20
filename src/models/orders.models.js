@@ -14,13 +14,14 @@ const orderScheme = new Schema({
 	price: { type: Number, require: true },
 	methodOfPayment: { type: String, require: true },
 	description: { type: String, require: true },
-	shippingAddress: { type: String, require: true},
+	shippingAddress: { type: String, require: true },
 	number: { type: String, require: true },
-	hour: { type: String, require: true},
+	hour: { type: String, require: true },
 },
-{
-	timestamps:true
-});
+	{
+		timestamps: true
+	});
+
 
 const orders = mongoose.model("orders", orderScheme);
 

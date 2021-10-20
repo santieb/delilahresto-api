@@ -6,7 +6,7 @@ const client = redis.createClient();
 
 const listProducts = async () => {
     const response = await products.find();
-    client.set('products', JSON.stringify(response), 'EX', 60 * 60 * 24 * 30 );
+    client.set('products', JSON.stringify(response), 'EX', 60 * 60 * 24 * 30);
     return response
 }
 

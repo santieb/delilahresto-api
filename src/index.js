@@ -35,6 +35,9 @@ const middlewares = require('./middlewares/users.middlewares')
 const users = require('./routes/users.routes');
 app.use('/', users);
 
+const addressBook = require('./routes/addressBook.routes');
+app.use('/user', middlewares.isAuthenticated, addressBook)
+
 const orders = require('./routes/orders.routes');
 app.use('/', middlewares.isAuthenticated, orders);
 

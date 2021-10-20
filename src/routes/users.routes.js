@@ -6,16 +6,16 @@ const middlewares = require('../middlewares/users.middlewares')
 router.post('/register', middlewares.validateEmail, (req, res) => {
 
     controllers.createUser(req)
-    .then((response) => res.json(response))
-    .catch((err) => res.json(err))
+        .then((response) => res.json(response))
+        .catch((err) => res.json(err))
 });
 
 
 router.post('/login', middlewares.confirmLogin, (req, res) => {
 
     controllers.loginUser(req)
-    .then((response) => res.json({ msj: "session started", token: response }))
-    .catch((err) => res.json(err))
+        .then((response) => res.json({ msj: "session started", token: response }))
+        .catch((err) => res.json(err))
 });
 
 

@@ -6,15 +6,15 @@ const middlewares = require('../../middlewares/users.middlewares')
 router.get('/users', (req, res) => {
 
     controllers.listUsers()
-    .then(response => res.json(response))
-    .catch(err => res.json(err));
+        .then(response => res.json(response))
+        .catch(err => res.json(err));
 });
 
-router.put('/users/:idUser', middlewares.isAdmin, middlewares.validateUserID, (req, res ) => {
+router.put('/users/:idUser', middlewares.validateUserID, (req, res) => {
 
     controllers.suspendUser(req)
-    .then(() => res.json({ msj: "User suspended" }))
-    .catch((err) => res.json(err))
+        .then(() => res.json({ msj: "User suspended" }))
+        .catch((err) => res.json(err))
 
 });
 

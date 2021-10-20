@@ -8,15 +8,16 @@ const userScheme = new Schema({
     name: { type: String, required: true },
     phone: { type: Number, required: true },
     addressBook: [
-            { shippingAddress: { type: String, require: true } }
+        { shippingAddress: { type: String, require: true } }
     ],
     isAdmin: { type: Boolean, default: false },
     isSuspended: { type: Boolean, default: false }
 },
-{
-	timestamps:true
-});
+    {
+        timestamps: true
+    });
 
+    
 const users = mongoose.model("users", userScheme);
 
 module.exports = users;

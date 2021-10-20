@@ -34,7 +34,7 @@ const suspendUser = async (req) => {
     const { idUser } = req.params;
     const filter = { _id: idUser };
     const update = { isSuspended: true };
-    
+
     await users.findOneAndUpdate(filter, update);
 }
 
