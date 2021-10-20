@@ -33,7 +33,7 @@ const createOrder = async (req, res) => {
 
 const modifyOrder = async (req, res) => {
 
-    const { order, methodOfPayment } = req.body
+    const { order, methodOfPayment, shippingAddress } = req.body
 
     const idUser = getIdUser(req)
     const filter = { idUser: idUser, state: "new" };
@@ -46,6 +46,7 @@ const modifyOrder = async (req, res) => {
         price: price,
         methodOfPayment: methodOfPayment,
         description: description,
+        shippingAddress: shippingAddress
     };
     await orders.findOneAndUpdate(filter, update);
 }

@@ -19,7 +19,7 @@ const validateRequest = async (req, res, next) => {
             if (!productExist) return res.status(404).send("a product entered does not exist. Check the product list")
         }
 
-        const shippingAddressExist = await users.exists({ 'addressBook.shippingAddress': { $eq: shippingAddress } });
+        const shippingAddressExist = await users.exists( { _id: idUser, $and: [{ 'addressBook.shippingAddress': { $eq: shippingAddress } }]});
         if (!shippingAddressExist) return res.status(404).send("The shipping address does not exist in your list. Add to your list")
 
         const paymentExist = await payments.exists({ method: methodOfPayment })
@@ -47,7 +47,7 @@ const validateChanges = async (req, res, next) => {
         const paymentExist = await payments.exists({ method: methodOfPayment })
         if (!paymentExist) return res.status(404).json("the payment method does not exist")
 
-        const shippingAddressExist = await users.exists({ 'addressBook.shippingAddress': { $eq: shippingAddress } });
+        const shippingAddressExist = await users.exists( { _id: idUser, $and: [{ 'addressBook.shippingAddress': { $eq: shippingAddress } }]});
         if (!shippingAddressExist) return res.status(404).send("The shipping address does not exist in your list. Add to your list")
 
         if (methodOfPayment == orderUser.methodOfPayment && order == orderUser.order && shippingAddress == order.shippingAddress) return res.status(404).json('you have not made any changes') //esto se deberia arreglar cuando saques el _id
