@@ -1,24 +1,29 @@
 require('dotenv').config();
 const users = require('../models/users.models')
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 
 const listUsers = async () => await users.find();
 
 const createUser = async (req) => {
+
+    const { username, password, email, name, phone, addressBook } = req.body
+
+    const passwordHash = await bcrypt.hash(password, 8)
     const newUser = {
-        username: req.body.username,
-        password: req.body.password, //encriptar y que sea de al menos 4 caracteres
-        email: req.body.email,
-        name: req.body.name,
-        phone: req.body.phone,
-        shippingAddress: req.body.shippingAddress,
+        username: username,
+        password: passwordHash,
+        email: email,
+        name: name,
+        phone: phone,
+        addressBook: addressBook,
     };
     const user = new users(newUser);
     const response = await user.save();
     return response;
 };
 
-const loginUser = async (req, res) => { //hacer login 2 veces
+const loginUser = async (req) => {
     const { email } = req.body;
     const user = await users.findOne({ email: email })
     const token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 60 });

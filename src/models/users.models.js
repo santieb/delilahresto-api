@@ -4,12 +4,17 @@ const { Schema } = mongoose;
 const userScheme = new Schema({
     username: { type: String, required: true },
     password: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     phone: { type: Number, required: true },
-    shippingAddress: { type: String, required: true },
+    addressBook: [
+            { shippingAddress: { type: String, require: true } }
+    ],
     isAdmin: { type: Boolean, default: false },
     isSuspended: { type: Boolean, default: false }
+},
+{
+	timestamps:true
 });
 
 const users = mongoose.model("users", userScheme);

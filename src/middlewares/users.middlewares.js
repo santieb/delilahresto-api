@@ -1,5 +1,6 @@
 require('dotenv').config();
 const users = require('../models/users.models')
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const validateEmail = async (req, res, next) => {
@@ -13,7 +14,14 @@ const validateEmail = async (req, res, next) => {
 
 const confirmLogin = async (req, res, next) => {
     try {
-        const user = await users.findOne({ email: req.body.email, password: req.body.password });
+        const { email, password } = req.body;
+        if( !email || !password) return res.status(404).json({ msj: "fill in all the fields" })
+        
+        const user = await users.findOne({ email: email });
+
+        const comparePassword = await bcrypt.compare(password, user.password)
+        if(!comparePassword) return res.status(404).json({ msj: "password does not match" })
+
         user.isSuspended ? res.status(404).json({ msj: "You are suspended, you cannot log in" }) : next()
     } catch {
         res.status(404).json({ msj: "Email address or password not found. Please try again" })

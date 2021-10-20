@@ -6,7 +6,7 @@ let count = 1;
 
 const createOrder = async (req, res) => {
 
-    const { order, methodOfPayment } = req.body
+    const { order, methodOfPayment, shippingAddress } = req.body
 
     const price = await getPrice(order, res)
     const description = await getDescription(req, res)
@@ -21,6 +21,7 @@ const createOrder = async (req, res) => {
         price: price,
         methodOfPayment: methodOfPayment,
         description: description,
+        shippingAddress: shippingAddress,
         number: number,
         hour: hour
     };
