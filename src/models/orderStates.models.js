@@ -7,5 +7,4 @@ const orderStatusScheme = new Schema({
 
 const orderStatus = mongoose.model("orderStatus", orderStatusScheme);
 
-
 module.exports = orderStatus;

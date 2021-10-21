@@ -1,6 +1,6 @@
 const payments = require('../models/payments.models')
 
-const validateMethod = async (req, res, next) => { //validar tambien que no se ingresen datos vacios
+const validateMethod = async (req, res, next) => {
     try {
         const { method } = req.body
         if (!method) return res.status(404).json({ msj: "fill in all the fields" })

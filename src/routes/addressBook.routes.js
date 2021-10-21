@@ -10,20 +10,14 @@ router.get('/addressBook', (req, res) => {
         .catch(err => res.json(err));
 })
 
-router.post('/addressBook', (req, res) => {
+router.post('/addressBook', middlewares.validateAddress, (req, res) => {
 
     controllers.createAddress(req)
         .then(() => res.json("address added successfully"))
         .catch((err) => res.json(err))
 })
 
-
-router.put('/addressBook/:idAddress', (req, res) => {
-
-})
-
-
-router.delete('/addressBook/:idAddress', (req, res) => {
+router.delete('/addressBook/:idAddress', middlewares.validateAddressID, (req, res) => {
 
     controllers.deleteAddress(req)
         .then(() => res.json("address deleted successfully"))

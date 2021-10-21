@@ -16,10 +16,19 @@ const createUser = async (req) => {
         phone: phone,
         addressBook: addressBook,
     };
+    addIdentifiersAddresses(req)
+    
     const user = new users(newUser);
     const response = await user.save();
     return response;
-};
+}
+
+const addIdentifiersAddresses = async (req) => {
+    const { addressBook } = req.body
+    for(i=0;i<addressBook.length;i++) {
+        addressBook[i].id = i;
+    }
+}
 
 const loginUser = async (req) => {
     const { email } = req.body;

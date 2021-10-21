@@ -12,9 +12,13 @@ const createAddress = async (req) => {
     const { address } = req.body
     const token = req.headers.authorization.replace('Bearer ', '');
     const decoded = jwt.verify(token, process.env.SECRET)
+
+    const user = await users.findOne({ _id: decoded.id })
     await users.updateOne({ _id: decoded.id },
         {
-            $push: { addressBook: { shippingAddress: address } }
+            $push: { addressBook: {
+                shippingAddress: address, 
+                id : user.addressBook.length } }
         })
 };
 
@@ -23,13 +27,10 @@ const deleteAddress = async (req) => {
     const token = req.headers.authorization.replace('Bearer ', '');
     const decoded = jwt.verify(token, process.env.SECRET)
 
-
-    parseInt(idAddress)
-    console.log(typeof (idAddress))
-    await users.updateOne({ _id: decoded.id },
-        {
-            $pullAll: { 'addressBook': { _id: { $eq: idAddress } } },
-        })
+    await users.updateOne(
+        { _id: decoded.id },
+        { $pull: { 'addressBook': { id : idAddress } } }
+      );
 };
 
 
