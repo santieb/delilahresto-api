@@ -3,7 +3,7 @@ const router = express.Router();
 const controllers = require('../controllers/users.controllers')
 const middlewares = require('../middlewares/users.middlewares')
 
-router.post('/register', middlewares.validateEmail, (req, res) => {
+router.post('/register', middlewares.validateRequest, (req, res) => {
 
     controllers.createUser(req)
         .then((response) => res.json(response))

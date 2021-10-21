@@ -3,8 +3,11 @@ const users = require('../models/users.models')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const validateEmail = async (req, res, next) => {
+const validateRequest = async (req, res, next) => {
     try {
+        const { username, password, email, name, phone, addressBook } = req.body;
+        if(!username || !password || !email || !name || !phone || !addressBook) return res.status(404).json({ msj: "fill in all the fields" })
+
         const emailExists = await users.exists({ email: req.body.email });
         emailExists ? res.status(404).json("The email is in use") : next()
     } catch {
@@ -66,7 +69,7 @@ const validateUserID = async (req, res, next) => {
 module.exports = {
     isAuthenticated,
     isAdmin,
-    validateEmail,
+    validateRequest,
     confirmLogin,
     validateUserID
 };

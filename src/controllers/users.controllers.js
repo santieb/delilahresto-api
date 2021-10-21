@@ -6,9 +6,7 @@ const jwt = require('jsonwebtoken')
 const listUsers = async () => await users.find();
 
 const createUser = async (req) => {
-
     const { username, password, email, name, phone, addressBook } = req.body
-
     const passwordHash = await bcrypt.hash(password, 8)
     const newUser = {
         username: username,
