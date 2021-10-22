@@ -12,7 +12,7 @@ router.post('/products', middlewares.validateProduct, (req, res) => {
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to update data',
                 errors: err,
                 status: 400
@@ -27,7 +27,7 @@ router.put('/products/:idProduct', middlewares.validateProductID, middlewares.va
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to update data',
                 errors: err,
                 status: 400
@@ -42,7 +42,7 @@ router.delete('/products/:idProduct', middlewares.validateProductID, (req, res) 
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to delete data',
                 errors: err,
                 status: 400

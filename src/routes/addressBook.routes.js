@@ -15,7 +15,7 @@ router.get('/addressBook', (req, res) => {
             res.status(404).json({
                 message: 'Unable to find data',
                 errors: err,
-                status: 400
+                status: 404
             }))
 })
 
@@ -43,7 +43,7 @@ router.delete('/addressBook/:idAddress', middlewares.validateAddressID, (req, re
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to delete data',
                 errors: err,
                 status: 400

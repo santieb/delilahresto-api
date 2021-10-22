@@ -1,36 +1,40 @@
 const products = require('../models/products.models')
 
-const redis = require('redis');
-const client = redis.createClient();
-
+const redis = require('redis')
+const client = redis.createClient()
 
 const listProducts = async () => {
     const response = await products.find();
-    client.set('products', JSON.stringify(response), 'EX', 60 * 60 * 24 * 30);
+    client.set('products', JSON.stringify(response), 'EX', 60 * 60 * 24 * 30)
     return response
 }
 
 const createProduct = async (req) => {
+    const { name, price, abbreviation} = req.body
+    
     const newProduct = {
-        name: req.body.name,
-        price: req.body.price,
-        abbreviation: req.body.abbreviation
+        name: name,
+        price: price,
+        abbreviation: abbreviation
     };
-    const product = new products(newProduct);
-    const response = await product.save();
-    return response;
+    const product = new products(newProduct)
+    const response = await product.save()
+    return response
 };
 
 const modifyProduct = async (req) => {
-    const filter = { _id: req.params.idProduct };
-    const update = {
-        name: req.body.name,
-        price: req.body.price,
-        abbreviation: req.body.abbreviation
-    };
-    client.del('products');
+    const { name, price, abbreviation} = req.body
+    const { idProduct } = req.params
 
-    await products.findOneAndUpdate(filter, update);
+    const filter = { _id: idProduct }
+    const update = {
+        name: name,
+        price: price,
+        abbreviation: abbreviation
+    };
+    client.del('products')
+
+    await products.findOneAndUpdate(filter, update)
 }
 
 const deleteProduct = async (req) => await products.findByIdAndDelete(req.params.idProduct);

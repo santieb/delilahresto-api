@@ -12,10 +12,10 @@ router.get('/allOrders', (req, res) => {
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: "Unable to find data",
                 errors: err,
-                status: 400
+                status: 404
             }))
 })
 
@@ -27,7 +27,7 @@ router.put('/allOrders/:idOrder', middlewares.validateState, (req, res) => {
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to update data',
                 errors: err,
                 status: 400

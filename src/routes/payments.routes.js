@@ -14,7 +14,7 @@ router.get('/payments', (req, res) => {
             res.status(404).json({
                 message: 'Unable to find data',
                 errors: err,
-                status: 400
+                status: 404
             }))
 })
 

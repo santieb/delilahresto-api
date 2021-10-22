@@ -1,5 +1,5 @@
-const mongoose = require("../config/db.config");
-const { Schema } = mongoose;
+const mongoose = require("../config/db.config")
+const { Schema } = mongoose
 
 const userScheme = new Schema({
     username: { type: String, required: true },

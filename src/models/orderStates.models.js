@@ -1,5 +1,5 @@
-const mongoose = require("../config/db.config");
-const { Schema } = mongoose;
+const mongoose = require("../config/db.config")
+const { Schema } = mongoose
 
 const orderStatusScheme = new Schema({
     state: { type: String, required: true }

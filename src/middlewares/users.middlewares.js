@@ -1,56 +1,33 @@
-require('dotenv').config();
+require('dotenv').config()
 const users = require('../models/users.models')
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const validateRequest = async (req, res, next) => {
     try {
         const { username, password, email, name, phone, addressBook } = req.body;
-        if(!username || !password || !email || !name || !phone || !addressBook) return res.status(404).json({ msj: "fill in all the fields" })
+        if (!username || !password || !email || !name || !phone || !addressBook) return res.status(404).json({ msg: 'Fill in all the fields', status: 404 })
 
         const emailExists = await users.exists({ email: req.body.email });
-        emailExists ? res.status(404).json("The email is in use") : next()
+        emailExists ? res.status(404).json({ msg: 'The email is in use', status: 404 }) : next()
     } catch {
-        res.status(404).json("not found");
+        res.status(404).json({ msg: 'Request denied. Check data', status: 404 })
     }
 }
 
-const confirmLogin = async (req, res, next) => {
+const validateLogin = async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        if (!email || !password) return res.status(404).json({ msj: "fill in all the fields" })
+        if (!email || !password) return res.status(404).json({ msg: 'Fill in all the fields', status: 404 })
 
         const user = await users.findOne({ email: email });
 
         const comparePassword = await bcrypt.compare(password, user.password)
-        if (!comparePassword) return res.status(404).json({ msj: "password does not match" })
+        if (!comparePassword) return res.status(404).json({ msg: 'Password does not match', status: 404 })
 
-        user.isSuspended ? res.status(404).json({ msj: "You are suspended, you cannot log in" }) : next()
+        user.isSuspended ? res.status(1020).json({ msg: 'You are suspended, you cannot log in', status: 1020 }) : next()
     } catch {
-        res.status(404).json({ msj: "Email address or password not found. Please try again" })
-    }
-}
-
-const isAuthenticated = async (req, res, next) => {
-    try {
-        const token = req.headers.authorization.replace('Bearer ', '');
-        const decoded = jwt.verify(token, process.env.SECRET)
-        const user = await users.findOne({ _id: decoded.id })
-        user.isSuspended ? res.status(404).json({ msj: "You are suspended, you cannot access" }) : next()
-    }
-    catch {
-        res.status(404).json({ msj: 'Not authenticated' });
-    }
-}
-
-const isAdmin = async (req, res, next) => {
-    try {
-        const token = req.headers.authorization.replace('Bearer ', '');
-        const decoded = jwt.verify(token, process.env.SECRET)
-        const adminExist = await users.exists({ _id: decoded.id, isAdmin: true })
-        adminExist ? next() : res.status(404).json({ msj: 'Not authorized' })
-    } catch {
-        res.status(404).json({ msj: 'Not authorized' })
+        res.status(404).json({ msg: 'Email address or password not found. Please try again', status: 404 })
     }
 }
 
@@ -58,18 +35,46 @@ const validateUserID = async (req, res, next) => {
     try {
         const { idUser } = req.params;
         const user = await users.findOne({ _id: idUser })
-        if (user.isAdmin) return res.status(404).json({ msj: 'you cannot suspend an administrator' })
-        user.isSuspended ? res.status(404).json({ msj: 'the user is already suspended' }) : next()
+        if (user.isAdmin) return res.status(404).json({ msg: 'you cannot suspend an administrator', status: 404 })
+        user.isSuspended ? res.status(404).json({ msg: 'the user is already suspended', status: 404 }) : next()
     } catch {
-        res.status(404).json({ msj: 'user id does not exist' });
+        res.status(404).json({ msg: 'User id does not exist', status: 404 })
     }
+}
+
+const isAuthenticated = async (req, res, next) => {
+    try {
+        const idUser = getIdUser(req)
+        const user = await users.findOne({ _id: idUser })
+        user.isSuspended ? res.status(1020).json({ msg: 'You are suspended, you cannot access', status: 1020 }) : next()
+    }
+    catch {
+        res.status(1020).json({ msg: 'Not authenticated', status: 1020 })
+    }
+}
+
+const isAdmin = async (req, res, next) => {
+    try {
+        const idUser = getIdUser(req)
+        const adminExist = await users.exists({ _id: idUser, isAdmin: true })
+        adminExist ? next() : res.status(1020).json({ msg: 'Not authorized', status: 1020 })
+    } catch {
+        res.status(1020).json({ msg: 'Not authorized', status: 1020 })
+    }
+}
+
+const getIdUser = (req) => {
+    const token = req.headers.authorization.replace('Bearer ', '')
+    const decoded = jwt.verify(token, process.env.SECRET)
+    const idUser = decoded.id
+    return idUser
 }
 
 
 module.exports = {
+    validateRequest,
+    validateLogin,
+    validateUserID,
     isAuthenticated,
     isAdmin,
-    validateRequest,
-    confirmLogin,
-    validateUserID
-};
+}

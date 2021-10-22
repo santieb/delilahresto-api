@@ -12,7 +12,7 @@ router.post('/orders', middlewares.validateRequest, (req, res) => {
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to insert data',
                 errors: err,
                 status: 400
@@ -27,7 +27,7 @@ router.put('/orders', middlewares.validateChanges, (req, res) => {
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to update data',
                 errors: err,
                 status: 400
@@ -42,7 +42,7 @@ router.put('/orders/confirmation', middlewares.validateConfirmation, (req, res) 
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to update data',
                 errors: err,
                 status: 400
@@ -61,7 +61,7 @@ router.get('/orders/history', (req, res) => {
             res.status(404).json({
                 message: 'Unable to find data',
                 errors: err,
-                status: 400
+                status: 404
             }))
 })
 

@@ -12,7 +12,7 @@ router.post('/payments', middlewares.validateMethod, (req, res) => {
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to insert data',
                 errors: err,
                 status: 400
@@ -27,7 +27,7 @@ router.put('/payments/:idPayment', middlewares.validatePaymentID, middlewares.va
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to update data',
                 errors: err,
                 status: 400
@@ -42,7 +42,7 @@ router.delete('/payments/:idPayment', middlewares.validatePaymentID, (req, res) 
                 status: 200
             }))
         .catch((err) =>
-            res.status(404).json({
+            res.status(400).json({
                 message: 'Unable to delete data',
                 errors: err,
                 status: 400

@@ -12,14 +12,14 @@ router.post('/register', middlewares.validateRequest, (req, res) => {
 				status: 200
 			}))
 		.catch((err) =>
-			res.status(404).json({
+			res.status(400).json({
 				message: 'Unable to insert data',
 				errors: err,
 				status: 400
 			}))
 })
 
-router.post('/login', middlewares.confirmLogin, (req, res) => {
+router.post('/login', middlewares.validateLogin, (req, res) => {
 	controllers.loginUser(req)
 		.then((token) =>
 			res.status(200).json({
@@ -28,7 +28,7 @@ router.post('/login', middlewares.confirmLogin, (req, res) => {
 				status: 200
 			}))
 		.catch((err) =>
-			res.status(404).json({
+			res.status(400).json({
 				message: 'Unable to insert data',
 				errors: err,
 				status: 400

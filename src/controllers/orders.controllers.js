@@ -5,7 +5,6 @@ const products = require('../models/products.models')
 let count = 1;
 
 const createOrder = async (req, res) => {
-
     const { order, methodOfPayment, shippingAddress } = req.body
 
     const price = await getPrice(order, res)
@@ -26,17 +25,16 @@ const createOrder = async (req, res) => {
         hour: hour
     };
 
-    const charge = new orders(newOrder);
-    const response = await charge.save();
-    return response;
+    const charge = new orders(newOrder)
+    const response = await charge.save()
+    return response
 };
 
 const modifyOrder = async (req, res) => {
-
     const { order, methodOfPayment, shippingAddress } = req.body
 
     const idUser = getIdUser(req)
-    const filter = { idUser: idUser, state: "new" };
+    const filter = { idUser: idUser, state: 'new' }
 
     const price = await getPrice(order, res)
     const description = await getDescription(req, res)
@@ -48,24 +46,21 @@ const modifyOrder = async (req, res) => {
         description: description,
         shippingAddress: shippingAddress
     };
-    await orders.findOneAndUpdate(filter, update);
+    await orders.findOneAndUpdate(filter, update)
 }
 
-const confirmOrder = async (req) => {
-
+const confirmOrder = async (req) => { //agregar number y hour
     const idUser = getIdUser(req)
-    const filter = { idUser: idUser, state: "new" };
-    const update = { state: "confirmed" }
+    const filter = { idUser: idUser, state: 'new' }
+    const update = { state: 'confirmed' }
 
-    await orders.findOneAndUpdate(filter, update); //plantear si agregar aca la hora y el "number" o no
+    await orders.findOneAndUpdate(filter, update)
 }
 
+const getHistory = async (req) => {
+    const idUser = getIdUser(req)
 
-const getHistory = async (req) => { //quitar ids y datos que no le sirven al usuario
-    const token = req.headers.authorization.replace('Bearer ', '');
-    const decoded = jwt.verify(token, process.env.SECRET)
-
-    response = await orders.find({ idUser: decoded.id })
+    response = await orders.find({ idUser: idUser })
     return response
 }
 
@@ -95,7 +90,6 @@ const getHour = () => {
     return hour = `${date.getHours()}:${date.getMinutes()}`
 }
 
-
 const getDescription = async (req, res) => {
     try {
         const { order } = req.body;
@@ -109,10 +103,9 @@ const getDescription = async (req, res) => {
         }
         return description
     } catch {
-        res.send("error")
+        res.status(404).json({ msg: 'Request denied. Check data', status: 404 })
     }
 }
-
 
 const getPrice = async (order, res) => {
     try {
@@ -128,7 +121,7 @@ const getPrice = async (order, res) => {
         }
         return price
     } catch {
-        res.send("error")
+        res.status(404).json({ msg: 'Request denied. Check data', status: 404 })
     }
 }
 

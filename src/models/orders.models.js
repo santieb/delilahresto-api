@@ -1,5 +1,5 @@
-const mongoose = require("../config/db.config");
-const { Schema } = mongoose;
+const mongoose = require("../config/db.config")
+const { Schema } = mongoose
 
 const orderScheme = new Schema({
 	idUser: { type: mongoose.Types.ObjectId, require: true },
