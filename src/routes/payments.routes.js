@@ -3,11 +3,20 @@ const router = express.Router();
 const controllers = require('../controllers/payments.controllers')
 
 router.get('/payments', (req, res) => {
-
     controllers.listPayments()
-        .then(payments => res.json(payments))
-        .catch(err => res.json(err));
+        .then((paymentMethods) =>
+            res.status(200).json({
+                message: 'Data find successfully',
+                paymentMethods: paymentMethods,
+                status: 200
+            }))
+        .catch((err) =>
+            res.status(404).json({
+                message: 'Unable to find data',
+                errors: err,
+                status: 400
+            }))
 })
 
 
-module.exports = router;
+module.exports = router

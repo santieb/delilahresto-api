@@ -5,6 +5,7 @@ const orderStatusScheme = new Schema({
     state: { type: String, required: true }
 });
 
-const orderStatus = mongoose.model("orderStatus", orderStatusScheme);
+const orderStatus = mongoose.model("orderStatus", orderStatusScheme)
 
-module.exports = orderStatus;
+
+module.exports = orderStatus

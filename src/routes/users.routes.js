@@ -4,19 +4,36 @@ const controllers = require('../controllers/users.controllers')
 const middlewares = require('../middlewares/users.middlewares')
 
 router.post('/register', middlewares.validateRequest, (req, res) => {
-
-    controllers.createUser(req)
-        .then((response) => res.json(response))
-        .catch((err) => res.json(err))
-});
-
+	controllers.createUser(req)
+		.then((user) =>
+			res.status(200).json({
+				message: 'User created successfully',
+				user: user,
+				status: 200
+			}))
+		.catch((err) =>
+			res.status(404).json({
+				message: 'Unable to insert data',
+				errors: err,
+				status: 400
+			}))
+})
 
 router.post('/login', middlewares.confirmLogin, (req, res) => {
+	controllers.loginUser(req)
+		.then((token) =>
+			res.status(200).json({
+				message: 'Session started successfully',
+				token: token,
+				status: 200
+			}))
+		.catch((err) =>
+			res.status(404).json({
+				message: 'Unable to insert data',
+				errors: err,
+				status: 400
+			}))
+})
 
-    controllers.loginUser(req)
-        .then((response) => res.json({ msj: "session started", token: response }))
-        .catch((err) => res.json(err))
-});
 
-
-module.exports = router;
+module.exports = router

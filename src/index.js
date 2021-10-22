@@ -4,8 +4,6 @@ const helmet = require('helmet')
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express')
 
-
-const port = process.env.PORT || 3000;
 app.use(helmet())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -13,20 +11,18 @@ app.use(express.json());
 const swaggerOptions = {
 	swaggerDefinition: {
 		info: {
-			title: 'Acamica API',
+			title: 'Delilah Restó API',
 			version: '1.0.0'
 		}
 	},
 	apis: ['swagger.js']
 };
 
-
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 app.use('/api-docs',
 	swaggerUI.serve,
 	swaggerUI.setup(swaggerDocs));
-
 
 
 const middlewares = require('./middlewares/users.middlewares')
@@ -61,6 +57,7 @@ const adminPayments = require('./routes/admin.routes/admin.payments.routes')
 app.use('/admin', middlewares.isAdmin, adminPayments);
 
 
-app.listen(port, function () {
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
 	console.log(`Server listening on port http://localhost:${port}`);
 });

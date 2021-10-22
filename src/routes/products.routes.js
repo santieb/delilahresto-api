@@ -4,11 +4,20 @@ const controllers = require('../controllers/products.controllers')
 const middlewares = require('../middlewares/products.middlewares')
 
 router.get('/products', middlewares.productsCache, (req, res) => {
-
     controllers.listProducts()
-        .then(payments => res.json(payments))
-        .catch(err => res.json(err));
+        .then((products) =>
+            res.status(200).json({
+                message: "Data find successfully",
+                products: products,
+                status: 200
+            }))
+        .catch((err) =>
+            res.status(404).json({
+                message: "Unable to find data",
+                errors: err,
+                status: 400
+            }))
 })
 
 
-module.exports = router;
+module.exports = router

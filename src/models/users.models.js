@@ -8,8 +8,9 @@ const userScheme = new Schema({
     name: { type: String, required: true },
     phone: { type: Number, required: true },
     addressBook: [
-        { shippingAddress: { type: String, require: true },
-          id: { type: Number}
+        {
+            shippingAddress: { type: String, require: true },
+            id: { type: Number }
         }
     ],
     isAdmin: { type: Boolean, default: false },
@@ -20,6 +21,7 @@ const userScheme = new Schema({
     }
 );
 
-const users = mongoose.model("users", userScheme);
+const users = mongoose.model("users", userScheme)
 
-module.exports = users;
+
+module.exports = users

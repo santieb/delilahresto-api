@@ -5,8 +5,13 @@ const productScheme = new Schema({
     name: { type: String, required: true },
     abbreviation: { type: String, required: true },
     price: { type: Number, required: true },
-});
+},
+    {
+        timestamps: true
+    }
+)
 
-const products = mongoose.model('products', productScheme);
+const products = mongoose.model('products', productScheme)
+
 
 module.exports = products
