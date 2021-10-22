@@ -6,7 +6,7 @@
  * 
  * /register:
  *   post:
- *    description: crear usuario
+ *    description: create user
  *    tags: [Users]
  *    consumes:
  *    - application/json
@@ -16,7 +16,7 @@
  *    - in: body
  *      name: orders
  *      required: false
- *      description : crear usuario. Es posible añadir otras direcciones diferentes añadiendo un objeto al array "addressBook" con sus correspondientes elemento (shippingAddress)
+ *      description : create user. It is possible to add other different addresses by adding an object to the array "addressBook" with its corresponding element (shippingAddress)
  *      schema:
  *                  type: object
  *                  properties:
@@ -43,7 +43,7 @@
  *
  * /login:
  *  post:
- *    description: Iniciar sesión
+ *    description: log in
  *    tags: [Users]
  *    parameters:
  *    - name: email
@@ -55,14 +55,14 @@
  *      type: string
  *      in: formData
  *      required: false
- *      description : Contraseña
+ *      description : password
  *    responses:
  *      200:
  *        Sucess
  * 
  * /admin/users:
  *  get:
- *    description: Ver usuarios
+ *    description: View users
  *    tags: [Users]
  *    parameters:
  *    - name: authorization
@@ -76,7 +76,7 @@
  *
  * /admin/users/{idUser}:
  *  put:
- *    description: suspender usuario
+ *    description: Suspend user
  *    tags: [Users]
  *    parameters:
  *      - name: authorization
@@ -104,7 +104,7 @@
  *
  * /orders:
  *   post:
- *    description: Hacer un pedido
+ *    description: make an order
  *    tags: [Orders]
  *    consumes:
  *    - application/json
@@ -119,7 +119,7 @@
  *    - in: body
  *      name: orders
  *      required: false
- *      description : Crear una orden. Es posible añadir otros productos diferente añadiendo un objeto al array "order" con sus correspondientes elementos (product y amount)
+ *      description : Create an order. It is possible to add other different products by adding an object to the "order" array with its corresponding elements (product and amount)
  *      schema:
  *                  type: object
  *                  properties:
@@ -146,7 +146,7 @@
  *
  * /orders:
  *   put:
- *    description: Editar un pedido, el cambio se efectuará en el pedido sin confirmar
+ *    description: Edit an order, the change will be made to the unconfirmed order
  *    tags: [Orders]
  *    consumes:
  *    - application/json
@@ -160,7 +160,7 @@
  *      description : token
  *    - in: body
  *      name: orders
- *      description : Editar una pedido. Es posible añadir otro producto diferente añadiendo un objeto al array "order" con sus correspondientes elementos (product y amount)
+ *      description : Edit an order. It is possible to add other different products by adding an object to the "order" array with its corresponding elements (product and amount)
  *      schema:
  *                  type: object
  *                  properties:
@@ -183,7 +183,7 @@
  * 
  * /orders/confirmation:
  *  put:
- *    description: se confirma el pedido que esta en estado "new"
+ *    description: The order is confirmed in "new" status
  *    tags: [Orders] 
  *    parameters:
  *      - name: authorization
@@ -197,7 +197,7 @@
  *
  * /orders/history:
  *  get:
- *    description: Ver historial del usuario
+ *    description: view history
  *    tags: [Orders] 
  *    parameters:
  *      - name: authorization
@@ -211,7 +211,7 @@
  *
  * /admin/allOrders:
  *  get:
- *    description: Ver todas las ordenes
+ *    description: view all orders
  *    tags: [Orders] 
  *    parameters:
  *      - name: authorization
@@ -225,7 +225,7 @@
  * 
  * /admin/allorders/{idOrder}:
  *  put:
- *    description: Modificar estados
+ *    description: modify order statuses
  *    tags: [Orders] 
  *    parameters:
  *      - name: authorization
@@ -236,14 +236,14 @@
  *      - in: path
  *        name: idOrder
  *        required: true
- *        description: id de la orden
+ *        description: order id
  *        schema:
  *          type: integer
  *      - name: state
  *        type: string
  *        in: formData
  *        required: true
- *        description: Nuevo estado
+ *        description: new state
  *    responses:
  *      200:
  *        Sucess
@@ -258,7 +258,7 @@
  * @swagger
  * /user/addressBook:
  *  get:
- *    description: Ver direcciones
+ *    description: view address book
  *    tags: [AddressBook]
  *    parameters:
  *      - name: authorization
@@ -274,7 +274,7 @@
  * @swagger
  * /user/addressBook:
  *  post:
- *    description: Crear producto
+ *    description: Create shipping address
  *    tags: [AddressBook]
  *    parameters:
  *      - name: authorization
@@ -295,7 +295,7 @@
  * @swagger
  * /user/addressBook/{shippingAddress}:
  *  delete:
- *    description: Eliminar producto
+ *    description: Remove shipping address
  *    tags: [AddressBook]
  *    parameters:
  *      - name: authorization
@@ -322,7 +322,7 @@
  * @swagger
  * /payments:
  *  get:
- *    description: View users
+ *    description: View methods of payments
  *    tags: [Payments] 
  *    parameters:
  *    - name: authorization
@@ -338,7 +338,7 @@
  * @swagger
  * /admin/payments:
  *  post:
- *    description: Crear metodo de pago
+ *    description: Create payment method
  *    tags: [Payments]
  *    parameters:
  *      - name: authorization
@@ -357,7 +357,7 @@
  * 
  * /admin/payments/{idPayment}:
  *  put:
- *    description: Editar metodo de pago
+ *    description: Edit payment method
  *    tags: [Payments]
  *    parameters:
  *      - name: authorization
@@ -375,7 +375,7 @@
  *        type: string
  *        in: formData
  *        required: true
- *        description: Metodo
+ *        description: method of payment
  *    responses:
  *      200:
  *        Sucess
@@ -384,7 +384,7 @@
  * @swagger
  * /admin/payments/{idPayment}:
  *  delete:
- *    description: Eliminar metodo de pago
+ *    description: Remove payment method
  *    tags: [Payments]
  *    parameters:
  *      - name: authorization
@@ -396,7 +396,7 @@
  *        name: idPayment
  *        schema:
  *          type: integer
- *        description: id del metodo
+ *        description: method id
  *    responses:
  *      200:
  *        Sucess
@@ -410,7 +410,7 @@
  * @swagger
  * /products:
  *  get:
- *    description: Ver productos
+ *    description: view products
  *    tags: [Products]
  *    parameters:
  *      - name: authorization
@@ -424,7 +424,7 @@
  * 
  * /admin/products:
  *  post:
- *    description: Crear producto
+ *    description: Create products
  *    tags: [Products]
  *    parameters:
  *      - name: authorization
@@ -453,7 +453,7 @@
  *
  * /admin/products/{idProduct}:
  *  put:
- *    description: Editar producto
+ *    description: Edit product
  *    tags: [Products]
  *    parameters:
  *      - name: authorization
@@ -490,7 +490,7 @@
  * @swagger
  * /admin/products/{idProduct}:
  *  delete:
- *    description: Eliminar producto
+ *    description: Remove product
  *    tags: [Products]
  *    parameters:
  *      - name: authorization
