@@ -8,7 +8,10 @@ const validateRequest = async (req, res, next) => {
         const { username, password, email, name, phone, addressBook } = req.body;
         if (!username || !password || !email || !name || !phone || !addressBook) return res.status(404).json({ msg: 'Fill in all the fields', status: 404 })
 
-        const emailExists = await users.exists({ email: req.body.email });
+        const characters = /^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
+        if(!characters.exec(email)) return res.status(404).json({ msg: 'The email has invalid characters', status: 404 })
+
+        const emailExists = await users.exists({ email: email });
         emailExists ? res.status(404).json({ msg: 'The email is in use', status: 404 }) : next()
     } catch {
         res.status(404).json({ msg: 'Request denied. Check data', status: 404 })
