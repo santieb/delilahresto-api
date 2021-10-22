@@ -16,7 +16,7 @@ const validateProduct = async (req, res, next) => { //validar tambien que no se 
         if (!name || !abbreviation) return res.status(404).json({ msj: "fill in all the fields" })
 
         const nameExist = await products.exists({ name: name });
-        if (nameExist) res.status(404).json("The name already exists")
+        if (nameExist) return res.status(404).json("The name already exists")
 
         const abbreviationExist = await products.exists({ abbreviation: abbreviation });
         if (abbreviationExist) return res.status(404).json("The abbreviation already exists")
