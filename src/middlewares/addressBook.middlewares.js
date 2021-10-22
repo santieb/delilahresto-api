@@ -5,11 +5,9 @@ const validateAddress = async (req, res, next) => {
     try {
         const { address } = req.body
         if (!address) return res.status(404).json({ msg: 'Fill in all the fields', status: 404 })
+        const idUser = getIdUser(req)
 
-        const token = req.headers.authorization.replace('Bearer ', '')
-        const decoded = jwt.verify(token, process.env.SECRET)
-
-        const user = await users.findOne({ _id: decoded.id })
+        const user = await users.findOne({ _id: idUser })
 
         const addresses = user.addressBook
         const addressExist = (addresses.find(addresses => addresses.shippingAddress == address))
@@ -19,25 +17,31 @@ const validateAddress = async (req, res, next) => {
     }
 };
 
-const validateAddressID = async (req, res, next) => {
+const validateAddressParameter = async (req, res, next) => {
     try {
-        const { idAddress } = req.params;
+        const { shippingAddress } = req.params;
+        const idUser = getIdUser(req)
 
-        const token = req.headers.authorization.replace('Bearer ', '')
-        const decoded = jwt.verify(token, process.env.SECRET)
-
-        const user = await users.findOne({ _id: decoded.id })
+        const user = await users.findOne({ _id: idUser })
 
         const addresses = user.addressBook
-        const idExist = (addresses.find(addresses => addresses.id == idAddress))
-        !idExist ? res.status(404).send({ msg: 'thes id address does not exist', status: 404 }) : next()
+        const idExist = (addresses.find(addresses => addresses.shippingAddress == shippingAddress))
+        !idExist ? res.status(404).send({ msg: 'thes address does not exist', status: 404 }) : next()
     } catch {
-        res.status(404).json({ msg: 'thes id address does not exist', status: 404 })
+        res.status(404).json({ msg: 'thes address does not exist', status: 404 })
     }
-};
+}
+
+const getIdUser = (req) => {
+    const token = req.headers.authorization.replace('Bearer ', '')
+    const decoded = jwt.verify(token, process.env.SECRET)
+    const idUser = decoded.id
+
+    return idUser
+}
 
 
 module.exports = {
     validateAddress,
-    validateAddressID
+    validateAddressParameter
 }

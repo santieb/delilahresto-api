@@ -34,7 +34,7 @@ const validateProductID = async (req, res, next) => {
     }
 };
 
-const validateChanges = async (req, res, next) => { //mejorar
+const validateChanges = async (req, res, next) => {
     try {
         const { name, price, abbreviation } = req.body
 

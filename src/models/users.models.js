@@ -10,7 +10,6 @@ const userScheme = new Schema({
     addressBook: [
         {
             shippingAddress: { type: String, require: true },
-            id: { type: Number }
         }
     ],
     isAdmin: { type: Boolean, default: false },

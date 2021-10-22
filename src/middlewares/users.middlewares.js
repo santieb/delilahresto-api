@@ -28,7 +28,7 @@ const validateLogin = async (req, res, next) => {
         const comparePassword = await bcrypt.compare(password, user.password)
         if (!comparePassword) return res.status(404).json({ msg: 'Password does not match', status: 404 })
 
-        user.isSuspended ? res.status(1020).json({ msg: 'You are suspended, you cannot log in', status: 1020 }) : next()
+        user.isSuspended ? res.status(404).json({ msg: 'You are suspended, you cannot log in', status: 404 }) : next()
     } catch {
         res.status(404).json({ msg: 'Email address or password not found. Please try again', status: 404 })
     }
@@ -49,10 +49,10 @@ const isAuthenticated = async (req, res, next) => {
     try {
         const idUser = getIdUser(req)
         const user = await users.findOne({ _id: idUser })
-        user.isSuspended ? res.status(1020).json({ msg: 'You are suspended, you cannot access', status: 1020 }) : next()
+        user.isSuspended ? res.status(404).json({ msg: 'You are suspended, you cannot access', status: 404 }) : next()
     }
     catch {
-        res.status(1020).json({ msg: 'Not authenticated', status: 1020 })
+        res.status(404).json({ msg: 'Not authenticated', status: 404 })
     }
 }
 
@@ -60,9 +60,9 @@ const isAdmin = async (req, res, next) => {
     try {
         const idUser = getIdUser(req)
         const adminExist = await users.exists({ _id: idUser, isAdmin: true })
-        adminExist ? next() : res.status(1020).json({ msg: 'Not authorized', status: 1020 })
+        !adminExist ? res.status(404).json({ msg: 'Not authorized', status: 404 }) : next()
     } catch {
-        res.status(1020).json({ msg: 'Not authorized', status: 1020 })
+        res.status(404).json({ msg: 'Not authorized', status: 404 })
     }
 }
 

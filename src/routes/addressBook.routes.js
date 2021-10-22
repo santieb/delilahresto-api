@@ -29,13 +29,13 @@ router.post('/addressBook', middlewares.validateAddress, (req, res) => {
             }))
         .catch((err) =>
             res.status(404).json({
-                message: 'Unable to update data',
+                message: 'Unable to insert data',
                 errors: err,
                 status: 400
             }))
 })
 
-router.delete('/addressBook/:idAddress', middlewares.validateAddressID, (req, res) => {
+router.delete('/addressBook/:shippingAddress', middlewares.validateAddressParameter, (req, res) => {
     controllers.deleteAddress(req)
         .then(() =>
             res.status(200).json({

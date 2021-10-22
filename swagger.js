@@ -293,7 +293,7 @@
  */
 /**
  * @swagger
- * /user/addressBook/{idAddress}:
+ * /user/addressBook/{shippingAddress}:
  *  delete:
  *    description: Eliminar producto
  *    tags: [AddressBook]
@@ -304,11 +304,11 @@
  *        required: false
  *        description : token
  *      - in: path
- *        name: idAddress
+ *        name: shippingAddress
  *        schema:
  *          type: integer
  *        required: true
- *        description: idAddress
+ *        description: shippingAddress
  *    responses:
  *      200:
  *        Sucess

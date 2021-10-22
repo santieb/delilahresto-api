@@ -2,17 +2,12 @@ const jwt = require('jsonwebtoken');
 const orders = require('../models/orders.models');
 const products = require('../models/products.models')
 
-let count = 1;
-
 const createOrder = async (req, res) => {
     const { order, methodOfPayment, shippingAddress } = req.body
 
     const price = await getPrice(order, res)
     const description = await getDescription(req, res)
     const idUser = getIdUser(req)
-    const hour = getHour(req)
-    count++
-    const number = `#${count}`
 
     const newOrder = {
         idUser: idUser,
@@ -20,9 +15,7 @@ const createOrder = async (req, res) => {
         price: price,
         methodOfPayment: methodOfPayment,
         description: description,
-        shippingAddress: shippingAddress,
-        number: number,
-        hour: hour
+        shippingAddress: shippingAddress
     };
 
     const charge = new orders(newOrder)
@@ -49,10 +42,15 @@ const modifyOrder = async (req, res) => {
     await orders.findOneAndUpdate(filter, update)
 }
 
-const confirmOrder = async (req) => { //agregar number y hour
+let count = 1
+const confirmOrder = async (req) => {
     const idUser = getIdUser(req)
+
+    const hour = getHour(req)
+    const number = `#${count++}`
+
     const filter = { idUser: idUser, state: 'new' }
-    const update = { state: 'confirmed' }
+    const update = { state: 'confirmed', number: number, hour: hour }  //se agrega "number" y "hour" cuando un pedido se confirma 
 
     await orders.findOneAndUpdate(filter, update)
 }
@@ -97,7 +95,7 @@ const getDescription = async (req, res) => {
 
         for (i = 0; i < order.length; i++) {
             const product = await products.findOne({ name: order[i].product })
-            const info = `${order[i].amount}x${product.abbreviation} `
+            const info = `${order[i].amount}x${product.abbreviation}`
 
             description += info;
         }
@@ -117,7 +115,7 @@ const getPrice = async (order, res) => {
             let amount = order[i].amount
             price += amount * productPrice
 
-            order[i].productPrice = productPrice;
+            order[i].productPrice = productPrice
         }
         return price
     } catch {
