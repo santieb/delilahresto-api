@@ -39,7 +39,10 @@ const modifyProduct = async (req) => {
     await products.findOneAndUpdate(filter, update)
 }
 
-const deleteProduct = async (req) => await products.findByIdAndDelete(req.params.idProduct);
+const deleteProduct = async (req) => {
+    client.del('products')
+    await products.findByIdAndDelete(req.params.idProduct)
+}
 
 
 module.exports = {
