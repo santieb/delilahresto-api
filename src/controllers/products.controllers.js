@@ -17,6 +17,8 @@ const createProduct = async (req) => {
         price: price,
         abbreviation: abbreviation
     };
+    client.del('products')
+    
     const product = new products(newProduct)
     const response = await product.save()
     return response
