@@ -1,0 +1,27 @@
+[{
+  "_id": {
+    "$oid": "617332ecb02ace64f7ff5740"
+  },
+  "username": "admin",
+  "password": "$2a$08$2lpEtCZLEQ8/rDyMa6OcCuGmuGcd8qiLWs8L2qIIJoQyABblMD8vu",
+  "email": "admin@gmail.com",
+  "name": "admin",
+  "phone": 1234,
+  "addressBook": [
+    {
+      "shippingAddress": "av.admin",
+      "_id": {
+        "$oid": "617332ecb02ace64f7ff5741"
+      }
+    }
+  ],
+  "isAdmin": true,
+  "isSuspended": false,
+  "createdAt": {
+    "$date": "2021-10-22T21:53:48.691Z"
+  },
+  "updatedAt": {
+    "$date": "2021-10-22T21:53:48.691Z"
+  },
+  "__v": 0
+}]

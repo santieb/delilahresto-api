@@ -1,0 +1,37 @@
+[{
+  "_id": {
+    "$oid": "6172604192362e2ec3b69ee3"
+  },
+  "method": "bitcoin",
+  "createdAt": {
+    "$date": "2021-10-22T06:54:57.417Z"
+  },
+  "updatedAt": {
+    "$date": "2021-10-22T06:54:57.417Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61735ac40850cde93b269bae"
+  },
+  "method": "credit card",
+  "createdAt": {
+    "$date": "2021-10-23T00:43:48.248Z"
+  },
+  "updatedAt": {
+    "$date": "2021-10-23T00:43:48.248Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61735ade0850cde93b269bbb"
+  },
+  "method": "cash",
+  "createdAt": {
+    "$date": "2021-10-23T00:44:14.078Z"
+  },
+  "updatedAt": {
+    "$date": "2021-10-23T00:44:14.078Z"
+  },
+  "__v": 0
+}]
