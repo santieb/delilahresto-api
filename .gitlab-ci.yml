@@ -9,4 +9,4 @@ upload_project_to_s3:
     - aws configure set region $AWS_DEFAULT_REGION
 
     # Usando AWS CLI, sube el contenido de la carpeta “code” a tu bucket
-    - aws s3 cp $CI_PROJECT_DIR/content s3://$AWS_S3_BUCKET_NAME/ --recursive
+    - aws s3 cp $CI_PROJECT_DIR/content/ s3://$AWS_S3_BUCKET_NAME/ --recursive
