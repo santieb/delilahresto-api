@@ -1,8 +1,13 @@
 require('dotenv').config({ path: '../.env' })
 const mongoose = require('mongoose')
 
-const uri = process.env.CLOUD_MONGODB;
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}
 
-mongoose.connect(uri);
+const conectionString = process.env.CLOUD_MONGODB
+
+mongoose.connect(conectionString, options)
 
 module.exports = mongoose
