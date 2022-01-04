@@ -15,9 +15,9 @@ const validateMethod = async (req, res, next) => {
 const validatePaymentID = async (req, res, next) => {
   try {
     validateId = await payments.exists({ _id: req.params.idPayment })
-    !validateId ? res.status(404).send({ msg: 'Thes id payment does not exist', status: 404 }) : next()
+    !validateId ? res.status(404).send({ msg: 'that id payment does not exist', status: 404 }) : next()
   } catch {
-    res.status(404).json({ msg: 'Thes id payment does not exist', status: 404 })
+    res.status(404).json({ msg: 'that id payment does not exist', status: 404 })
   }
 }
 

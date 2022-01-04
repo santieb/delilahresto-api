@@ -4,10 +4,6 @@ const helmet = require('helmet')
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
 
-app.use(helmet())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-
 const swaggerOptions = {
   swaggerDefinition: {
     info: {
@@ -23,6 +19,10 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions)
 app.use('/api-docs',
   swaggerUI.serve,
   swaggerUI.setup(swaggerDocs))
+
+app.use(helmet())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 const middlewares = require('./middlewares/users.middlewares')
 
@@ -57,5 +57,5 @@ app.use('/admin', middlewares.isAdmin, adminPayments)
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
-  console.log(`Server listening on port http://localhost:${port}`)
+  console.log(`Server listening on port ${port}`)
 })

@@ -38,6 +38,7 @@ const validateUserID = async (req, res, next) => {
   try {
     const { idUser } = req.params
     const user = await users.findOne({ _id: idUser })
+
     if (user.isAdmin) return res.status(404).json({ msg: 'you cannot suspend an administrator', status: 404 })
     user.isSuspended ? res.status(404).json({ msg: 'the user is already suspended', status: 404 }) : next()
   } catch {
@@ -49,6 +50,7 @@ const isAuthenticated = async (req, res, next) => {
   try {
     const idUser = getIdUser(req)
     const user = await users.findOne({ _id: idUser })
+
     user.isSuspended ? res.status(404).json({ msg: 'You are suspended, you cannot access', status: 404 }) : next()
   } catch {
     res.status(404).json({ msg: 'Not authenticated', status: 404 })
@@ -59,6 +61,7 @@ const isAdmin = async (req, res, next) => {
   try {
     const idUser = getIdUser(req)
     const adminExist = await users.exists({ _id: idUser, isAdmin: true })
+    
     !adminExist ? res.status(404).json({ msg: 'Not authorized', status: 404 }) : next()
   } catch {
     res.status(404).json({ msg: 'Not authorized', status: 404 })

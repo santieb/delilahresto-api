@@ -49,7 +49,8 @@ const validateChanges = async (req, res, next) => {
     const shippingAddressExist = await users.exists({ _id: idUser, $and: [{ 'addressBook.shippingAddress': { $eq: shippingAddress } }] })
     if (!shippingAddressExist) return res.status(404).json({ msg: 'The shipping address does not exist in your list. Add to your list', status: 404 })
 
-    if (methodOfPayment == orderUser.methodOfPayment && order == orderUser.order && shippingAddress == order.shippingAddress) res.status(404).json({ msg: 'You have not made any changes', status: 404 })
+    if (methodOfPayment == orderUser.methodOfPayment && order == orderUser.order && shippingAddress == order.shippingAddress)
+     res.status(404).json({ msg: 'You have not made any changes', status: 404 })
 
     next()
   } catch {

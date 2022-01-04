@@ -26,9 +26,9 @@ const validateAddressParameter = async (req, res, next) => {
 
     const addresses = user.addressBook
     const idExist = (addresses.find(addresses => addresses.shippingAddress == shippingAddress))
-    !idExist ? res.status(404).send({ msg: 'thes address does not exist', status: 404 }) : next()
+    !idExist ? res.status(404).send({ msg: 'that address does not exist', status: 404 }) : next()
   } catch {
-    res.status(404).json({ msg: 'thes address does not exist', status: 404 })
+    res.status(404).json({ msg: 'that address does not exist', status: 404 })
   }
 }
 
