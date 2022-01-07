@@ -3,7 +3,7 @@ const router = express.Router()
 const controllers = require('../controllers/products.controllers')
 const middlewares = require('../middlewares/products.middlewares')
 
-router.get('/', middlewares.productsCache, (req, res) => {
+router.get('/products', middlewares.productsCache, (req, res) => {
   controllers.listProducts()
     .then((products) =>
       res.status(200).json({

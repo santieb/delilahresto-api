@@ -34,13 +34,13 @@ const addressBook = require('./routes/addressBook.routes')
 app.use('/user', middlewares.isAuthenticated, addressBook)
 
 const orders = require('./routes/orders.routes')
-app.use('/orders', middlewares.isAuthenticated, orders)
+app.use('/', middlewares.isAuthenticated, orders)
 
 const products = require('./routes/products.routes')
-app.use('/products', middlewares.isAuthenticated, products)
+app.use('/', middlewares.isAuthenticated, products)
 
 const payments = require('./routes/payments.routes')
-app.use('/payments', middlewares.isAuthenticated, payments)
+app.use('/', middlewares.isAuthenticated, payments)
 
 // admin routes
 const adminUsers = require('./routes/admin.routes/admin.users.routes')

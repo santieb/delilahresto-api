@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const controllers = require('../controllers/payments.controllers')
 
-router.get('/', (req, res) => {
+router.get('/payments', (req, res) => {
   controllers.listPayments()
     .then((paymentMethods) =>
       res.status(200).json({
