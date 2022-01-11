@@ -53,7 +53,7 @@ const isAuthenticated = async (req, res, next) => {
 
     user.isSuspended ? res.status(404).json({ msg: 'You are suspended, you cannot access', status: 404 }) : next()
   } catch {
-    res.status(200).json({ msg: 'Not authenticated', status: 404 })
+    res.status(404).json({ msg: 'Not authenticated', status: 404 })
   }
 }
 
