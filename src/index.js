@@ -26,6 +26,9 @@ app.use(express.json())
 
 const middlewares = require('./middlewares/users.middlewares')
 
+const check = require('./routes/check.routes')
+app.get('/check', check)
+
 // user routes
 const users = require('./routes/users.routes')
 app.use('/', users)
@@ -34,13 +37,13 @@ const addressBook = require('./routes/addressBook.routes')
 app.use('/user', middlewares.isAuthenticated, addressBook)
 
 const orders = require('./routes/orders.routes')
-app.use('/', middlewares.isAuthenticated, orders)
+app.use('/orders', middlewares.isAuthenticated, orders)
 
 const products = require('./routes/products.routes')
-app.use('/', middlewares.isAuthenticated, products)
+app.use('/products', middlewares.isAuthenticated, products)
 
 const payments = require('./routes/payments.routes')
-app.use('/', middlewares.isAuthenticated, payments)
+app.use('/payments', middlewares.isAuthenticated, payments)
 
 // admin routes
 const adminUsers = require('./routes/admin.routes/admin.users.routes')
