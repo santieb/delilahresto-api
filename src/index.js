@@ -26,8 +26,9 @@ app.use(express.json())
 
 const middlewares = require('./middlewares/users.middlewares')
 
-const check = require('./routes/check.routes')
-app.get('/check', check)
+app.get('/', (req, res) => {
+  res.status(200).send('Ok')
+})
 
 // user routes
 const users = require('./routes/users.routes')
