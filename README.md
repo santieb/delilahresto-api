@@ -23,25 +23,18 @@ npm install
 Crea un archivo **".env"** e inserta los datos tomando como referencia el archivo **".env.example"** para crear la base de datos. Debería quedar algo asi:
 
 ```
-MONGODB_HOST=localhost
-MONGODB_PORT=27017
-MONGODB_DB_NAME=restaurant
+CLOUD_MONGODB=mongodb+srv://admin:password@sprint3.y6js9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+ELASTICACHE_URL=enlace.v3vtsh.0001.sae2.cache.amazonaws.com
 SECRET=signature
 ```
 
-**2 - Inserción de datos**
+**2 - Ejecución**
 
-Exporta los archivos JSON de la carpeta **"src/data"** e insertarlos en la base de datos en sus correspondientes colecciones
+Para iniciar mi proyecto, tienes que usar `npm run start` y para iniciar el test usa `npm run test`
 
-* Solo los archivos **"users.json"** y **"orderstatuses.json"** son necesarios, los demás archivos son opcionales
- 
-* Los datos del usuario con el rol administrador son **email: "admin@gmail.com", password "admin"**
-
-**3 - Ejecución**
-
-Para iniciar mi proyecto, tienes que usar `npm run dev` y para iniciar el test usa `npm run test`
-
-* Recuerda que la API está documentada en swagger te será más fácil hacer pruebas
+* Recuerda que la API está documentada en swagger, te será más fácil hacer pruebas
+https://www.delilahresto.gq/api-docs/
+* Los datos del usuario con el rol administrador son: **email: "admin@gmail.com", password: "admin"**
 
 ## Construido con 🛠️
 
@@ -52,6 +45,7 @@ Para iniciar mi proyecto, tienes que usar `npm run dev` y para iniciar el test u
 * [Redis]("https://redis.io/") - Cache
 * [Mocha]("https://mochajs.org/") - Test
 * [JWT]("https://jwt.io/") - Auth
+* [AWS]("https://aws.amazon.com/) - Cloud services
 
 
 ## Autor ✒️
@@ -59,5 +53,3 @@ Para iniciar mi proyecto, tienes que usar `npm run dev` y para iniciar el test u
 * **Santiago Barreto** - [santieb](https://gitlab.com/santieb) 
 
 ---
-
-por [santieb](https://gitlab.com/santieb)
