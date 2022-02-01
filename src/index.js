@@ -24,40 +24,25 @@ app.use(helmet())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-const middlewares = require('./middlewares/users.middlewares')
+
 
 app.get('/', (req, res) => {
   res.status(200).send('Ok')
 })
 
-// user routes
-const users = require('./routes/users.routes')
-app.use('/', users)
+const { isAuthenticated, isAdmin} = require('./middlewares/users.middlewares')
 
-const addressBook = require('./routes/addressBook.routes')
-app.use('/user', middlewares.isAuthenticated, addressBook)
+app.use('/', require('./routes/users.routes'))
+app.use('/user', isAuthenticated, require('./routes/addressBook.routes'))
+app.use('/orders', isAuthenticated, require('./routes/orders.routes'))
+app.use('/products', isAuthenticated, require('./routes/products.routes'))
+app.use('/payments', isAuthenticated, require('./routes/payments.routes'))
 
-const orders = require('./routes/orders.routes')
-app.use('/orders', middlewares.isAuthenticated, orders)
-
-const products = require('./routes/products.routes')
-app.use('/products', middlewares.isAuthenticated, products)
-
-const payments = require('./routes/payments.routes')
-app.use('/payments', middlewares.isAuthenticated, payments)
-
-// admin routes
-const adminUsers = require('./routes/admin.routes/admin.users.routes')
-app.use('/admin', middlewares.isAdmin, adminUsers)
-
-const adminOrders = require('./routes/admin.routes/admin.orders.routes')
-app.use('/admin', middlewares.isAdmin, adminOrders)
-
-const adminProducts = require('./routes/admin.routes/admin.products.routes')
-app.use('/admin', middlewares.isAdmin, adminProducts)
-
-const adminPayments = require('./routes/admin.routes/admin.payments.routes')
-app.use('/admin', middlewares.isAdmin, adminPayments)
+app.use('/admin', isAdmin)
+app.use('/admin', require('./routes/admin.routes/admin.users.routes'))
+app.use('/admin', require('./routes/admin.routes/admin.orders.routes'))
+app.use('/admin', require('./routes/admin.routes/admin.products.routes'))
+app.use('/admin', require('./routes/admin.routes/admin.payments.routes'))
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {

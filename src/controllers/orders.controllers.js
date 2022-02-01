@@ -50,7 +50,7 @@ const confirmOrder = async (req) => {
   const number = `#${count++}`
 
   const filter = { idUser: idUser, state: 'new' }
-  const update = { state: 'confirmed', number: number, hour: hour } // se agrega "number" y "hour" cuando un pedido se confirma
+  const update = { state: 'confirmed', number: number, hour: hour }
 
   await orders.findOneAndUpdate(filter, update)
 }
