@@ -3,6 +3,7 @@ const app = express()
 const helmet = require('helmet')
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
+const cors = require('cors')
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -20,6 +21,7 @@ app.use('/api-docs',
   swaggerUI.serve,
   swaggerUI.setup(swaggerDocs))
 
+app.use(cors())
 app.use(helmet())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -32,6 +34,8 @@ app.get('/', (req, res) => {
 
 const { isAuthenticated, isAdmin} = require('./middlewares/users.middlewares')
 
+
+app.use('/', require('./routes/auth.routes'))
 app.use('/', require('./routes/users.routes'))
 app.use('/user', isAuthenticated, require('./routes/addressBook.routes'))
 app.use('/orders', isAuthenticated, require('./routes/orders.routes'))

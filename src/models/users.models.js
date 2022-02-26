@@ -1,15 +1,16 @@
 const mongoose = require('../config/db.config')
+const findOrCreate = require('mongoose-findorcreate')
 const { Schema } = mongoose
 
 const userScheme = new Schema({
-  username: { type: String, required: true },
-  password: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  name: { type: String, required: true },
-  phone: { type: Number, required: true },
+  username: { type: String },
+  password: { type: String },
+  email: { type: String },
+  name: { type: String },
+  phone: { type: Number },
   addressBook: [
     {
-      shippingAddress: { type: String, require: true }
+      shippingAddress: { type: String }
     }
   ],
   isAdmin: { type: Boolean, default: false },
@@ -19,6 +20,8 @@ const userScheme = new Schema({
   timestamps: true
 }
 )
+
+userScheme.plugin(findOrCreate)
 
 const users = mongoose.model('users', userScheme)
 

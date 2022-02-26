@@ -2,10 +2,7 @@ require('dotenv').config()
 const products = require('../models/products.models')
 
 const redis = require('redis')
-const client = redis.createClient({
-  host: process.env.ELASTICACHE_URL,
-  port: 6379
-})
+const client = redis.createClient()
 
 const listProducts = async () => {
   const response = await products.find()
