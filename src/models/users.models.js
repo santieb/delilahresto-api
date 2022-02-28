@@ -8,6 +8,7 @@ const userScheme = new Schema({
   email: { type: String },
   name: { type: String },
   phone: { type: Number },
+  cart: { type: Array, default: [] },
   addressBook: [
     {
       shippingAddress: { type: String }

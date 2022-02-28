@@ -3,8 +3,6 @@ const users = require('../models/users.models')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const listUsers = async () => await users.find()
-
 const createUser = async (req) => {
   const { username, password, email, name, phone, addressBook } = req.body
 
@@ -32,6 +30,25 @@ const loginUser = async (req) => {
   return token
 }
 
+const getUser = async (req) => {
+  const { idUser } = getIdUser(req)
+
+  const user = await users.findById(idUser)
+  return user
+}
+
+const addCart = async (req, res) => {
+  const { cart } = req.body
+  const { idUser } = getIdUser(req)
+
+  const filter = { _id: idUser }
+  const update = { cart: cart }
+
+  await Users.findOneAndUpdate(filter, update)
+}
+
+const listUsers = async () => await users.find()
+
 const suspendUser = async (req) => {
   const { idUser } = req.params
 
@@ -48,9 +65,19 @@ const addIdentifiersAddresses = async (req) => {
   }
 }
 
+const getIdUser = (req) => {
+  const token = req.headers.authorization.replace('Bearer ', '')
+  const decoded = jwt.verify(token, process.env.SECRET)
+  const idUser = decoded.id
+
+  return idUser
+}
+
 module.exports = {
-  listUsers,
   createUser,
   loginUser,
+  addCart,
+  getUser,
+  listUsers,
   suspendUser
 }
