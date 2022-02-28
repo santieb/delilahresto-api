@@ -39,7 +39,7 @@ app.use('/', require('./routes/auth.routes'))
 app.use('/', require('./routes/users.routes'))
 app.use('/user', isAuthenticated, require('./routes/addressBook.routes'))
 app.use('/orders', isAuthenticated, require('./routes/orders.routes'))
-app.use('/products', isAuthenticated, require('./routes/products.routes'))
+app.use('/products', require('./routes/products.routes'))
 app.use('/payments', isAuthenticated, require('./routes/payments.routes'))
 
 app.use('/admin', isAdmin)

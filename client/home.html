@@ -9,11 +9,25 @@
 </head>
 
 <body>
-  <header></header>
-  <section>
-    <div id="produts"></div>
-  </section>
-  <script src="./scripts/index.js"></script>
+
+  <div id="listProducts"></div>
+  <template id="section">
+    <div>
+      <img></img>
+      <h4 id="productName">nombre</h4>
+      <h9></h9>
+      <p></p>
+      <button id="add" class='add-to-cart'></button>
+    </div>
+  </template>
+  <form>
+    <h3>Orden</h3>
+    <div id="order"></div>
+    <input type="text" id="shipping_address" placeholder="Dirección">
+    <div id="cart"></div>
+  </form>
+
+  <script src="./scripts/app.js"></script>
 </body>
 
 </html>
