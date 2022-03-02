@@ -1,0 +1,19 @@
+.product {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product img {
+  width:200px;
+  height:200px;
+}
+
+.product button {
+  height: 20px;
+  background-color: rgb(245, 90, 90);
+  border-radius: 5px;
+}

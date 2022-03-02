@@ -1,0 +1,12 @@
+.product-order {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  background-color: #fff;
+  border-bottom: 1px solid;
+}
+
+.product-order img {
+  width: 30px;
+  height: 30px;
+}
