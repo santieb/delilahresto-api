@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+  list-style: none;
+}
+
+.header li {
+  background-color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: 1rem
+}
+
+.header li ul {
+  display: none;
+  position: absolute;
+  min-width: 140px;
+}
+
+.header li:hover >ul {
+  display: block;
+}
