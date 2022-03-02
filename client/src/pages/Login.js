@@ -1,27 +1,27 @@
 import React, { useState } from 'react'
 import login from '../services/login'
 
-const Login = () => {
+const Login = ({user} ) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [token, setToken] = useState('')
-
+  
   const handleLogin = async (event) => {
     event.preventDefault()
     try{
-      const user = await login({email, password})
-
-      if (!user.token) alert('Wrong credencials')
-      setToken(user.token)
+      const { user } = await login({email, password})
+      if (!user) alert('Wrong credencials')
+      else {
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      window.location.href = "/";
+      }
       setEmail('')
       setPassword('')
-      
     } catch (err) {
       alert('error', err)
     }
   }
 
-  return ( 
+  return (
     <div>
       <form onSubmit={handleLogin}>
         <input
@@ -38,9 +38,7 @@ const Login = () => {
           placeholder='Password'
           onChange={({target}) => setPassword(target.value)}
         />
-      <button>
-        Login
-      </button>
+        <button>Login</button>
       </form>
     </div>
   )

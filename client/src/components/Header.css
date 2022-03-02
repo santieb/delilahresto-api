@@ -13,7 +13,7 @@ ul {
   background-color: #fff;
   text-decoration: none;
   display: block;
-  padding: 1rem
+  padding: 1rem;
 }
 
 .header li ul {
@@ -24,4 +24,16 @@ ul {
 
 .header li:hover >ul {
   display: block;
+}
+
+.user {
+  font-size: 1.5rem;
+  padding-right: 1rem;
+}
+
+.header-user {
+  text-decoration: none;
+}
+.header-user:hover {
+  background-color: rgb(182, 226, 206);
 }

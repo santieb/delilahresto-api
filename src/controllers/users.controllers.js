@@ -28,8 +28,7 @@ const loginUser = async (req) => {
   const user = await users.findOne({ email: email }).select('-password -_id -createdAt -updatedAt -__v -isSuspended -addressBook -username -cart -phone')
   const token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 24 * 7 })
 
-  const res = Object.assign(user, token);
-  return res
+  return {user, token}
 }
 
 const getUser = async (req) => {

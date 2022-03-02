@@ -21,10 +21,10 @@ router.post('/register', middlewares.validateRequest, (req, res) => {
 
 router.post('/login', middlewares.validateLogin, (req, res) => {
   controllers.loginUser(req)
-    .then((data) =>
+    .then((user) =>
       res.status(200).json({
         message: 'Session started successfully',
-        data: data,
+        user: user,
         status: 200
       }))
     .catch((err) =>
