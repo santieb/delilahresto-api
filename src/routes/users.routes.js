@@ -21,10 +21,10 @@ router.post('/register', middlewares.validateRequest, (req, res) => {
 
 router.post('/login', middlewares.validateLogin, (req, res) => {
   controllers.loginUser(req)
-    .then((token) =>
+    .then((data) =>
       res.status(200).json({
         message: 'Session started successfully',
-        token: token,
+        data: data,
         status: 200
       }))
     .catch((err) =>
@@ -35,7 +35,7 @@ router.post('/login', middlewares.validateLogin, (req, res) => {
       }))
 })
 
-router.get('/me', middlewares.isAuthenticated, (req, res) => {
+router.get('/user/me', middlewares.isAuthenticated, (req, res) => {
   controllers.getUser(req)
     .then((user) =>
       res.status(200).json({
@@ -51,8 +51,8 @@ router.get('/me', middlewares.isAuthenticated, (req, res) => {
       }))
 })
 
-router.post('/addCart', middlewares.isAuthenticated, (req, res) => {
-  controllers.addCart(req)
+router.post('/user/addcart', middlewares.isAuthenticated, (req, res) => {
+  controllers.updateCart(req)
     .then(() =>
       res.status(200).json({
         message: 'Data update successfully',

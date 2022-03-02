@@ -25,26 +25,27 @@ const createUser = async (req) => {
 const loginUser = async (req) => {
   const { email } = req.body
 
-  const user = await users.findOne({ email: email })
+  const user = await users.findOne({ email: email }).select('-password -_id -createdAt -updatedAt -__v -isSuspended -addressBook -username -cart -phone')
   const token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 24 * 7 })
-  return token
+
+  const res = Object.assign(user, token);
+  return res
 }
 
 const getUser = async (req) => {
-  const { idUser } = getIdUser(req)
-
-  const user = await users.findById(idUser)
+  const idUser = getIdUser(req)
+  const user = await users.findOne({_id: idUser})
   return user
 }
 
-const addCart = async (req, res) => {
+const updateCart = async (req, res) => {
   const { cart } = req.body
-  const { idUser } = getIdUser(req)
+  const idUser = getIdUser(req)
 
   const filter = { _id: idUser }
   const update = { cart: cart }
 
-  await Users.findOneAndUpdate(filter, update)
+  await users.findOneAndUpdate(filter, update)
 }
 
 const listUsers = async () => await users.find()
@@ -69,14 +70,13 @@ const getIdUser = (req) => {
   const token = req.headers.authorization.replace('Bearer ', '')
   const decoded = jwt.verify(token, process.env.SECRET)
   const idUser = decoded.id
-
   return idUser
 }
 
 module.exports = {
   createUser,
   loginUser,
-  addCart,
+  updateCart,
   getUser,
   listUsers,
   suspendUser
