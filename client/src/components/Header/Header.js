@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './Header.css'
-import images from '../assets/images'
+import images from '../../assets/images'
+
 const Header = ({user}) => {
 
   const handleLogout = () => {

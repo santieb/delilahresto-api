@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Product from '../components/Product'
-import Cart from '../components/Cart'
-import './Home.css'
+import Product from '../../components/Product/Product'
+import Cart from '../../components/Cart/Cart'
+import './styles.css'
 
 const App = ({user}) => {
   const [products, setProducts] = useState()

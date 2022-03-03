@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Cart.css'
-import Product from './Product-order'
-import createOrder from '../services/order'
+import Product from '../Product/Product-order'
+import createOrder from '../../services/order'
 
 const Cart = ({cart, setCart}) => {
   const [address, setAddress] = useState('')
@@ -21,7 +21,9 @@ const Cart = ({cart, setCart}) => {
   return (
     <div className="cart">
       <h4>Order</h4>
-      {cart.length === 0 ? (<p>Your order is empty</p>) : (cart.map(product => <Product key={product.name} product={product} cart={cart} setCart={setCart}/> ))}
+        {cart.length === 0 
+        ? (<p>Your order is empty</p>) 
+        : (cart.map(product => <Product key={product.name} product={product} cart={cart} setCart={setCart}/> ))}
 
     <div>
       <form onSubmit={handleBuy}>
