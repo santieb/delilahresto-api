@@ -6,6 +6,7 @@ import './Home.css'
 const App = ({user}) => {
   const [products, setProducts] = useState()
   const [cart, setCart] = useState([])
+
   useEffect( () => {
       fetch("http://localhost:3000/products")
       .then(res => res.json())
@@ -15,9 +16,9 @@ const App = ({user}) => {
   return ( 
     <>
       <div>
-        <h3>Products</h3>
+        <h3 className="title">Products</h3>
         <div className="products">
-        {products && products.map(product => <Product key={product.name} product={product} products={products} cart={cart} setCart={setCart} />)}
+          {products && products.map(product => <Product key={product.name} product={product} products={products} cart={cart} setCart={setCart} />)}
         </div>
       </div>
       <div>

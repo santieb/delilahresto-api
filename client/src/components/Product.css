@@ -1,7 +1,8 @@
 .product {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 2rem;
+  margin: 0rem 2rem ;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
@@ -16,4 +17,5 @@
   height: 20px;
   background-color: rgb(245, 90, 90);
   border-radius: 5px;
+  cursor: pointer;
 }

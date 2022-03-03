@@ -2,3 +2,9 @@
   display: flex;
   flex-direction: row;
 }
+
+.title {
+  padding: 1rem;
+  font-size: 30px;
+  margin-left: 600px;
+}

@@ -10,3 +10,10 @@
   width: 30px;
   height: 30px;
 }
+
+.quantity {
+  margin-left: 1rem;
+  background-color: #c2c2c2;
+  border-radius: 50px;
+  text-align: center;
+}
