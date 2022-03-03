@@ -7,15 +7,13 @@ const getUser = async (token) => {
       'Accept': '*/*'
     }
   }
-  
-  try{
-  const res = await fetch('http://localhost:3000/user/me', requestOptions)
-  const userData = await res.json();
-  console.log(userData)
-  return userData
 
+  try{
+    const res = await fetch('http://localhost:3000/user/me', requestOptions)
+    const userData = await res.json();
+    return userData
   } catch (err) {
-   return err
+    return err
   }
 }
 

@@ -1,5 +1,6 @@
 import React  from 'react'
 import './Product.css'
+import images from '../../assets/images'
 
 const Product = ({ product, products, cart, setCart }) => {
   const { name, price } = product
@@ -14,15 +15,17 @@ const Product = ({ product, products, cart, setCart }) => {
       product[0].amount = 1
       setCart([...cart, ...product])
     }
-    
   }
 
   return (
     <div className="product">
-      <img alt="" src="https://us.123rf.com/450wm/foodandmore/foodandmore1611/foodandmore161100126/66013283-pizza-con-jam%C3%B3n-y-ensalada-de-r%C3%BAcula-aislar-sobre-fondo-blanco.jpg?ver=6"></img>
-      <h5>{name}</h5>
-      <p>${price}</p>
-      <button onClick={() => addCart(name)}>Add to my order</button>
+      <img alt="" src="https://napolicartagena.com/wp-content/uploads/2022/01/La-Historia-de-la-pizza.jpg"></img>
+      <div className="product-info">
+        <h5>{name}</h5>
+        <p>${price}</p>
+        <img alt="" onClick={() => addCart(name)} src={images.bag}></img>
+      </div>
+
     </div>
   )
 }

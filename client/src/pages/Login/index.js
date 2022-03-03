@@ -14,7 +14,7 @@ const Login = ({user} ) => {
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       window.location.href = "/";
       }
-      
+
       setEmail('')
       setPassword('')
     } catch (err) {
