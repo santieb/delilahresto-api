@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import login from '../../services/login'
-import { Navigate } from 'react-router-dom'
 
 const Login = ({user} ) => {
   const [email, setEmail] = useState('')
@@ -12,10 +11,10 @@ const Login = ({user} ) => {
       const { user } = await login({email, password})
       if (!user) alert('Wrong credencials')
       else {
-        window.localStorage.setItem('loggedUser', JSON.stringify(user))
-        Navigate('/')
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      window.location.href = "/";
       }
-
+      
       setEmail('')
       setPassword('')
     } catch (err) {
