@@ -50,7 +50,6 @@ const isAuthenticated = async (req, res, next) => {
   try {
     const idUser = getIdUser(req)
     const user = await users.findOne({ _id: idUser })
-
     user.isSuspended ? res.status(404).json({ msg: 'You are suspended, you cannot access', status: 404 }) : next()
   } catch {
     res.status(404).json({ msg: 'Not authenticated', status: 404 })
@@ -60,6 +59,7 @@ const isAuthenticated = async (req, res, next) => {
 const isAdmin = async (req, res, next) => {
   try {
     const idUser = getIdUser(req)
+    console.log(idUser)
     const adminExist = await users.exists({ _id: idUser, isAdmin: true })
     
     !adminExist ? res.status(404).json({ msg: 'Not authorized', status: 404 }) : next()
@@ -71,6 +71,7 @@ const isAdmin = async (req, res, next) => {
 const getIdUser = (req) => {
   const token = req.headers.authorization.replace('Bearer ', '')
   const decoded = jwt.verify(token, process.env.SECRET)
+  console.log(decoded)
   const idUser = decoded.id
   return idUser
 }
