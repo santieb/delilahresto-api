@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { getHistory } from '../../services/order'
+import Order from '../../components/Order/Order'
 
 const App = () => {
-    const { history, setHistory } = useState([])
+    const [ history, setHistory ] = useState([])
 
   useEffect(() => {
     const getUserData = async () => {
         const loggedUser = window.localStorage.getItem('loggedUser')
         const token = JSON.parse(loggedUser).token
-        console.log(token)
-        const history = await getHistory(token)
-        console.log(history)
+        const data = await getHistory(token)
+        
+        setHistory(data.history)
     } 
     getUserData()
-  }, [])
+  }, [setHistory])
 
   return ( 
     <>
@@ -26,41 +27,25 @@ const App = () => {
                     <thead class="bg-gray-100 dark:bg-gray-700">
                         <tr>
                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                Name
+                                Date
                             </th>
                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                Color
+                                Description
                             </th>
                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                Category
+                                Payment
                             </th>
                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                 Price
                             </th>
-                            <th scope="col" class="relative py-3 px-6">
-                                <span class="sr-only">Edit</span>
+                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                address
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 dark:border-gray-600">
-                            <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Apple MacBook Pro 17"
-                            </td>
-                            <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                Sliver
-                            </td>
-                            <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                Laptop
-                            </td>
-                            <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                $2999
-                            </td>
-                            <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
-                                <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            </td>
-                        </tr>
-
+                        {history && history.map(order => <Order key={order.id} order={order} />)}
+                        {!history && <p>Loading...</p>}
                     </tbody>
                 </table>
             </div>
