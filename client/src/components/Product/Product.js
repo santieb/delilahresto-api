@@ -25,7 +25,6 @@ const Product = ({ product, products, cart, setCart }) => {
         <p>${price}</p>
         <img alt="" onClick={() => addCart(name)} src={images.bag}></img>
       </div>
-
     </div>
   )
 }

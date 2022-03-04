@@ -16,7 +16,6 @@ const App = ({user}) => {
   return ( 
     <>
       <div>
-        <h3 className="title">Products</h3>
         <div className="products">
           {products && products.map(product => <Product key={product.name} product={product} products={products} cart={cart} setCart={setCart} />)}
         </div>

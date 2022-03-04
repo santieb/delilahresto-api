@@ -26,4 +26,24 @@ const createOrder = async (token, order, methodOfPayment, shippingAddress) => {
   }
 }
 
-export default createOrder 
+const getHistory = async (token) => {
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token,
+    },
+  }
+
+  try {
+  const res = await fetch('http://localhost:3000/orders/history', requestOptions)
+  console.log(res)
+  const data = await res.json();
+  return data
+
+  } catch (err) {
+   return err
+  }
+}
+
+export {createOrder, getHistory}
