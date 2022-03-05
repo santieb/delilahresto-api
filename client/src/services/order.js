@@ -1,4 +1,4 @@
-const createOrder = async (token, order, methodOfPayment, shippingAddress) => {
+const createOrder = async (token, order, shippingAddress, methodOfPayment) => {
   const data = { 
     'order': order,
     'methodOfPayment': methodOfPayment,
@@ -19,6 +19,7 @@ const createOrder = async (token, order, methodOfPayment, shippingAddress) => {
   const res = await fetch('http://localhost:3000/orders', requestOptions)
   console.log(res)
   const data = await res.json();
+  console.log(data)
   return data
 
   } catch (err) {

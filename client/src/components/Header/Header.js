@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import Login from '../Login'
 
 const Header = ({user}) => {
-  const nameUser = user.user
-  console.log((nameUser))
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
     window.location.href = "/"
@@ -27,9 +25,6 @@ const Header = ({user}) => {
             <ul class="py-1" aria-labelledby="dropdown">
               <li class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                 <Link to='/my-account'>My account</Link>
-              </li>
-              <li class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                <Link to='/history'>History</Link>
               </li>
               <li onClick={handleLogout} class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                 Logout

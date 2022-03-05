@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom'
 import Header from './components/Header/Header'
 import Home from './pages/Home'
 import MyAccount from './pages/MyAccount'
-import History from './pages/History'
 
 const App = () => {
   const [user, setUser] = useState('') 
@@ -22,8 +21,7 @@ const App = () => {
       <div>
       <Routes>
         <Route path='/' element={<Home user={user}/>}></Route>
-        <Route path='/my-account' element={<MyAccount user={user}/>} ></Route>
-        <Route path='/history' element={<History user={user}/>}></Route>
+        <Route path='/my-account' element={<MyAccount user={user}/>}></Route>
       </Routes>
       </div>
     </div>
