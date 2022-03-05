@@ -71,7 +71,6 @@ const isAdmin = async (req, res, next) => {
 const getIdUser = (req) => {
   const token = req.headers.authorization.replace('Bearer ', '')
   const decoded = jwt.verify(token, process.env.SECRET)
-  console.log(decoded)
   const idUser = decoded.id
   return idUser
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Product from '../../components/Product/Product'
 import Cart from '../../components/Cart/Cart'
 
-const App = ({user}) => {
+const App = () => {
   const [products, setProducts] = useState()
   const [cart, setCart] = useState([])
 

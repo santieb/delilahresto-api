@@ -15,7 +15,7 @@ const validateRequest = async (req, res, next) => {
     if (orderUser) return res.status(404).json({ msg: 'You already have a pending order, confirm the order to create another', status: 404 })
 
     for (let i = 0; i < order.length; i++) {
-      const productExist = await products.exists({ name: order[i].product })
+      const productExist = await products.exists({ name: order[i].name })
       if (!productExist) return res.status(404).json({ msg: 'A product entered does not exist. Check the product list', status: 404 })
     }
 
