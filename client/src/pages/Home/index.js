@@ -13,7 +13,7 @@ const App = () => {
   }, [products])
 
   return ( 
-    <div class="md:mx-52 flex px-12 py-6">
+    <div class="flex m-auto py-6 justify-center px-12">
       <div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
           {products && products.map(product => <Product key={product.name} product={product} products={products} cart={cart} setCart={setCart} />)}

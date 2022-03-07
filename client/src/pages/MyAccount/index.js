@@ -20,7 +20,7 @@ const MyAccount = () => {
   }, [])
 
   return (
-    <div class="flex flex-col w-100 sm:ml-40 sm:my-8 sm:flex-row">
+    <div class="flex flex-col w-100 sm:ml-20 m-auto sm:my-8 sm:flex-row">
       <div class="bg-white shadow overflow-hidden sm:rounded-lg ">
         <div class="px-4 py-5 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">My account</h3>

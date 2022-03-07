@@ -16,7 +16,7 @@ const App = () => {
   }, [])
 
   return ( 
-    <div>
+    <div class="md:mx-60  min-h-screen bg-slate-50 border shadow-md">
       <Header user={user}/>
       <div>
       <Routes>

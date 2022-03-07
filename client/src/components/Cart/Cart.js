@@ -31,6 +31,7 @@ const Cart = ({cart, setCart}) => {
             <h4 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Order</h4>
           </div>
           <div class="flow-root">
+            <img alt="" src="https://i.pinimg.com/originals/6f/fd/64/6ffd64c5366898c59bbc91d9aec935c3.png" ></img>
             <p class="my-4 divide-y divide-gray-200 dark:divide-gray-700">
               The order is empty.
             </p>
