@@ -25,9 +25,9 @@ const Header = () => {
     <nav class="drop-shadow-lg bg-white border-gray-200 px-14 py-6 rounded dark:bg-gray-800">
       <div class="flex flex-wrap justify-between items-center mx-auto">
         <div class="flex items-center">
-          <img src={images.resto} class="mr-3 h-6 sm:h-10" alt="" />
           <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"><Link to='/'>Delilah Resto</Link></span>
         </div>
+        <img src={images.resto} class="mr-3 h-6 sm:h-10" alt="" />
         <div class="flex items-center">
         {user.name}
           <button type="button" class="flex mx-4 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" type="button" data-dropdown-toggle="dropdown">
