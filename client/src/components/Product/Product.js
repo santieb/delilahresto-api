@@ -1,5 +1,4 @@
 import React  from 'react'
-import images from '../../assets/images'
 
 const Product = ({ product, products, cart, setCart }) => {
   const { name, price } = product
