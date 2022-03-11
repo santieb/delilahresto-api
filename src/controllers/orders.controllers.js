@@ -17,7 +17,6 @@ const createOrder = async (req, res) => {
     description: description,
     shippingAddress: shippingAddress
   }
-
   const charge = new orders(newOrder)
   const response = await charge.save()
   return response
@@ -46,11 +45,11 @@ let count = 1
 const confirmOrder = async (req) => {
   const idUser = getIdUser(req)
 
-  const hour = getHour(req)
+  const date = getDate(req)
   const number = `#${count++}`
 
   const filter = { idUser: idUser, state: 'new' }
-  const update = { state: 'confirmed', number: number, hour: hour }
+  const update = { state: 'confirmed', number: number, date: date }
 
   await orders.findOneAndUpdate(filter, update)
 }
@@ -82,10 +81,11 @@ const getIdUser = (req) => {
   return idUser
 }
 
-const getHour = () => {
-  const date = new Date()
-  const hour = `${date.getHours()}:${date.getMinutes()}`
-  return hour
+const getDate = () => {
+  const now = new Date()
+  const date = `${now.toLocaleDateString()} ${now.getHours()}:${now.getMinutes()}`
+  
+  return date
 }
 
 const getDescription = async (req, res) => {
@@ -94,7 +94,7 @@ const getDescription = async (req, res) => {
     let description = ''
 
     for (let i = 0; i < order.length; i++) {
-      const product = await products.findOne({ name: order[i].product })
+      const product = await products.findOne({ name: order[i].name })
       const info = `${order[i].amount}x${product.abbreviation}`
 
       description += info
@@ -110,12 +110,12 @@ const getPrice = async (order, res) => {
     let price = 0
 
     for (let i = 0; i < order.length; i++) {
-      const product = await products.findOne({ name: order[i].product })
+      const product = await products.findOne({ name: order[i].name })
       const productPrice = product.price
       const amount = order[i].amount
       price += amount * productPrice
 
-      order[i].productPrice = productPrice
+      order[i].price = productPrice
     }
     return price
   } catch {

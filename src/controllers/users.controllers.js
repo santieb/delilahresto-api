@@ -36,6 +36,20 @@ const getUser = async (req) => {
   return user
 }
 
+const updateUser = async (req) => {
+  const { username, password, email, name, phone, addressBook } = req.body
+  const idUser = getIdUser(req)
+
+  await users.findOneAndUpdate({_id: idUser}, {
+    username: username,
+    email: email,
+    name: name,
+    phone: phone,
+    addressBook: addressBook
+  })
+  return
+}
+
 const updateCart = async (req, res) => {
   const { cart } = req.body
   const idUser = getIdUser(req)
@@ -77,5 +91,6 @@ module.exports = {
   updateCart,
   getUser,
   listUsers,
-  suspendUser
+  suspendUser,
+  updateUser
 }

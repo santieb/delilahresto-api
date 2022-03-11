@@ -19,13 +19,13 @@ const validateRequest = async (req, res, next) => {
       if (!productExist) return res.status(404).json({ msg: 'A product entered does not exist. Check the product list', status: 404 })
     }
 
-    const shippingAddressExist = await users.exists({ _id: idUser, $and: [{ 'addressBook.shippingAddress': { $eq: shippingAddress } }] })
+    const shippingAddressExist = await users.exists({ _id: idUser, $and: [{ 'addressBook.address': { $eq: shippingAddress } }] })
     if (!shippingAddressExist) return res.status(404).json({ msg: 'The shipping address does not exist in your list. Add to your list', status: 404 })
 
     const paymentExist = await payments.exists({ method: methodOfPayment })
     !paymentExist ? res.status(404).json({ msg: 'The payment method does not exist. Check the methods of payments list', status: 404 }) : next()
   } catch {
-    res.status(404).json({ msg: 'Request denied. Check data', status: 404 })
+    res.status(404).json({ msg: 'Request denied. Check data middle', status: 404 })
   }
 }
 

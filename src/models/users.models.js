@@ -8,14 +8,10 @@ const userScheme = new Schema({
   email: { type: String },
   name: { type: String },
   phone: { type: Number },
-  cart: { type: Array, default: [] },
-  addressBook: [
-    {
-      shippingAddress: { type: String }
-    }
-  ],
+  addressBook: { type: Array, default: []},
   isAdmin: { type: Boolean, default: false },
-  isSuspended: { type: Boolean, default: false }
+  isSuspended: { type: Boolean, default: false },
+  facebookId: { type: String, unique: true}
 },
 {
   timestamps: true

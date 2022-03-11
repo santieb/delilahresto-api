@@ -51,6 +51,21 @@ router.get('/user/me', middlewares.isAuthenticated, (req, res) => {
       }))
 })
 
+router.patch('/user/me', middlewares.validateUpdate, middlewares.isAuthenticated, (req, res) => {
+  controllers.updateUser(req)
+    .then(() =>
+      res.status(200).json({
+        message: 'Data update successfully',
+        status: 200
+      }))
+    .catch((err) =>
+      res.status(400).json({
+        message: 'Unable to insert data',
+        errors: err,
+        status: 400
+      }))
+})
+
 router.post('/user/addcart', middlewares.isAuthenticated, (req, res) => {
   controllers.updateCart(req)
     .then(() =>
