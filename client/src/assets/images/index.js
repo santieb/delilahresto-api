@@ -3,7 +3,7 @@ import bag from './shopping-bag.png'
 import cart from './cart.png'
 import empty from './empty.png'
 import resto from './resto.png'
-import cerrar from './cerrar.png'
+import borrar from './borrar.png'
 
 const images = {
   "flecha": flecha,
@@ -11,7 +11,7 @@ const images = {
   "cart": cart,
   "empty": empty,
   "resto": resto,
-  "cerrar": cerrar
+  "borrar": borrar
 }
 
 export default images

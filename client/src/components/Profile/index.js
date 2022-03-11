@@ -21,8 +21,6 @@ const Profile = () => {
     getUserData()
   }, [])
 
-
-
   const handleUpdate = async () => {
     try{
       const loggedUser = window.localStorage.getItem('loggedUser')
@@ -47,18 +45,24 @@ const Profile = () => {
   const handleChange = e => {
     const {name, value} = e.target
     setData({...data, [name]:value})
+  }
+
+  const handleChangeAddress = (e, id) => {
+    const {value} = e.target
+    const newAddress = address.map(addrñess => address.id === id ? {...data, address:value} : address)
+    setAddress(newAddress)
 }
 
-  const handleChangeAddress = () => {
+  const addAddress = () => {
     const newAddress = [...address, {"id": address.length, "address": "New Address" }]
     setAddress(newAddress)
   }
 
   
-  const handlePrueba = (id) => {
+  const handleDelete = (id) => {
     const newAddress = address.filter(address => address.id !== id)
     setAddress(newAddress)
-}
+  }
 
   return (
     <div class="bg-white shadow overflow-hidden sm:rounded-lg ">
@@ -96,10 +100,10 @@ const Profile = () => {
             <dt class="text-sm font-medium text-gray-500">Address Book</dt>
             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               {
-                address.map((address) => <Address address={address} handleChange={handleChange} handlePrueba={handlePrueba} ></Address>)
+                address.map((address) => <Address address={address} handleChangeAddress={handleChangeAddress} handleDelete={handleDelete} ></Address>)
               }
             </dd>
-            <button onClick={handleChangeAddress} type="button" class="w-16 p-2 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2">
+            <button onClick={addAddress} type="button" class="w-16 p-2 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2">
               Add
             </button>
           </div>
