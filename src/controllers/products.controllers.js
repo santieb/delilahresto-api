@@ -11,12 +11,14 @@ const listProducts = async () => {
 }
 
 const createProduct = async (req) => {
-  const { name, price, abbreviation } = req.body
+  const { name, price, abbreviation, description, imgURL } = req.body
 
   const newProduct = {
     name: name,
     price: price,
-    abbreviation: abbreviation
+    abbreviation: abbreviation,
+    description: description,
+    imgURL: imgURL
   }
   client.del('products')
 
@@ -26,14 +28,16 @@ const createProduct = async (req) => {
 }
 
 const modifyProduct = async (req) => {
-  const { name, price, abbreviation } = req.body
+  const { name, price, abbreviation, description, imgURL } = req.body
   const { idProduct } = req.params
 
   const filter = { _id: idProduct }
   const update = {
     name: name,
     price: price,
-    abbreviation: abbreviation
+    abbreviation: abbreviation,
+    description: description,
+    imgURL: imgURL
   }
   client.del('products')
 

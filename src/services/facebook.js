@@ -3,7 +3,6 @@ const router = express.Router()
 const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy
 const user = require('../models/users.models')
-const jwt = require('jsonwebtoken')
 
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_APP_ID,
@@ -19,6 +18,7 @@ passport.use(new FacebookStrategy({
 
 router.get('/auth/facebook', passport.authenticate('facebook'))
 
+
 router.get('/auth/facebook/delilahresto',
   passport.authenticate('facebook', {
     session: false
@@ -27,8 +27,10 @@ router.get('/auth/facebook/delilahresto',
     const token = jwt.sign({ id: req.user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 24 * 7 })
 
     if (token) {
-      res.cookie('', token); // Choose whatever name you'd like for that cookie, 
-      res.redirect('http://localhost:3001');
+      res.json({
+        success: true,
+        token: token
+      })
     } else {
       res.json({
         success: false

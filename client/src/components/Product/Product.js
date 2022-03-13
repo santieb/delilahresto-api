@@ -1,7 +1,7 @@
 import React  from 'react'
 
 const Product = ({ product, products, cart, setCart }) => {
-  const { name, price } = product
+  const { name, price, description, imgURL } = product
 
   const addCart = (name) => {
     const product = products.filter(products => products.name === name)
@@ -17,10 +17,10 @@ const Product = ({ product, products, cart, setCart }) => {
 
   return (
     <div class="w-64 bg-white rounded-lg border shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <img class="rounded-t-lg" src="https://napolicartagena.com/wp-content/uploads/2022/01/La-Historia-de-la-pizza.jpg" alt="" />
+      <img class="rounded-t-lg h-36 w-full" src={imgURL} alt="" />
       <div class="p-2">
         <h5 class="mb-1 font-bold tracking-tight text-gray-900 dark:text-white">{name}</h5>
-        <p class="font-sm text-sm text-gray-700 dark:text-gray-400">x2cheese, extra bacon, tomato, potato and other combinations</p>
+        <p class="font-sm text-sm text-gray-700 dark:text-gray-400">{description}</p>
         <div class="flex item-center justify-between mt-3">
             <h1 class="text-2xl font-extrabold tracking-tightl">
                 ${price}
@@ -33,8 +33,6 @@ const Product = ({ product, products, cart, setCart }) => {
             </button>
         </div>
       </div>
-      
-
     </div>
   )
 }
