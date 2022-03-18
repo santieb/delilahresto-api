@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const facebookAuth = require('../services/facebook')
-const spotifyAuth = require('../services/spotify')
+const githubAuth = require('../services/github')
+const googleAuth = require('../services/google')
 
 const passport = require('passport')
 
@@ -13,6 +14,6 @@ passport.deserializeUser((user, done) => {
   done(null, user)
 })
 
-router.use('/', facebookAuth, spotifyAuth)
+router.use('/', facebookAuth, githubAuth, googleAuth)
 
 module.exports = router
