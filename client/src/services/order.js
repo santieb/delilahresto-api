@@ -5,7 +5,6 @@ const createOrder = async (token, order, shippingAddress, methodOfPayment) => {
     'shippingAddress': shippingAddress 
   }
 
-  console.log(data)
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -17,7 +16,7 @@ const createOrder = async (token, order, shippingAddress, methodOfPayment) => {
 
   try {
   const res = await fetch('http://localhost:3000/orders', requestOptions)
-  console.log(res)
+
   const data = await res.json();
   console.log(data)
   return data
@@ -47,4 +46,45 @@ const getHistory = async (token) => {
   }
 }
 
-export {createOrder, getHistory}
+const confirmOrder = async (token) => {
+  const requestOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token,
+    },
+  }
+
+  try {
+  const res = await fetch('http://localhost:3000/orders/confirmation', requestOptions)
+
+  const data = await res.json();
+  console.log(data)
+  return data
+
+  } catch (err) {
+   return err
+  }
+}
+
+const cancellationOrder = async (token) => {
+  const requestOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token,
+    },
+  }
+
+  try {
+  const res = await fetch('http://localhost:3000/orders/cancellation', requestOptions)
+
+  const data = await res.json();
+  return data
+
+  } catch (err) {
+   return err
+  }
+}
+
+export { createOrder, getHistory, confirmOrder, cancellationOrder }

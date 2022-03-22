@@ -1,9 +1,11 @@
 import React  from 'react'
 
-const Product = ({ product, products, cart, setCart }) => {
+const Product = ({ product, products, cart, setCart, user }) => {
   const { name, price, description, imgURL } = product
-
+  
   const addCart = (name) => {
+    if (!user) return alert('log in before adding a product')
+
     const product = products.filter(products => products.name === name)
 
     if(cart.find((products => products.name === name))) {

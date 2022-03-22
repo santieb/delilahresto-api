@@ -35,7 +35,8 @@ const Profile = () => {
         addressBook: address ? address : userData.addressBook
       }
 
-      await updateUser(token, newUserData)
+      const res = await updateUser(token, newUserData)
+      if (res.status) alert(res.message)
 
     } catch (err) {
       alert('error', err)

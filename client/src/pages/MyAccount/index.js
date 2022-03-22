@@ -4,7 +4,6 @@ import History from '../../components/History'
 import Profile from '../../components/Profile'
 
 const MyAccount = (user) => {
-  console.log(user)
   return (
     <>
     {!user.user ? <Navigate to="/"></Navigate> : (

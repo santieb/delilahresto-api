@@ -49,6 +49,21 @@ router.put('/confirmation', middlewares.validateConfirmation, (req, res) => {
       }))
 })
 
+router.put('/cancellation', middlewares.validateConfirmation, (req, res) => {
+  controllers.cancellationOrder(req)
+    .then(() =>
+      res.status(200).json({
+        message: 'Data update successfully',
+        status: 200
+      }))
+    .catch((err) =>
+      res.status(400).json({
+        message: 'Unable to update data',
+        errors: err,
+        status: 400
+      }))
+})
+
 router.get('/history', (req, res) => {
   controllers.getHistory(req)
     .then((history) =>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Product from '../Product/Product-order'
-import { createOrder } from '../../services/order'
-import Paypal from '../Paypal'
+import { createOrder, confirmOrder, cancellationOrder } from '../../services/order'
+import { PayPalButton } from "react-paypal-button-v2";
 import getUser from '../../services/user'
 import Address from './Address'
 
@@ -11,17 +11,28 @@ const Cart = ({cart, setCart}) => {
 
   const calculatePriceTotal = () => cart.reduce((acc, product) => acc + product.price * product.amount, 0)
 
-  const handleBuy = async (event) => {
-    event.preventDefault()
+  const cancellationOrderww = async () => {
     try{
-      console.log(address)
       const loggedUser = localStorage.getItem('loggedUser')
       if(!loggedUser) window.location.href = "/login";
       const token = JSON.parse(loggedUser).token
 
-      await createOrder(token, cart, address, "bitcoin")
+      const res = await cancellationOrder(token)
+      console.log("res",res)
     } catch (err) {
-      alert('log in before', err)
+      alert('error', err)
+    }
+  }
+
+  const confirmOrderww = async () => {
+    try{
+      const loggedUser = localStorage.getItem('loggedUser')
+      if(!loggedUser) window.location.href = "/login";
+      const token = JSON.parse(loggedUser).token
+
+      await confirmOrder(token)
+    } catch (err) {
+      alert('error', err)
     }
   }
 
@@ -69,14 +80,55 @@ const Cart = ({cart, setCart}) => {
               ${calculatePriceTotal()}
             </span>
           </div>
-          <form onSubmit={handleBuy}>
+          <form>
             <label for="countries" name="address2" onChange={({target}) => setAddress(target.value)} class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select your address</label>
             <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               {addressBook.map(address => <Address address={address}/>)}
             </select>
-            <button>
-              Comprar
-            </button>
+            <PayPalButton
+              style= {{
+                layout: 'horizontal',
+                color:  'blue',
+                shape:  'pill',
+                label:  'checkout',
+                tagline: false,
+                height: 30,
+              }}
+              options={{
+                clientId: "",
+                currency: "USD",
+              }}
+              amount={2.5}
+              onSuccess={async (details, data) => {
+                confirmOrderww()
+                alert("Transaction completed by " + details.payer.name.given_name);
+                window.location.href = "/my-account"
+                }
+              }
+              onCancel={ () => {
+                cancellationOrderww()
+                alert("transaction canceled please try again ");
+                }
+              }
+              onClick={async (data, actions) => {
+                try {
+                  const loggedUser = localStorage.getItem('loggedUser')
+                  if(!loggedUser) window.location.href = "/login";
+                  const token = JSON.parse(loggedUser).token
+            
+                  const res = await createOrder(token, cart, "New Address", "Paypal")
+
+                  if(res.status === 404) {
+                    return actions.reject()
+                  }
+                  else actions.resolve()
+                  
+                } catch (err) {
+                  cancellationOrderww()
+                  return actions.reject()
+                }
+              }}
+            />
           </form>
         </div>
       )}

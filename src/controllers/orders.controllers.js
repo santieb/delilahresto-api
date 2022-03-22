@@ -54,6 +54,15 @@ const confirmOrder = async (req) => {
   await orders.findOneAndUpdate(filter, update)
 }
 
+const cancellationOrder = async (req) => {
+  const idUser = getIdUser(req)
+  
+  const filter = { idUser: idUser, state: 'new' }
+  const update = { state: 'cancelled' }
+
+  await orders.findOneAndUpdate(filter, update)
+}
+
 const getHistory = async (req) => {
   const idUser = getIdUser(req)
 
@@ -129,5 +138,6 @@ module.exports = {
   getHistory,
   getAllOrders,
   confirmOrder,
-  changeOrderStatus
+  changeOrderStatus,
+  cancellationOrder
 }

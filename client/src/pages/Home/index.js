@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Product from '../../components/Product/Product'
 import Cart from '../../components/Cart/Cart'
 
-const App = () => {
+const App = ({user}) => {
   const [products, setProducts] = useState()
   const [cart, setCart] = useState([])
 
@@ -16,7 +16,7 @@ const App = () => {
     <div class="flex m-auto py-6 justify-center px-12">
       <div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {products && products.map(product => <Product key={product.name} product={product} products={products} cart={cart} setCart={setCart} />)}
+          {products && products.map(product => <Product key={product.name} product={product} products={products} cart={cart} setCart={setCart} user={user}/>)}
         </div>
       </div>
       <div class="w-4/12 pl-12 justify-between">
