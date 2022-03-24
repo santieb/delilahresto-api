@@ -15,7 +15,7 @@ const App = ({user}) => {
   return ( 
     <div class="flex m-auto py-6 justify-center px-12">
       <div>
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-3 md:grid-cols-2">
           {products && products.map(product => <Product key={product.name} product={product} products={products} cart={cart} setCart={setCart} user={user}/>)}
         </div>
       </div>

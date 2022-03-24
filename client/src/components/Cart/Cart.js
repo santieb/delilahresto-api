@@ -11,20 +11,19 @@ const Cart = ({cart, setCart}) => {
 
   const calculatePriceTotal = () => cart.reduce((acc, product) => acc + product.price * product.amount, 0)
 
-  const cancellationOrderww = async () => {
+  const cancelOrder = async () => {
     try{
       const loggedUser = localStorage.getItem('loggedUser')
       if(!loggedUser) window.location.href = "/login";
       const token = JSON.parse(loggedUser).token
 
-      const res = await cancellationOrder(token)
-      console.log("res",res)
+      await cancellationOrder(token)
     } catch (err) {
       alert('error', err)
     }
   }
 
-  const confirmOrderww = async () => {
+  const corroborateOrder = async () => {
     try{
       const loggedUser = localStorage.getItem('loggedUser')
       if(!loggedUser) window.location.href = "/login";
@@ -42,11 +41,11 @@ const Cart = ({cart, setCart}) => {
       const token = JSON.parse(loggedUser).token
       const data = await getUser(token)
       setAddressBook(data.user.addressBook)
+      setAddress(data.user.addressBook[0].address)
     }
     getUserData()
   }, [setAddressBook])
 
-  
   return (
     <>
       {cart.length === 0
@@ -81,54 +80,56 @@ const Cart = ({cart, setCart}) => {
             </span>
           </div>
           <form>
-            <label for="countries" name="address2" onChange={({target}) => setAddress(target.value)} class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select your address</label>
-            <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              {addressBook.map(address => <Address address={address}/>)}
+            <label for="countries" name="address2" class="block mb-5 text-sm font-medium text-gray-900 dark:text-gray-400">Select your address:
+            <select onChange={({target}) => setAddress(target.value)} id="countries" class="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              {addressBook.length === 0 ? <option class=" bg-yellow text-gray-200">Add addresses to your profile</option> : addressBook.map(address => <Address address={address}/>)}
             </select>
+            </label>
+            <div class="mx-0">
             <PayPalButton
               style= {{
                 layout: 'horizontal',
                 color:  'blue',
-                shape:  'pill',
                 label:  'checkout',
                 tagline: false,
                 height: 30,
               }}
               options={{
-                clientId: "",
+                clientId: "AeDK6G-jcyQHO4v0TLYBloQ1_h7Q0Mpofa-C8pQIMy3SPKID6csnRidINmfp-lDF483BlyDMB47IwhrR",
                 currency: "USD",
               }}
-              amount={2.5}
+              amount={calculatePriceTotal()}
               onSuccess={async (details, data) => {
-                confirmOrderww()
+                corroborateOrder()
                 alert("Transaction completed by " + details.payer.name.given_name);
                 window.location.href = "/my-account"
                 }
               }
-              onCancel={ () => {
-                cancellationOrderww()
-                alert("transaction canceled please try again ");
+              onCancel={() => {
+                cancelOrder()
+                return alert("transaction canceled please try again ");
                 }
               }
               onClick={async (data, actions) => {
                 try {
                   const loggedUser = localStorage.getItem('loggedUser')
-                  if(!loggedUser) window.location.href = "/login";
+                  if (!loggedUser) window.location.href = "/";
                   const token = JSON.parse(loggedUser).token
-            
-                  const res = await createOrder(token, cart, "New Address", "Paypal")
 
-                  if(res.status === 404) {
-                    return actions.reject()
+                  const res = await createOrder(token, cart, address, "Paypal")
+
+                  if (res.status === 404) {
+                    actions.reject()
+                    return alert(res.msg)
                   }
-                  else actions.resolve()
-                  
+
                 } catch (err) {
-                  cancellationOrderww()
+                  cancelOrder()
                   return actions.reject()
                 }
               }}
             />
+            </div>
           </form>
         </div>
       )}

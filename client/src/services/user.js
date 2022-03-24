@@ -1,5 +1,4 @@
 const getUser = async (token) => {
-  console.log(token)
   const requestOptions = {
     method: 'GET',
     headers: {
@@ -12,7 +11,6 @@ const getUser = async (token) => {
   try{
     const res = await fetch('http://localhost:3000/user/me', requestOptions)
     const userData = await res.json();
-    console.log(userData)
     return userData
   } catch (err) {
     return err

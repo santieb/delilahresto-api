@@ -10,8 +10,10 @@ const App = () => {
 
   useEffect( () => {
     const getUserData = async () => {
+      const url = window.location.href
+
+      if(url.includes('token')) {
       try {
-        const url = window.location.href
         const aux = url.replace("http://localhost:3001/?token=", "")
         const token = aux.replace("#_=_", "")
           
@@ -33,7 +35,7 @@ const App = () => {
         console.log(err)
       }
     }
-
+  }
     getUserData()
     const loggedUser = localStorage.getItem('loggedUser')
     if (loggedUser) {
@@ -43,7 +45,7 @@ const App = () => {
   }, [])
 
   return ( 
-    <div class="md:mx-60  min-h-screen bg-slate-50 border shadow-md">
+    <div class=" lg:mx-60  min-h-screen bg-slate-50 border shadow-md">
       <Header user={user}/>
       <div>
       <Routes>

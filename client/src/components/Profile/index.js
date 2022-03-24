@@ -6,6 +6,7 @@ import Address from '../Address'
 const Profile = () => {
   const [userData, setUserData] = useState('')
   const [address, setAddress] = useState([])
+  const [newAddress, setNewAddress] = useState('')
   const [data, setData] = useState([])
   const { name, username, email, phone } = data
 
@@ -48,13 +49,12 @@ const Profile = () => {
     setData({...data, [name]:value})
   }
 
-
   const addAddress = () => {
-    const newAddress = [...address, {"id": address.length, "address": "New Address" }]
-    setAddress(newAddress)
+    const data = [...address, {"id": address.length, "address": newAddress }]
+    setAddress(data)
+    setNewAddress('')
   }
 
-  
   const handleDelete = (id) => {
     const newAddress = address.filter(address => address.id !== id)
     setAddress(newAddress)
@@ -83,7 +83,7 @@ const Profile = () => {
           <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Email address</dt>
             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            <input onChange={handleChange} defaultValue={userData.email} type="email" name="email" class="text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+            <input onChange={handleChange} defaultValue={userData.email} disabled type="email" name="email" class="text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
             </dd>
           </div>
           <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -98,10 +98,14 @@ const Profile = () => {
               {
                 address.map((address) => <Address address={address} handleDelete={handleDelete} ></Address>)
               }
+                          <div class="flex flex-row">
+              <input onChange={({target}) => setNewAddress(target.value)} type="text" value={newAddress} name="phone" class="text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="New Address" />
+              <button onClick={addAddress} type="button" class="w-16 p-2 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2">
+                Add
+              </button>
+            </div>
             </dd>
-            <button onClick={addAddress} type="button" class="w-16 p-2 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2">
-              Add
-            </button>
+
           </div>
           <div class="px-4 py-5 sm:px-6 ">
             <button onClick={() => handleUpdate()} type="button" class="text-white bg-yellow-400 hover:bg-yellow-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Update</button>

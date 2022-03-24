@@ -18,7 +18,6 @@ const createOrder = async (token, order, shippingAddress, methodOfPayment) => {
   const res = await fetch('http://localhost:3000/orders', requestOptions)
 
   const data = await res.json();
-  console.log(data)
   return data
 
   } catch (err) {
@@ -37,7 +36,6 @@ const getHistory = async (token) => {
 
   try {
   const res = await fetch('http://localhost:3000/orders/history', requestOptions)
-  console.log(res)
   const data = await res.json();
   return data
 
@@ -59,7 +57,6 @@ const confirmOrder = async (token) => {
   const res = await fetch('http://localhost:3000/orders/confirmation', requestOptions)
 
   const data = await res.json();
-  console.log(data)
   return data
 
   } catch (err) {
