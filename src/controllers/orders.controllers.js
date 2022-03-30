@@ -110,7 +110,7 @@ const getDescription = async (req, res) => {
     }
     return description
   } catch {
-    res.status(404).json({ msg: 'Request denied. Check data', status: 404 })
+    res.status(404).json({ message: 'Request denied. Check data', status: 404 })
   }
 }
 
@@ -128,7 +128,7 @@ const getPrice = async (order, res) => {
     }
     return price
   } catch {
-    res.status(404).json({ msg: 'Request denied. Check data', status: 404 })
+    res.status(404).json({ message: 'Request denied. Check data', status: 404 })
   }
 }
 

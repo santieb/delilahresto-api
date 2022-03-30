@@ -11,10 +11,10 @@ const userScheme = new Schema({
   addressBook: { type: Array, default: [] },
   isAdmin: { type: Boolean, default: false },
   isSuspended: { type: Boolean, default: false },
-  facebookId: { type: String, unique: true },
-  googleId: { type: String, unique: true },
-  githubId: { type: String, unique: true },
-  linkedinId: { type: String, unique: true }
+  facebookId: { type: String },
+  googleId: { type: String },
+  githubId: { type: String },
+  linkedinId: { type: String }
 },
 {
   timestamps: true

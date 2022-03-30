@@ -11,21 +11,19 @@ passport.use(new GoogleStrategy ({
   callbackURL: 'http://localhost:3000/auth/google/delilahresto'
 },
 (accessToken, refreshToken, expires_in, profile, done) => {
-  console.log(profile.id);
 
-  User.findOrCreate({ googleId: profile.id, name: profile.displayName }, function (err, user) {
+  User.findOrCreate({ googleId: profile.id, name: profile.displayName, email: profile._json.email }, function (err, user) {
     return done(err, user)
   })
 }
 ))
 
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
+router.get('/auth/google', passport.authenticate('google', { scope: ["email", "profile"] }))
 
 router.get('/auth/google/delilahresto',
   passport.authenticate('google', {
     session: false
   }), (req, res) => {
-    console.log(req.user)
     const token = jwt.sign({ id: req.user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 24 * 7 })
     if (token) {
       res.redirect('http://localhost:3001/?token=' + token)

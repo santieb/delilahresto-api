@@ -13,13 +13,13 @@ const App = ({user}) => {
   }, [products])
 
   return ( 
-    <div class="flex m-auto py-6 justify-center px-12">
+    <div className="flex m-auto py-6 justify-center px-12">
       <div>
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-3 md:grid-cols-2">
           {products && products.map(product => <Product key={product.name} product={product} products={products} cart={cart} setCart={setCart} user={user}/>)}
         </div>
       </div>
-      <div class="w-4/12 pl-12 justify-between">
+      <div className="w-4/12 pl-12 justify-between">
         <Cart cart={cart} setCart={setCart}></Cart>
       </div>
     </div>

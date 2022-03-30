@@ -20,23 +20,23 @@ const productsCache = async (req, res, next) => {
 const validateProduct = async (req, res, next) => {
   try {
     const { name, abbreviation, description } = req.body
-    if (!name || !abbreviation || !description) return res.status(404).json({ msg: 'Fill in all the fields', status: 404 })
+    if (!name || !abbreviation || !description) return res.status(404).json({ message: 'Fill in all the fields', status: 404 })
 
     const nameExist = await products.exists({ name: name })
-    if (nameExist) return res.status(404).json({ msg: 'The name already exists', status: 404 })
+    if (nameExist) return res.status(404).json({ message: 'The name already exists', status: 404 })
 
     next()
   } catch {
-    res.status(404).json({ msg: 'Request denied. Check data', status: 404 })
+    res.status(404).json({ message: 'Request denied. Check data', status: 404 })
   }
 }
 
 const validateProductID = async (req, res, next) => {
   try {
     const validateId = await products.exists({ _id: req.params.idProduct })
-    !validateId ? res.status(404).json({ msg: 'that id payment does not exist', status: 404 }) : next()
+    !validateId ? res.status(404).json({ message: 'that id payment does not exist', status: 404 }) : next()
   } catch {
-    res.status(404).json({ msg: 'that id payment does not exist', status: 404 })
+    res.status(404).json({ message: 'that id payment does not exist', status: 404 })
   }
 }
 
@@ -45,11 +45,11 @@ const validateChanges = async (req, res, next) => {
     const { name } = req.body
 
     const nameExist = await products.exists({ name: name, _id: { $not: { $eq: req.params.idProduct }}})
-    if (nameExist) return res.status(404).json({ msg: 'The name already exists', status: 404 })
+    if (nameExist) return res.status(404).json({ message: 'The name already exists', status: 404 })
 
     next()
   } catch {
-    res.status(404).json({ msg: 'Request denied. Check data', status: 404 })
+    res.status(404).json({ message: 'Request denied. Check data', status: 404 })
   }
 }
 

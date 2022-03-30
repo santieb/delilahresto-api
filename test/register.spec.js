@@ -30,7 +30,7 @@ describe('#register()', function () {
 		})
 			.then(response => response.json())
 			.then(data => {
-				assert.equal(data.msg, 'The email is in use')
+				assert.equal(data.message, 'The email is in use')
 			})
 	})
 
@@ -60,7 +60,7 @@ describe('#register()', function () {
 		})
 			.then(response => response.json())
 			.then(data => {
-				assert.equal(data.msg, 'Fill in all the fields')
+				assert.equal(data.message, 'Fill in all the fields')
 			})
 	})
 	it(`The email has invalid characters`, async () => { //ingreso caracteres invalidos para un email
@@ -89,7 +89,7 @@ describe('#register()', function () {
 		})
 			.then(response => response.json())
 			.then(data => {
-				assert.equal(data.msg, 'The email has invalid characters')
+				assert.equal(data.message, 'The email has invalid characters')
 			})
 	})
 	it(`Bad Request`, async () => { //ingreso datos de diferente tipo

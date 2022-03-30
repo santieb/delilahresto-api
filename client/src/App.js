@@ -45,12 +45,12 @@ const App = () => {
   }, [])
 
   return ( 
-    <div class=" lg:mx-60  min-h-screen bg-slate-50 border shadow-md">
+    <div className=" lg:mx-60  min-h-screen bg-slate-50 border shadow-md">
       <Header user={user}/>
       <div>
       <Routes>
         <Route path='/' element={<Home user={user}/>}></Route>
-        <Route path='/my-account' element={<MyAccount user={user}/>}></Route>
+        <Route path='/my-account' element={user ? <MyAccount user={user}/> : <Home></Home>}></Route>
       </Routes>
       </div>
     </div>

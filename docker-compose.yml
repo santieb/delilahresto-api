@@ -1,0 +1,10 @@
+version: '3'
+services:
+  evento:
+    build: .
+    volumes:
+      - ./:/usr/src/app
+    container_name: nodedocker
+    restart: always
+    ports:
+      - ${PORT}:5000

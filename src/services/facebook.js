@@ -8,16 +8,18 @@ const user = require('../models/users.models')
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
-  callbackURL: 'http://localhost:3000/auth/facebook/delilahresto'
+  callbackURL: 'http://localhost:3000/auth/facebook/delilahresto',
+  profileFields: ['id', 'emails', 'name']
 },
 (accessToken, refreshToken, profile, cb) => {
-  user.findOrCreate({ facebookId: profile.id, name: profile.displayName }, function (err, user) {
+  const name = profile._json.first_name + ' ' + profile._json.last_name
+  user.findOrCreate({ facebookId: profile.id, name: name, email: profile.emails[0].value }, function (err, user) {
     return cb(err, user)
-  })
+  }) 
 }
 ))
 
-router.get('/auth/facebook', passport.authenticate('facebook'))
+router.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }))
 
 router.get('/auth/facebook/delilahresto',
   passport.authenticate('facebook', {
