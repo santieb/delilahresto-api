@@ -3,7 +3,7 @@ const router = express.Router()
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const jwt = require('jsonwebtoken')
-const User = require('../models/users.models')
+const user = require('../models/users.models')
 
 passport.use(new GoogleStrategy ({
   clientID: process.env.GOOGLE_APP_ID,
@@ -12,7 +12,7 @@ passport.use(new GoogleStrategy ({
 },
 (accessToken, refreshToken, expires_in, profile, done) => {
 
-  User.findOrCreate({ googleId: profile.id, name: profile.displayName, email: profile._json.email }, function (err, user) {
+  user.findOrCreate({ email: profile._json.email }, function (err, user) {
     return done(err, user)
   })
 }

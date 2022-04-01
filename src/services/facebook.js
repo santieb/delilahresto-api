@@ -12,8 +12,7 @@ passport.use(new FacebookStrategy({
   profileFields: ['id', 'emails', 'name']
 },
 (accessToken, refreshToken, profile, cb) => {
-  const name = profile._json.first_name + ' ' + profile._json.last_name
-  user.findOrCreate({ facebookId: profile.id, name: name, email: profile.emails[0].value }, function (err, user) {
+  user.findOrCreate({ email: profile.emails[0].value }, function (err, user) {
     return cb(err, user)
   }) 
 }

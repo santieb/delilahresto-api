@@ -447,6 +447,13 @@
  *        in: formData
  *        required: true
  *        description: product abbreviation
+ *      - name: imgURL
+ *        type: string
+ *        in: formData
+ *        required: false
+ *        description: product image url
+ * 
+ * 
  *    responses:
  *      200:
  *        Sucess

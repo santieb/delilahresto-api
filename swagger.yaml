@@ -1,0 +1,575 @@
+swagger: "2.0"
+info:
+  title: "Mi APP Full"
+  description: "API del proyecto de Delilah Resto"
+  version: "2.0.0"
+  contact: { email: "santiagonicolasbarreto@gmail.com" }
+  license: { name: "Nginx", url: "https://nginx.org/LICENSE" }
+host: "localhost:3000"
+schemes: [ "http"]
+paths:
+  /api/register:
+    post:
+      tags:
+        - Users
+      description: Registra un nuevo usuario
+      parameters:
+      - name: name
+        type: string
+        in: formData
+        required: true
+        description: Nombre de usuario
+      - name: password
+        type: string
+        in: formData
+        required: true
+        description: Contraseña del usuario
+      - name: username
+        type: string
+        in: formData
+        required: true
+        description: username
+      - name: email
+        type: string
+        in: formData
+        required: true
+        description: Correo electronico del usuario
+      - name: phone
+        type: number
+        in: formData
+        required: true
+        description: Telefono del usuario
+      - name: addressBook
+        type: array
+        in: formData
+        required: true
+        description: Direccion de envio del usuario
+      responses:
+        200: 
+          description: Sucess
+
+  /api/login:
+    post:
+      tags: 
+        - "Users"
+      description: "Login"
+      parameters:
+      - name: email
+        type: string
+        in: formData
+        required: true
+        description : email
+      - name: password
+        type: string
+        in: formData
+        required: true
+        description : password
+      responses:
+        200:
+          description: Sucess
+
+  /api/user/me:
+    get:
+      description: View user profile
+      tags: 
+        - "Users"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description: token
+      responses:
+        200:
+          description: Sucess
+
+    patch:
+      description: Update users
+      tags: 
+        - "Users"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description: token
+      - name: name
+        type: string
+        in: formData
+        required: true
+        description: Nombre
+      - name: username
+        type: string
+        in: formData
+        required: true
+        description: Username
+      - name: email
+        type: string
+        in: formData
+        required: true
+        description: Email
+      - name: phone
+        type: number
+        in: formData
+        required: true
+        description: Phone
+      - name: addressBook
+        type: array
+        in: formData
+        required: true
+        description: ShippingAddress
+      responses:
+        200:
+          description: Sucess
+
+  /api/admin/users:
+    put:
+      description: Suspend user
+      tags: 
+        - "Users"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description : token
+      responses:
+        200:
+          description: Sucess
+
+  /api/admin/users/:idUser:
+    put:
+      description: Suspend user
+      tags: 
+        - "Users"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description : token
+      - in: path
+        name: idUser
+        required: true
+        description: ID del usuario
+        type: string
+      responses:
+        200:
+          description: Sucess
+
+
+  /api/orders:
+    post:
+      description: Create an order. It is possible to add other different products by adding an object to the "order" array with its corresponding elements (product and amount)
+      tags: 
+        - "Orders"
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: false
+        description : token
+      - in: body
+        name: orders
+        description : Create an order. It is possible to add other different products by adding an object to the "order" array with its corresponding elements (product and amount)
+        schema:
+                  type: object
+                  properties:
+                    order:
+                      type: array
+                      items:
+                            type: object
+                            properties:
+                                  product:
+                                    type: string
+                                  amount: 
+                                    type: number
+                    methodOfPayment: 
+                        type: string
+                    shippingAddress: 
+                        type: string
+      responses:
+        200:
+          description: "Sucess"
+
+    put:
+      description: Edit an order, the change will be made to the unconfirmed order
+      tags: 
+        - "Orders"
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: false
+        description : token
+      - in: body
+        name: orders
+        description : Edit an order. It is possible to add other different products by adding an object to the "order" array with its corresponding elements (product and amount)
+        schema:
+                  type: object
+                  properties:
+                    order:
+                      type: array
+                      items:
+                            type: object
+                            properties:
+                                  product:
+                                    type: string
+                                  amount: 
+                                    type: number
+                    methodOfPayment: 
+                        type: string
+                    shippingAddress: 
+                        type: string
+      responses:
+        200:
+          description: "Sucess"
+
+  /api/orders/confirmation:
+    put:
+      description: The order is confirmed
+      tags: 
+        - "Orders"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description : token
+      responses:
+        200:
+          description: "Sucess"
+
+  /api/orders/cancellation:
+    put:
+      description: The order is cancelled
+      tags: 
+        - "Orders"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description : token
+      responses:
+        200:
+          description: "Sucess"
+
+  /api/orders/history:
+    get:
+      description: View history
+      tags: 
+        - "Orders"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: false
+        description : token
+      responses:
+        200:
+          description: "Sucess"
+
+  /api/admin/allOrders:
+    get:
+      description: View all orders
+      tags: 
+        - "Orders"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: false
+        description : token
+      responses:
+        200:
+          description: "Sucess"
+
+  /api/admin/allorders/:idOrder:
+    put:
+      description: modify order statuses
+      tags: 
+        - "Orders"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: false
+        description : token
+      - in: path
+        name: idOrder
+        required: true
+        description: order id
+        type: integer
+      - name: state
+        type: string
+        in: formData
+        required: true
+        description: new state
+      responses:
+        200:
+          description: "Sucess"
+
+
+  /api/products:
+    get:
+      tags:
+      - "Products"
+      description: view productos
+      responses:
+        200: 
+          description: Sucess
+
+  /api/admin/products:
+    post:
+      description: Create product
+      tags:
+        - "Products"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description : token
+      - name: name
+        type: string
+        in: formData
+        required: true
+        description: Product name
+      - name: price
+        type: integer
+        in: formData
+        required: true
+        description: product price
+      - name: abbreviation
+        type: string
+        in: formData
+        required: true
+        description: product abbreviation
+      - name: imgURL
+        type: string
+        in: formData
+        required: false
+        description: product image url 
+      responses:
+        200: 
+          description: "Sucess"
+
+  /api/admin/products/:idProduct:
+    put:
+      description: Edit product
+      tags:
+        - "Products"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: false
+        description : token
+      - name: idProduct
+        type: string
+        in: path
+        required: true
+        description: Product ID
+      - name: name
+        type: string
+        in: formData
+        required: true
+        description: Product name
+      - name: price
+        type: integer
+        in: formData
+        required: true
+        description: Product price
+      - name: abbreviation
+        type: string
+        in: formData
+        required: true
+        description: Product abbreviation
+      - name: imgURL
+        type: string
+        in: formData
+        required: false
+        description: product image url 
+      responses:
+        200: 
+          description: "Sucess"
+
+    delete:
+      description: Remove product
+      tags:
+        - "Products"
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description : token
+      - name: idProduct
+        type: string
+        in: path
+        required: true
+        description: "Product ID"
+      responses:
+        200:
+          description: "Sucess"
+
+
+  /api/payments:
+    get:
+      tags:
+      - Payments
+      description: View methods of payments
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description : token
+      responses:
+        200: 
+          description: Sucess
+  /api/admin/payments:
+    post:
+      description: Create payment method
+      tags:
+        - Payments
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description : token
+      - name: method
+        type: string
+        in: formData
+        required: true
+        description: Method of payment
+      responses:
+        200: 
+          description: "Sucess"
+
+  /api/admin/payments/:idPayment:
+    put:
+      description: Edit payment method
+      tags:
+        - Payments
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description : token
+      - name: idProduct
+        type: string
+        in: path
+        required: true
+        description: Product ID
+      - name: method
+        type: string
+        in: formData
+        required: true
+        description: Method of payment
+      responses:
+        200: 
+          description: "Sucess"
+
+    delete:
+      description: Remove payment method
+      tags:
+        - Payments
+      parameters:
+      - name: authorization
+        type: string
+        in: header
+        required: true
+        description : token
+      - name: idPayment
+        type: string
+        in: path
+        required: true
+        description: "Payment ID"
+      responses:
+        200:
+          description: "Sucess"
+
+
+  /auth/facebook:
+    get:
+      tags:
+        - Identity providers
+      description: "Auth facebook"
+      responses:
+        200:
+          description: "Sucess"
+
+  /auth/facebook/delilahresto:
+    get:
+      tags:
+        - Identity providers
+      description: "URL Callback"
+      responses:
+        200:
+          description: "Sucess"
+
+  /auth/google:
+    get:
+      tags:
+        - Identity providers
+      description: "Auth google"
+      responses:
+        200:
+          description: "Sucess"
+
+  /auth/google/delilahresto:
+    get:
+      tags:
+        - Identity providers
+      description: "URL Callback"
+      responses:
+        200:
+          description: "Sucess"
+
+  /auth/github:
+    get:
+      tags:
+        - Identity providers
+      description: "Auth github"
+      responses:
+        200:
+          description: "Sucess"
+
+  /auth/github/delilahresto:
+    get:
+      tags:
+        - Identity providers
+      description: "URL Callback"
+      responses:
+        200:
+          description: "Sucess"
+
+  /auth/linkedin:
+    get:
+      tags:
+        - Identity providers
+      description: "Auth linkedin"
+      responses:
+        200:
+          description: "Sucess"
+
+  /auth/linkedin/delilahresto:
+    get:
+      tags:
+        - Identity providers
+      description: "URL Callback"
+      responses:
+        200:
+          description: "Sucess"

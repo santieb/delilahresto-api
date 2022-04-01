@@ -37,7 +37,7 @@ const getUser = async (req) => {
 }
 
 const updateUser = async (req) => {
-  const { username, password, email, name, phone, addressBook } = req.body
+  const { username, email, name, phone, addressBook } = req.body
   const idUser = getIdUser(req)
 
   await users.findOneAndUpdate({_id: idUser}, {
@@ -48,16 +48,6 @@ const updateUser = async (req) => {
     addressBook: addressBook
   })
   return
-}
-
-const updateCart = async (req, res) => {
-  const { cart } = req.body
-  const idUser = getIdUser(req)
-
-  const filter = { _id: idUser }
-  const update = { cart: cart }
-
-  await users.findOneAndUpdate(filter, update)
 }
 
 const listUsers = async () => await users.find()
@@ -88,7 +78,6 @@ const getIdUser = (req) => {
 module.exports = {
   createUser,
   loginUser,
-  updateCart,
   getUser,
   listUsers,
   suspendUser,
