@@ -8,7 +8,7 @@ const user = require('../models/users.models')
 passport.use(new GoogleStrategy ({
   clientID: process.env.GOOGLE_APP_ID,
   clientSecret: process.env.GOOGLE_APP_SECRET,
-  callbackURL: 'http://localhost:3000/auth/google/delilahresto'
+  callbackURL: 'https://www.delilahresto.gq/api/auth/google/delilahresto'
 },
 (accessToken, refreshToken, expires_in, profile, done) => {
 
@@ -26,7 +26,7 @@ router.get('/auth/google/delilahresto',
   }), (req, res) => {
     const token = jwt.sign({ id: req.user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 24 * 7 })
     if (token) {
-      res.redirect('http://localhost:3001/?token=' + token)
+      res.redirect('https://delilahreesto.herokuapp.com/?token=' + token)
     }
   }
 )

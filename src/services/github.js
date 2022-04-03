@@ -9,7 +9,7 @@ passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_APP_ID,
   clientSecret: process.env.GITHUB_APP_SECRET,
   scope: ['user:email'],
-  callbackURL: 'http://localhost:3000/auth/github/delilahresto',
+  callbackURL: 'https://www.delilahresto.gq/api/auth/github/delilahresto',
 },
 (accessToken, refreshToken, profile, cb) => {
   user.findOrCreate({ email: profile.emails[0].value }, function (err, user) {
@@ -27,7 +27,7 @@ router.get('/auth/github/delilahresto',
     console.log(req.user.id)
     const token = jwt.sign({ id: req.user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 24 * 7 })
     if (token) {
-      res.redirect('http://localhost:3001/?token=' + token)
+      res.redirect('https://delilahreesto.herokuapp.com/?token=' + token)
     }
   }
 )

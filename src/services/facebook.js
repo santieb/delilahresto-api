@@ -8,7 +8,7 @@ const user = require('../models/users.models')
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
-  callbackURL: 'http://localhost:3000/auth/facebook/delilahresto',
+  callbackURL: 'https://www.delilahresto.gq/api/auth/facebook/delilahresto',
   profileFields: ['id', 'emails', 'name']
 },
 (accessToken, refreshToken, profile, cb) => {
@@ -27,7 +27,7 @@ router.get('/auth/facebook/delilahresto',
 
     const token = jwt.sign({ id: req.user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 24 * 7 })
     if (token) {
-      res.redirect('http://localhost:3001/?token=' + token)
+      res.redirect('https://delilahreesto.herokuapp.com/?token=' + token)
     }
   }
 )

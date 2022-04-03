@@ -5,7 +5,6 @@ const { isAuthenticated, isAdmin} = require('../middlewares/users.middlewares')
 
 router.use('/', require('./auth.routes'))
 router.use('/', require('./users.routes'))
-router.use('/user', isAuthenticated, require('./addressBook.routes'))
 router.use('/orders', isAuthenticated, require('./orders.routes'))
 router.use('/products', require('./products.routes'))
 router.use('/payments', isAuthenticated, require('./payments.routes'))

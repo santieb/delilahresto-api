@@ -5,6 +5,16 @@ info:
   version: "2.0.0"
   contact: { email: "santiagonicolasbarreto@gmail.com" }
   license: { name: "Nginx", url: "https://nginx.org/LICENSE" }
+  termsOfService: "http://swagger.io/terms/"
+
+securityDefinitions:
+  APIKey:
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - APIKey: []
+
 host: "localhost:3000"
 schemes: [ "http"]
 paths:
@@ -123,8 +133,8 @@ paths:
           description: Sucess
 
   /api/admin/users:
-    put:
-      description: Suspend user
+    get:
+      description: view users
       tags: 
         - "Users"
       parameters:
@@ -137,7 +147,7 @@ paths:
         200:
           description: Sucess
 
-  /api/admin/users/:idUser:
+  /api/admin/users/{idUser}:
     put:
       description: Suspend user
       tags: 
@@ -177,21 +187,21 @@ paths:
         name: orders
         description : Create an order. It is possible to add other different products by adding an object to the "order" array with its corresponding elements (product and amount)
         schema:
-                  type: object
-                  properties:
-                    order:
-                      type: array
-                      items:
-                            type: object
-                            properties:
-                                  product:
-                                    type: string
-                                  amount: 
-                                    type: number
-                    methodOfPayment: 
-                        type: string
-                    shippingAddress: 
-                        type: string
+              type: object
+              properties:
+                order:
+                  type: array
+                  items:
+                      type: object
+                      properties:
+                        product:
+                          type: string
+                        amount: 
+                          type: number
+                methodOfPayment: 
+                    type: string
+                shippingAddress: 
+                    type: string
       responses:
         200:
           description: "Sucess"
@@ -214,21 +224,21 @@ paths:
         name: orders
         description : Edit an order. It is possible to add other different products by adding an object to the "order" array with its corresponding elements (product and amount)
         schema:
-                  type: object
-                  properties:
-                    order:
-                      type: array
-                      items:
-                            type: object
-                            properties:
-                                  product:
-                                    type: string
-                                  amount: 
-                                    type: number
-                    methodOfPayment: 
-                        type: string
-                    shippingAddress: 
-                        type: string
+              type: object
+              properties:
+                order:
+                  type: array
+                  items:
+                      type: object
+                      properties:
+                        product:
+                          type: string
+                        amount: 
+                          type: number
+                methodOfPayment: 
+                  type: string
+                shippingAddress: 
+                  type: string
       responses:
         200:
           description: "Sucess"
@@ -293,7 +303,7 @@ paths:
         200:
           description: "Sucess"
 
-  /api/admin/allorders/:idOrder:
+  /api/admin/allorders/{idOrder}:
     put:
       description: modify order statuses
       tags: 
@@ -354,6 +364,11 @@ paths:
         in: formData
         required: true
         description: product abbreviation
+      - name: description
+        type: string
+        in: formData
+        required: true
+        description: Product Description
       - name: imgURL
         type: string
         in: formData
@@ -363,7 +378,7 @@ paths:
         200: 
           description: "Sucess"
 
-  /api/admin/products/:idProduct:
+  /api/admin/products/{idProduct}:
     put:
       description: Edit product
       tags:
@@ -394,6 +409,11 @@ paths:
         in: formData
         required: true
         description: Product abbreviation
+      - name: description
+        type: string
+        in: formData
+        required: true
+        description: Product Description
       - name: imgURL
         type: string
         in: formData
@@ -457,7 +477,7 @@ paths:
         200: 
           description: "Sucess"
 
-  /api/admin/payments/:idPayment:
+  /api/admin/payments/{idPayment}:
     put:
       description: Edit payment method
       tags:
@@ -502,7 +522,7 @@ paths:
           description: "Sucess"
 
 
-  /auth/facebook:
+  /api/auth/facebook:
     get:
       tags:
         - Identity providers
@@ -511,7 +531,7 @@ paths:
         200:
           description: "Sucess"
 
-  /auth/facebook/delilahresto:
+  /api/auth/facebook/delilahresto:
     get:
       tags:
         - Identity providers
@@ -520,7 +540,7 @@ paths:
         200:
           description: "Sucess"
 
-  /auth/google:
+  /api/auth/google:
     get:
       tags:
         - Identity providers
@@ -529,7 +549,7 @@ paths:
         200:
           description: "Sucess"
 
-  /auth/google/delilahresto:
+  /api/auth/google/delilahresto:
     get:
       tags:
         - Identity providers
@@ -538,7 +558,7 @@ paths:
         200:
           description: "Sucess"
 
-  /auth/github:
+  /api/auth/github:
     get:
       tags:
         - Identity providers
@@ -547,7 +567,7 @@ paths:
         200:
           description: "Sucess"
 
-  /auth/github/delilahresto:
+  /api/auth/github/delilahresto:
     get:
       tags:
         - Identity providers
@@ -556,7 +576,7 @@ paths:
         200:
           description: "Sucess"
 
-  /auth/linkedin:
+  /api/auth/linkedin:
     get:
       tags:
         - Identity providers
@@ -565,7 +585,7 @@ paths:
         200:
           description: "Sucess"
 
-  /auth/linkedin/delilahresto:
+  /api/auth/linkedin/delilahresto:
     get:
       tags:
         - Identity providers

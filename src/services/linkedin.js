@@ -8,7 +8,7 @@ const User = require('../models/users.models')
 passport.use(new LinkedinStrategy ({
   clientID: process.env.LINKEDIN_APP_ID,
   clientSecret: process.env.LINKEDIN_APP_SECRET,
-  callbackURL: 'http://localhost:3000/auth/linkedin/delilahresto',
+  callbackURL: 'https://www.delilahresto.gq/api/auth/linkedin/delilahresto',
   scope: ['r_emailaddress'],
   profileFields: ['email-address','public-profile-url'],
   passReqToCallback: true
@@ -31,7 +31,7 @@ router.get('/auth/linkedin/delilahresto',
   }), (req, res) => {
     const token = jwt.sign({ id: req.user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 24 * 7 })
     if (token) {    
-      res.redirect('http://localhost:3001/?token=' + token)
+      res.redirect('https://delilahreesto.herokuapp.com/?token=' + token)
     }
   }
 )
