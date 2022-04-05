@@ -18,14 +18,23 @@ npm install
 
 ### Instrucciones 📄
 
-**1 - Base de datos**
+**1 - Variables de entorno**
 
 Crea un archivo **".env"** e inserta los datos tomando como referencia el archivo **".env.example"** para crear la base de datos. Debería quedar algo asi:
 
 ```
-CLOUD_MONGODB=mongodb+srv://admin:password@sprint3.y6js9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-ELASTICACHE_URL=enlace.v3vtsh.0001.sae2.cache.amazonaws.com
+CLOUD_MONGODB=mongodburl
+ELASTICACHE_URL=redisurl
 SECRET=signature
+PORT=3000
+FACEBOOK_APP_ID=id
+FACEBOOK_APP_SECRET=secret
+GOOGLE_APP_ID=secret
+GOOGLE_APP_SECRET=secret
+GITHUB_APP_ID=id
+GITHUB_APP_SECRET=secret
+LINKEDIN_APP_ID=id
+LINKEDIN_APP_SECRET=secret
 ```
 
 **2 - Ejecución**
