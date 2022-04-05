@@ -57,7 +57,6 @@ const validateLogin = async (req, res, next) => {
 const validateUserID = async (req, res, next) => {
   try {
     const { idUser } = req.params
-    console.log({"iduser": idUser})
     const user = await users.findOne({ _id: idUser })
 
     if (user.isAdmin) return res.status(404).json({ message: 'you cannot suspend an administrator', status: 404 })
@@ -80,7 +79,7 @@ const isAuthenticated = async (req, res, next) => {
 const isAdmin = async (req, res, next) => {
   try {
     const idUser = getIdUser(req)
-    console.log(idUser)
+
     const adminExist = await users.exists({ _id: idUser, isAdmin: true })
     
     !adminExist ? res.status(404).json({ message: 'Not authorized', status: 404 }) : next()

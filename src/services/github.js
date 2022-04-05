@@ -24,7 +24,7 @@ router.get('/auth/github/delilahresto',
   passport.authenticate('github', {
     session: false
   }), (req, res) => {
-    console.log(req.user.id)
+
     const token = jwt.sign({ id: req.user.id }, process.env.SECRET, { expiresIn: 60 * 60 * 24 * 7 })
     if (token) {
       res.redirect('https://delilahreesto.herokuapp.com/?token=' + token)
