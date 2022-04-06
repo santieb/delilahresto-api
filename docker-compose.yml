@@ -1,10 +1,23 @@
-version: '3'
+version: "3.3"
+networks:
+  my-app-net:
+    name: my-app-net
 services:
-  evento:
-    build: .
-    volumes:
-      - ./:/usr/src/app
-    container_name: nodedocker
-    restart: always
+  myapp:
+    image: myapp-node
+    working_dir: /myapp
+    command: "npm start"
     ports:
-      - ${PORT}:5000
+      - "3000:3000"
+    depends_on:
+      - redis
+    networks:
+      - my-app-net
+  redis:
+    image: redis
+    restart: always
+    command: redis-server
+    ports:
+      - 8383:6379
+    networks:
+      - my-app-net 
