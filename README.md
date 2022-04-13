@@ -20,7 +20,7 @@ npm install
 
 **1 - Variables de entorno**
 
-Crea un archivo **".env"** e inserta los datos tomando como referencia el archivo **".env.example"** para crear la base de datos. Debería quedar algo asi:
+Crea un archivo **".env"** e inserta los datos tomando como referencia el archivo **".env.sample"**. Debería quedar algo asi:
 
 ```
 CLOUD_MONGODB=mongodburl
@@ -39,7 +39,18 @@ LINKEDIN_APP_SECRET=secret
 
 **2 - Ejecución**
 
-Para iniciar mi proyecto, tienes que usar `npm run start` y para iniciar el test usa `npm run test`
+* Local
+
+Para iniciar mi proyecto de manera local, tienes que usar `npm run start` y para iniciar el test usa `npm run test`
+
+* Docker
+
+Para ejecutar mi proyecto con docker, ejecuta 
+
+`docker build -t myapp-node .`
+
+`docker-compose up -d`
+
 
 * Recuerda que la API está documentada en swagger, te será más fácil hacer pruebas
 https://www.delilahresto.gq/api-docs/
@@ -55,6 +66,7 @@ https://www.delilahresto.gq/api-docs/
 * [Mocha]("https://mochajs.org/") - Test
 * [JWT]("https://jwt.io/") - Auth
 * [AWS]("https://aws.amazon.com/) - Cloud services
+* [Docker](https://www.docker.com/) - Docker
 
 
 ## Autor ✒️
